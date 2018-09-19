@@ -15,21 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\..\..\..\Lil%27\documents\visual studio 2015\Projects\wizardworm\wizardworm\ReadMe.txt" />
+    <Text Include=".\ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\..\Lil%27\documents\visual studio 2015\Projects\wizardworm\wizardworm\stdafx.h">
+    <ClInclude Include=".\stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Lil%27\documents\visual studio 2015\Projects\wizardworm\wizardworm\targetver.h">
+    <ClInclude Include=".\targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\..\Lil%27\documents\visual studio 2015\Projects\wizardworm\wizardworm\stdafx.cpp">
+    <ClCompile Include=".\stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Lil%27\documents\visual studio 2015\Projects\wizardworm\wizardworm\wizardworm.cpp">
+    <ClCompile Include=".\wizardworm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
