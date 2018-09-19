@@ -1,0 +1,13 @@
+ipch
+**/*.tlog
+**/*.obj
+**/*.pch
+**/*.idb
+**/*.ilk
+**/*.exe
+**/*.lastbuildstate
+**/*.db
+**/*.suo
+**/*.pdb
+wizardworm/x64
+.vs
