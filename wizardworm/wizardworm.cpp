@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Logger.h"
+
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
