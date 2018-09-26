@@ -164,6 +164,10 @@
     <ClInclude Include="LanServerHandler.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="NetworkManager.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Properties.h" />
+    <ClInclude Include="Window.h" />
+    <ClInclude Include="Wizard.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include=".\stdafx.cpp">
@@ -177,6 +181,10 @@
     <ClCompile Include="LanHandler.cpp" />
     <ClCompile Include="LanServerHandler.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Properties.cpp" />
+    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="Wizard.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
