@@ -28,7 +28,7 @@ void Wizard::draw() {
 	
 	//Az élet és a mana elheyezésének beállítása + színek
 	life->set_position(get_position().get_x(), get_position().get_y() - 25);
-	mana->set_position(get_position().get_x(), get_position().get_y() + 50);
+	mana->set_position(get_position().get_x(), get_position().get_y() -20);
 	
 	life->draw(sf::Color::Red);
 	mana->draw(sf::Color::Blue);
