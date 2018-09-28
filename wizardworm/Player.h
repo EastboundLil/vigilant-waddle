@@ -16,7 +16,7 @@ public:
 	Player(sf::RenderWindow* w);
 	~Player();
 	
-	void set_wizard_position(int val);
+	void move(int x, int y);
 	void draw();
 
 };

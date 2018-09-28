@@ -11,6 +11,7 @@ public:
 	Wizard(sf::RenderWindow* window);
 	~Wizard();
 	void draw();
+	void move_to(int x,int y);
 
 };
 

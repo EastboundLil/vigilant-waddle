@@ -15,6 +15,7 @@ Window::~Window()
 
 void Window::eventhandler() {
 
+
 	while (window->isOpen())
 	{
 		sf::Event event;
@@ -25,17 +26,17 @@ void Window::eventhandler() {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			{
 				// move left...
-				player->set_wizard_position(-1);
+				player->move(-1,0);
 				std::cout << "balra" << std::endl;
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
 				// move right...
-				player->set_wizard_position(1);
+				
+				player->move(1,0);
 				std::cout << "jobbra" << std::endl;
 			}
 		}
-
 		window->clear(sf::Color::Black);
 		//window.draw(rectangle);
 		player->draw();

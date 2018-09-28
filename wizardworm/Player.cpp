@@ -13,9 +13,9 @@ Player::Player(sf::RenderWindow *w)
 Player::~Player()
 {}
 
-void Player::set_wizard_position(int val){ 
+void Player::move(int x,int y){ 
 
-	wizard->move(val,0);
+	wizard->move_to(x,y);
 
 }
 
