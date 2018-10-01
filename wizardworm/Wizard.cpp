@@ -38,19 +38,9 @@ void Wizard::draw() {
 
 	rectangle.setSize(sf::Vector2f(10, 25));
 	rectangle.setFillColor(sf::Color::White);
-	rectangle.setPosition(get_position().get_x(), get_position().get_y());
+	rectangle.setPosition(get_position().get_x(), get_position().get_y());*/
 	
-<<<<<<< Updated upstream
-	window->draw(rectangle);
-	
-	//Az élet és a mana elheyezésének beállítása + színek
-	life->set_position(get_position().get_x(), get_position().get_y() - 25);
-	mana->set_position(get_position().get_x(), get_position().get_y() -20);
-=======
-	window->draw(rectangle);*/
-
 	window->draw(sprite);
->>>>>>> Stashed changes
 	
 
 	//TODO attó függõen milyen színre állítod más az x pozíciója

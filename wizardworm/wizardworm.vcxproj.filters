@@ -19,6 +19,12 @@
     <Filter Include="Source Files\networking">
       <UniqueIdentifier>{f2e1a5db-2ae1-4dbf-b8c4-8bae69393c6e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\drawable">
+      <UniqueIdentifier>{1a17b513-848c-4893-93fe-e5c73702c175}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\networking">
+      <UniqueIdentifier>{19d22db0-3433-4b4a-898f-14c6d392004d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".\ReadMe.txt" />
@@ -33,28 +39,28 @@
     <ClInclude Include="Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NetworkManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LanHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LanClientHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LanServerHandler.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Wizard.h">
+      <Filter>Header Files\drawable</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\drawable</Filter>
     </ClInclude>
     <ClInclude Include="Properties.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkManager.h">
+      <Filter>Header Files\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="LanServerHandler.h">
+      <Filter>Header Files\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="LanHandler.h">
+      <Filter>Header Files\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="LanClientHandler.h">
+      <Filter>Header Files\networking</Filter>
     </ClInclude>
     <ClInclude Include="Window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Wizard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
