@@ -6,5 +6,8 @@ class LanClientHandler :
 public:
 	LanClientHandler();
 	~LanClientHandler();
+
+	void start() override;
+	void sendData() override;
 };
 
