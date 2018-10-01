@@ -5,11 +5,11 @@
 
 Wizard::Wizard(sf::RenderWindow *w)
 {
-	set_value(1); //Él e még a varázsló 
-	set_position(100, 100); //Varázsló kezdeti pozíciója
+	set_value(1); //ï¿½l e mï¿½g a varï¿½zslï¿½ 
+	set_position(100, 100); //Varï¿½zslï¿½ kezdeti pozï¿½ciï¿½ja
 	window = w;
-	life = new Properties(window); //A varázsló élete
-	mana = new Properties(window); //A varázsló manája
+	life = new Properties(window); //A varï¿½zslï¿½ ï¿½lete
+	mana = new Properties(window); //A varï¿½zslï¿½ manï¿½ja
 	life->set_position(100, 100 - 25);
 	mana->set_position(100, 100 - 20);
 
@@ -30,7 +30,7 @@ void Wizard::draw() {
 	sf::Sprite sprite;
 	sprite.setTexture(texture);
 	sprite.setPosition(get_position().get_x(), get_position().get_y());
-	//Worm nagysága
+	//Worm nagysï¿½ga
 	sprite.setScale(0.30, 0.30);
 
 
@@ -43,14 +43,14 @@ void Wizard::draw() {
 	window->draw(sprite);
 	
 
-	//TODO attó függõen milyen színre állítod más az x pozíciója
-		//Faszság
+	//TODO attï¿½ fï¿½ggï¿½en milyen szï¿½nre ï¿½llï¿½tod mï¿½s az x pozï¿½ciï¿½ja
+		//Faszsï¿½g
 	life->draw(sf::Color::Red);
 	mana->draw(sf::Color::Blue);
 }
 
 void Wizard::move_to(int x,int y) {
-	//Az élet és a mana elheyezésének beállítása + színek
+	//Az ï¿½let ï¿½s a mana elheyezï¿½sï¿½nek beï¿½llï¿½tï¿½sa + szï¿½nek
 
 	move(x, y);
 	life->move(x, y);
