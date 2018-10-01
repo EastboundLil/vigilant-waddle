@@ -9,6 +9,9 @@ public:
 	LanServerHandler();
 	~LanServerHandler();
 
+	void start() override;
+	void sendData() override;
+
 private:
 	sf::TcpListener listener;
 };
