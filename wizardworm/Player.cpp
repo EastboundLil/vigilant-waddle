@@ -2,11 +2,11 @@
 #include "Player.h"
 
 
-Player::Player(sf::RenderWindow *w)
+Player::Player(sf::RenderWindow *w , std::string name)
 {
 	window = w;
-	wizard = new Wizard(window);
-
+	wizard = new Wizard(100,100,1, window);
+	player_name = name;
 }
 
 
@@ -15,7 +15,7 @@ Player::~Player()
 
 void Player::move(int x,int y){ 
 
-	wizard->move_to(x,y);
+	wizard->move(x,y);
 
 }
 

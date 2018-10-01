@@ -63,6 +63,12 @@
     <ClInclude Include="Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Drawable.h">
+      <Filter>Header Files\drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="Bar.h">
+      <Filter>Header Files\drawable</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include=".\stdafx.cpp">
@@ -94,6 +100,12 @@
     </ClCompile>
     <ClCompile Include="NetworkManager.cpp">
       <Filter>Source Files\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="Drawable.cpp">
+      <Filter>Source Files\drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="Bar.cpp">
+      <Filter>Source Files\drawable</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

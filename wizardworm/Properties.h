@@ -1,27 +1,14 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Drawable.h"
+/*
 
 
 
-struct pos {
-private:
-	int x;
-	int y;
-public:
-	void set_x(int x_) { x = x_; };
-	void set_y(int y_) { y = y_; };
-	int get_x() { return x; };
-	int get_y() { return y; };
-	void incr_x(int x_) { x += x_; };
-	void incr_y(int y_) { y += y_; };
 
-
-};
-
-
-class Properties
+class Properties : public Drawable
 {
-	pos position;
+	
 	int value;
 	sf::RenderWindow* window;
 public:
@@ -37,8 +24,9 @@ public:
 	void set_value(int val);
 	int get_value();
 
-	void draw(sf::Color color);
+	
 
 
 };
 
+*/

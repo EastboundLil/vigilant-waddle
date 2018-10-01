@@ -3,15 +3,15 @@
 
 
 
-Wizard::Wizard(sf::RenderWindow *w)
+Wizard::Wizard(int x_ , int y_ , int id , sf::RenderWindow *w)
+	:Drawable(x_, y_)
 {
-	set_value(1); //�l e m�g a var�zsl� 
-	set_position(100, 100); //Var�zsl� kezdeti poz�ci�ja
+	//set_value(1); //�l e m�g a var�zsl� 
+	set_pos(x_ , y_ ); //Var�zsl� kezdeti poz�ci�ja
 	window = w;
-	life = new Properties(window); //A var�zsl� �lete
-	mana = new Properties(window); //A var�zsl� man�ja
-	life->set_position(100, 100 - 25);
-	mana->set_position(100, 100 - 20);
+	lifebar = new Bar(x_,y_-25 , sf::Color::Red ,50 , window); //A var�zsl� �lete
+	manabar = new Bar(x_, y_-20 , sf::Color::Blue , 50 , window); //A var�zsl� man�ja
+	
 
 }
 
@@ -29,11 +29,11 @@ void Wizard::draw() {
 
 	sf::Sprite sprite;
 	sprite.setTexture(texture);
-	sprite.setPosition(get_position().get_x(), get_position().get_y());
+	sprite.setPosition(x, y);
 	//Worm nagys�ga
 	sprite.setScale(0.30, 0.30);
 
-
+	//ha kép helyett worm kéne:
 	/*sf::RectangleShape rectangle;
 
 	rectangle.setSize(sf::Vector2f(10, 25));
@@ -45,16 +45,41 @@ void Wizard::draw() {
 
 	//TODO att� f�gg�en milyen sz�nre �ll�tod m�s az x poz�ci�ja
 		//Faszs�g
-	life->draw(sf::Color::Red);
-	mana->draw(sf::Color::Blue);
+	lifebar->draw();
+	manabar->draw();
 }
 
-void Wizard::move_to(int x,int y) {
+void Wizard::move(int x,int y) {
 	//Az �let �s a mana elheyez�s�nek be�ll�t�sa + sz�nek
 
-	move(x, y);
-	life->move(x, y);
-	mana->move(x, y);
+	incr_pos(x, y);
+	lifebar->incr_pos(x, y);
+	manabar->incr_pos(x, y);
 
+}
+
+void Wizard::set_life(int l)
+{
+	//TODO: catchelni kell az exceptiont
+	lifebar->set_val(l);
+
+}
+
+void Wizard::set_mana(int m)
+{
+	//TODO: catchelni kell az exceptiont
+	manabar->set_val(m);
+}
+
+void Wizard::incr_life(int l)
+{
+	//TODO: catchelni kell az exceptiont
+	lifebar->incr_val(l);
+}
+
+void Wizard::incr_mana(int m)
+{
+	//TODO: catchelni kell az exceptiont
+	manabar->incr_val(m);
 }
 

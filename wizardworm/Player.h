@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Properties.h"
+
 #include "Wizard.h"
 
 //TODO Egy Játékosnak több varázsló kell melyeket ülön kezel
@@ -10,10 +10,11 @@ class Player
 
 	Wizard* wizard;
 	sf::RenderWindow *window;
+	std::string player_name;
 
 public:
 
-	Player(sf::RenderWindow* w);
+	Player(sf::RenderWindow* w, std::string name);
 	~Player();
 	
 	void move(int x, int y);

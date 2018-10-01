@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Properties.h"
 #include <SFML/Graphics.hpp>
-
+/*
 
 
 Properties::Properties(sf::RenderWindow *w)
@@ -55,3 +55,4 @@ void Properties::draw(sf::Color color) {
 
 
 
+*/
