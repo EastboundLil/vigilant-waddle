@@ -6,5 +6,7 @@ class ClientEngine :
 public:
 	ClientEngine();
 	~ClientEngine();
+
+	std::vector<Data> GenerateMoveset();
 };
 
