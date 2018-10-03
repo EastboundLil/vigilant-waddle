@@ -2,7 +2,8 @@
 #include "LanServerHandler.h"
 
 
-LanServerHandler::LanServerHandler()
+LanServerHandler::LanServerHandler(INWManager* NWManager) :
+	LanHandler(NWManager)
 {
 }
 
@@ -22,16 +23,24 @@ void LanServerHandler::start()
 		LOG("Error starting listener socket!");
 	}
 
-	listener.accept(socket);
+	connectionStatus = listener.accept(socket);
 
 	if (connectionStatus != sf::Socket::Done)
 	{
 		LOG("Error accepting connection!");
 	}
 
+	char data[100];
+	std::size_t received;
+
+	if (socket.receive(data, 100, received) != sf::Socket::Done)
+	{
+		LOG("Error receiving data!");
+	}
+
 }
 
-void LanServerHandler::sendData()
+void LanServerHandler::sendData(sf::Packet packet)
 {
 	char data[100] = "Hello!";
 
@@ -39,4 +48,9 @@ void LanServerHandler::sendData()
 	{
 		LOG("Error sending data!");
 	}
+}
+
+void LanServerHandler::onDataReceived(sf::Packet packet)
+{
+	networkManager->onMessageReceived(packet);
 }

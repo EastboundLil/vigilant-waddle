@@ -2,7 +2,8 @@
 #include "LanClientHandler.h"
 
 
-LanClientHandler::LanClientHandler()
+LanClientHandler::LanClientHandler(INWManager* NWManager) :
+	LanHandler(NWManager)
 {
 }
 
@@ -13,16 +14,20 @@ LanClientHandler::~LanClientHandler()
 
 void LanClientHandler::start()
 {
-	LOG("Connecting to " << ipAddress.toString << "...");
+	LOG("Connecting to " << ipAddress.toString() << "...");
 	connectionStatus = socket.connect(ipAddress, PORT);
 
 	if (connectionStatus != sf::Socket::Done)
 	{
 		LOG("Connection error!");
 	}
+	else
+	{
+		LOG("Connected!");
+	}
 }
 
-void LanClientHandler::sendData()
+void LanClientHandler::sendData(sf::Packet packet)
 {
 	char data[100] = "Hello!";
 
@@ -30,5 +35,10 @@ void LanClientHandler::sendData()
 	{
 		LOG("Error sending data!");
 	}
+}
+
+void LanClientHandler::onDataReceived(sf::Packet packet)
+{
+
 }
 

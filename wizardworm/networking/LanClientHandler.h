@@ -4,10 +4,11 @@ class LanClientHandler :
 	public LanHandler
 {
 public:
-	LanClientHandler();
+	LanClientHandler(INWManager* NWManager = nullptr);
 	~LanClientHandler();
 
 	void start() override;
-	void sendData() override;
+	void sendData(sf::Packet packet) override;
+	void onDataReceived(sf::Packet packet) override;
 };
 
