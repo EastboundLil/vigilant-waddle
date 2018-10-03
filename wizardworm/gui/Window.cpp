@@ -23,13 +23,13 @@ void Window::eventhandler() {
 		{
 			if (event.type == sf::Event::Closed)
 				window->close();
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) /*&& not mouse event*/)
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) /*TODO: && not mouse event*/)
 			{
 				// move left...
 				player->move(-1,0);
 				std::cout << "balra" << std::endl;
 			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)/*&& not mouse event*/)
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)/* TODO: && not mouse event*/)
 			{
 				// move right...
 				
