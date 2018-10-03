@@ -11,6 +11,7 @@ public:
 
 	void start() override;
 	void sendData(sf::Packet packet) override;
+	void receiveData() override;
 	void onDataReceived(sf::Packet packet) override;
 
 private:

@@ -18,6 +18,7 @@ public:
 	void startAsServer() override;
 	void startAsClient() override;
 	void startConnection() override;
+	void startThread();
 
 	void setRemoteAddress(std::string ipAddress) override;
 
@@ -28,7 +29,8 @@ public:
 
 
 private:
-	std::unique_ptr<LanHandler> connectionHandler;
+	std::shared_ptr<LanHandler> connectionHandler;
+	sf::Thread connectionThread;
 	MessageHandler messageHandler;
 };
 
