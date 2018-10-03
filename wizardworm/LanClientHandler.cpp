@@ -13,7 +13,7 @@ LanClientHandler::~LanClientHandler()
 
 void LanClientHandler::start()
 {
-	LOG("Connecting to " << ipAddress.toString << "...");
+	LOG("Connecting to " << ipAddress.toString() << "...");
 	connectionStatus = socket.connect(ipAddress, PORT);
 
 	if (connectionStatus != sf::Socket::Done)
@@ -30,5 +30,11 @@ void LanClientHandler::sendData()
 	{
 		LOG("Error sending data!");
 	}
+}
+
+void LanClientHandler::onDataReceived(char data[100])
+{
+	std::string msg(data);
+	LOG(msg);
 }
 

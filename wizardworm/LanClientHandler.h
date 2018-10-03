@@ -9,5 +9,6 @@ public:
 
 	void start() override;
 	void sendData() override;
+	void onDataReceived(char data[100]) override;
 };
 

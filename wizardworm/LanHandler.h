@@ -13,6 +13,7 @@ public:
 	void setAddress(std::string ipAddress);
 	std::string getAddress();
 	virtual void sendData() = 0;
+	virtual void onDataReceived(char data[100]) = 0;
 
 protected:
 	sf::TcpSocket socket;
