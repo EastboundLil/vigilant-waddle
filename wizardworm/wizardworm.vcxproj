@@ -168,7 +168,6 @@
     <ClInclude Include="networking\LanHandler.h" />
     <ClInclude Include="networking\LanServerHandler.h" />
     <ClInclude Include="Logger.h" />
-<<<<<<< Updated upstream
     <ClInclude Include="networking\Message.h" />
     <ClInclude Include="networking\MessageHandler.h" />
     <ClInclude Include="networking\MessageTypes.h" />
@@ -180,12 +179,6 @@
     <ClInclude Include="engine\ServerEngine.h" />
     <ClInclude Include="gui\Window.h" />
     <ClInclude Include="gui\Wizard.h" />
-=======
-    <ClInclude Include="NetworkManager.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="Window.h" />
-    <ClInclude Include="Wizard.h" />
->>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include=".\stdafx.cpp">
@@ -195,7 +188,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include=".\wizardworm.cpp" />
-<<<<<<< Updated upstream
     <ClCompile Include="gui\Bar.cpp" />
     <ClCompile Include="engine\ClientEngine.cpp" />
     <ClCompile Include="gui\Drawable.cpp" />
@@ -210,17 +202,6 @@
     <ClCompile Include="engine\ServerEngine.cpp" />
     <ClCompile Include="gui\Window.cpp" />
     <ClCompile Include="gui\Wizard.cpp" />
-=======
-    <ClCompile Include="Bar.cpp" />
-    <ClCompile Include="Drawable.cpp" />
-    <ClCompile Include="LanClientHandler.cpp" />
-    <ClCompile Include="LanHandler.cpp" />
-    <ClCompile Include="LanServerHandler.cpp" />
-    <ClCompile Include="NetworkManager.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Window.cpp" />
-    <ClCompile Include="Wizard.cpp" />
->>>>>>> Stashed changes
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
