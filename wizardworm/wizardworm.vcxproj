@@ -170,6 +170,7 @@
     <ClInclude Include="Logger.h" />
     <ClInclude Include="networking\Message.h" />
     <ClInclude Include="networking\MessageHandler.h" />
+    <ClInclude Include="networking\MessageTypes.h" />
     <ClInclude Include="networking\MoveSetMsg.h" />
     <ClInclude Include="networking\NetworkManager.h" />
     <ClInclude Include="gui\Player.h" />
