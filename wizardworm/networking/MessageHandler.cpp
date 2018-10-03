@@ -16,7 +16,7 @@ Message* MessageHandler::parsePacket(sf::Packet packet)
 	if (packet.getDataSize() == 0)
 	{
 		LOG("Error: packet to parse is empty!");
-		return;
+		return nullptr;
 	}
 
 	//extract header

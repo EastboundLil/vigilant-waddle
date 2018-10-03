@@ -2,7 +2,8 @@
 #include "NetworkManager.h"
 
 NetworkManager::NetworkManager() :
-	connectionHandler(nullptr)
+	connectionHandler(nullptr),
+	connectionThread(&NetworkManager::startThread,this)
 {
 
 }
@@ -18,7 +19,7 @@ void NetworkManager::startAsServer()
 {
 	if (connectionHandler == nullptr)
 	{
-		connectionHandler = std::make_unique<LanServerHandler>(this);
+		connectionHandler = std::make_shared<LanServerHandler>(this);
 	}
 	else
 	{
@@ -30,7 +31,7 @@ void NetworkManager::startAsClient()
 {
 	if (connectionHandler == nullptr)
 	{
-		connectionHandler = std::make_unique<LanClientHandler>(this);
+		connectionHandler = std::make_shared<LanClientHandler>(this);
 	}
 	else
 	{
@@ -42,12 +43,17 @@ void NetworkManager::startConnection()
 {
 	if (connectionHandler != nullptr)
 	{
-		connectionHandler->start();
+		connectionThread.launch();
 	}
 	else
 	{
 		LOG("Handler is nullptr!");
 	}
+}
+
+void NetworkManager::startThread()
+{
+	connectionThread.launch();
 }
 
 void NetworkManager::setRemoteAddress(std::string ipAddress)
