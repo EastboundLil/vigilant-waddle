@@ -1,4 +1,5 @@
 ipch
+**/*.log
 **/*.tlog
 **/*.obj
 **/*.pch

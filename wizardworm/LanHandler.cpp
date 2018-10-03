@@ -2,7 +2,8 @@
 #include "LanHandler.h"
 
 
-LanHandler::LanHandler()
+LanHandler::LanHandler(INWManager* NWManager) :
+	networkManager(NWManager)
 {
 }
 

@@ -1,9 +1,8 @@
 #include "stdafx.h"
 #include "NetworkManager.h"
 
-
 NetworkManager::NetworkManager() :
-	handler(nullptr)
+	connectionHandler(nullptr)
 {
 
 }
@@ -17,9 +16,9 @@ NetworkManager::~NetworkManager()
 
 void NetworkManager::startAsServer()
 {
-	if (handler == nullptr)
+	if (connectionHandler == nullptr)
 	{
-		handler = std::make_unique<LanServerHandler>();
+		connectionHandler = std::make_unique<LanServerHandler>(this);
 	}
 	else
 	{
@@ -29,9 +28,9 @@ void NetworkManager::startAsServer()
 
 void NetworkManager::startAsClient()
 {
-	if (handler == nullptr)
+	if (connectionHandler == nullptr)
 	{
-		handler = std::make_unique<LanClientHandler>();
+		connectionHandler = std::make_unique<LanClientHandler>(this);
 	}
 	else
 	{
@@ -41,9 +40,9 @@ void NetworkManager::startAsClient()
 
 void NetworkManager::startConnection()
 {
-	if (handler != nullptr)
+	if (connectionHandler != nullptr)
 	{
-		handler->start();
+		connectionHandler->start();
 	}
 	else
 	{
@@ -53,12 +52,31 @@ void NetworkManager::startConnection()
 
 void NetworkManager::setRemoteAddress(std::string ipAddress)
 {
-	if (handler != nullptr)
+	if (connectionHandler != nullptr)
 	{
-		handler->setAddress(ipAddress);
+		connectionHandler->setAddress(ipAddress);
 	}
 	else
 	{
 		LOG("Handler is nullptr!");
 	}
+}
+
+void NetworkManager::onMessageReceived(sf::Packet packet)
+{
+	Message* message = messageHandler.parsePacket(packet);
+	message->execute();
+	delete message;
+}
+
+void NetworkManager::sendMoveSetMsg(std::vector<std::string> moveSet)
+{
+	sf::Packet message = messageHandler.createMoveSetMsg(moveSet);
+	connectionHandler->sendData(message);
+}
+
+void NetworkManager::sendTimerEndMsg()
+{
+	sf::Packet message = messageHandler.createTimerEndMsg();
+	connectionHandler->sendData(message);
 }

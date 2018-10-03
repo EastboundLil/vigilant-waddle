@@ -6,12 +6,12 @@ class LanServerHandler :
 	public LanHandler
 {
 public:
-	LanServerHandler();
+	LanServerHandler(INWManager* NWManager = nullptr);
 	~LanServerHandler();
 
 	void start() override;
-	void sendData() override;
-	void onDataReceived(char data[100]) override;
+	void sendData(sf::Packet packet) override;
+	void onDataReceived(sf::Packet packet) override;
 
 private:
 	sf::TcpListener listener;

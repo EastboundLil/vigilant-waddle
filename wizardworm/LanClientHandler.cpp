@@ -2,7 +2,8 @@
 #include "LanClientHandler.h"
 
 
-LanClientHandler::LanClientHandler()
+LanClientHandler::LanClientHandler(INWManager* NWManager) :
+	LanHandler(NWManager)
 {
 }
 
@@ -20,9 +21,13 @@ void LanClientHandler::start()
 	{
 		LOG("Connection error!");
 	}
+	else
+	{
+		LOG("Connected!");
+	}
 }
 
-void LanClientHandler::sendData()
+void LanClientHandler::sendData(sf::Packet packet)
 {
 	char data[100] = "Hello!";
 
@@ -32,9 +37,8 @@ void LanClientHandler::sendData()
 	}
 }
 
-void LanClientHandler::onDataReceived(char data[100])
+void LanClientHandler::onDataReceived(sf::Packet packet)
 {
-	std::string msg(data);
-	LOG(msg);
+
 }
 

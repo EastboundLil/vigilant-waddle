@@ -25,6 +25,9 @@
     <Filter Include="Header Files\networking">
       <UniqueIdentifier>{19d22db0-3433-4b4a-898f-14c6d392004d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\networking\VWP messages">
+      <UniqueIdentifier>{29428f3c-ecf6-4dd0-a6dc-bb120b73a0ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".\ReadMe.txt" />
@@ -69,6 +72,21 @@
     <ClInclude Include="Bar.h">
       <Filter>Header Files\drawable</Filter>
     </ClInclude>
+    <ClInclude Include="Message.h">
+      <Filter>Header Files\networking\VWP messages</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveSetMsg.h">
+      <Filter>Header Files\networking\VWP messages</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerEndMsg.h">
+      <Filter>Header Files\networking\VWP messages</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageHandler.h">
+      <Filter>Header Files\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="INWManager.h">
+      <Filter>Header Files\networking</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include=".\stdafx.cpp">
@@ -106,6 +124,9 @@
     </ClCompile>
     <ClCompile Include="Bar.cpp">
       <Filter>Source Files\drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageHandler.cpp">
+      <Filter>Source Files\networking</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

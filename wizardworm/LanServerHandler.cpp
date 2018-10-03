@@ -2,7 +2,8 @@
 #include "LanServerHandler.h"
 
 
-LanServerHandler::LanServerHandler()
+LanServerHandler::LanServerHandler(INWManager* NWManager) :
+	LanHandler(NWManager)
 {
 }
 
@@ -37,11 +38,9 @@ void LanServerHandler::start()
 		LOG("Error receiving data!");
 	}
 
-	onDataReceived(data);
-
 }
 
-void LanServerHandler::sendData()
+void LanServerHandler::sendData(sf::Packet packet)
 {
 	char data[100] = "Hello!";
 
@@ -51,8 +50,7 @@ void LanServerHandler::sendData()
 	}
 }
 
-void LanServerHandler::onDataReceived(char data[100])
+void LanServerHandler::onDataReceived(sf::Packet packet)
 {
-	std::string msg(data);
-	LOG(msg);
+	networkManager->onMessageReceived(packet);
 }
