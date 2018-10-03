@@ -8,7 +8,11 @@ class Bar :
 protected:
 		int full_val;
 		int curr_val;
+		sf::Color missing_color;
 		sf::RenderWindow *window;
+
+		sf::RectangleShape missingrectangle;
+		sf::RectangleShape currentrectangle;
 
 
 
