@@ -160,8 +160,10 @@
     <ClInclude Include=".\stdafx.h" />
     <ClInclude Include=".\targetver.h" />
     <ClInclude Include="Bar.h" />
+    <ClInclude Include="ClientEngine.h" />
     <ClInclude Include="Drawable.h" />
     <ClInclude Include="INWManager.h" />
+    <ClInclude Include="IEngine.h" />
     <ClInclude Include="LanClientHandler.h" />
     <ClInclude Include="LanHandler.h" />
     <ClInclude Include="LanServerHandler.h" />
@@ -173,6 +175,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Properties.h" />
     <ClInclude Include="TimerEndMsg.h" />
+    <ClInclude Include="ServerEngine.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="Wizard.h" />
   </ItemGroup>
@@ -185,7 +188,9 @@
     </ClCompile>
     <ClCompile Include=".\wizardworm.cpp" />
     <ClCompile Include="Bar.cpp" />
+    <ClCompile Include="ClientEngine.cpp" />
     <ClCompile Include="Drawable.cpp" />
+    <ClCompile Include="IEngine.cpp" />
     <ClCompile Include="LanClientHandler.cpp" />
     <ClCompile Include="LanHandler.cpp" />
     <ClCompile Include="LanServerHandler.cpp" />
@@ -193,6 +198,7 @@
     <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Properties.cpp" />
+    <ClCompile Include="ServerEngine.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="Wizard.cpp" />
   </ItemGroup>

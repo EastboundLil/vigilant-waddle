@@ -27,6 +27,11 @@
     </Filter>
     <Filter Include="Header Files\networking\VWP messages">
       <UniqueIdentifier>{29428f3c-ecf6-4dd0-a6dc-bb120b73a0ef}</UniqueIdentifier>
+    <Filter Include="Header Files\engine">
+      <UniqueIdentifier>{40844c5f-c54d-4c7b-ba5e-adcda25723bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine">
+      <UniqueIdentifier>{8f729bbb-6a68-465f-823f-cadac0229540}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +91,14 @@
     </ClInclude>
     <ClInclude Include="INWManager.h">
       <Filter>Header Files\networking</Filter>
+    <ClInclude Include="ClientEngine.h">
+      <Filter>Header Files\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerEngine.h">
+      <Filter>Header Files\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="IEngine.h">
+      <Filter>Header Files\engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +140,14 @@
     </ClCompile>
     <ClCompile Include="MessageHandler.cpp">
       <Filter>Source Files\networking</Filter>
+    <ClCompile Include="ClientEngine.cpp">
+      <Filter>Source Files\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="IEngine.cpp">
+      <Filter>Source Files\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerEngine.cpp">
+      <Filter>Source Files\engine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
