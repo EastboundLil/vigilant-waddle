@@ -25,6 +25,12 @@
     <Filter Include="Header Files\networking">
       <UniqueIdentifier>{19d22db0-3433-4b4a-898f-14c6d392004d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\engine">
+      <UniqueIdentifier>{40844c5f-c54d-4c7b-ba5e-adcda25723bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine">
+      <UniqueIdentifier>{8f729bbb-6a68-465f-823f-cadac0229540}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".\ReadMe.txt" />
@@ -69,6 +75,15 @@
     <ClInclude Include="Bar.h">
       <Filter>Header Files\drawable</Filter>
     </ClInclude>
+    <ClInclude Include="ClientEngine.h">
+      <Filter>Header Files\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerEngine.h">
+      <Filter>Header Files\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="IEngine.h">
+      <Filter>Header Files\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include=".\stdafx.cpp">
@@ -106,6 +121,15 @@
     </ClCompile>
     <ClCompile Include="Bar.cpp">
       <Filter>Source Files\drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientEngine.cpp">
+      <Filter>Source Files\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="IEngine.cpp">
+      <Filter>Source Files\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerEngine.cpp">
+      <Filter>Source Files\engine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
