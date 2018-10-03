@@ -1,153 +1,143 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Source Files\drawable">
-      <UniqueIdentifier>{f4626c07-d08d-4213-a036-5cbde179a198}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\networking">
-      <UniqueIdentifier>{f2e1a5db-2ae1-4dbf-b8c4-8bae69393c6e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\drawable">
-      <UniqueIdentifier>{1a17b513-848c-4893-93fe-e5c73702c175}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\networking">
-      <UniqueIdentifier>{19d22db0-3433-4b4a-898f-14c6d392004d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\networking\VWP messages">
-      <UniqueIdentifier>{29428f3c-ecf6-4dd0-a6dc-bb120b73a0ef}</UniqueIdentifier>
-    <Filter Include="Header Files\engine">
-      <UniqueIdentifier>{40844c5f-c54d-4c7b-ba5e-adcda25723bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\engine">
-      <UniqueIdentifier>{8f729bbb-6a68-465f-823f-cadac0229540}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include=".\stdafx.cpp" />
+    <ClCompile Include=".\wizardworm.cpp" />
+    <ClCompile Include="gui\Bar.cpp">
+      <Filter>gui\sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\Drawable.cpp">
+      <Filter>gui\sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\Player.cpp">
+      <Filter>gui\sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\Properties.cpp">
+      <Filter>gui\sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\Window.cpp">
+      <Filter>gui\sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\Wizard.cpp">
+      <Filter>gui\sources</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\ClientEngine.cpp">
+      <Filter>engine\sources</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\IEngine.cpp">
+      <Filter>engine\sources</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\ServerEngine.cpp">
+      <Filter>engine\sources</Filter>
+    </ClCompile>
+    <ClCompile Include="networking\NetworkManager.cpp">
+      <Filter>networking\sources</Filter>
+    </ClCompile>
+    <ClCompile Include="networking\MessageHandler.cpp">
+      <Filter>networking\sources</Filter>
+    </ClCompile>
+    <ClCompile Include="networking\LanServerHandler.cpp">
+      <Filter>networking\sources</Filter>
+    </ClCompile>
+    <ClCompile Include="networking\LanHandler.cpp">
+      <Filter>networking\sources</Filter>
+    </ClCompile>
+    <ClCompile Include="networking\LanClientHandler.cpp">
+      <Filter>networking\sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include=".\stdafx.h" />
+    <ClInclude Include=".\targetver.h" />
+    <ClInclude Include="Logger.h" />
+    <ClInclude Include="gui\Wizard.h">
+      <Filter>gui\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\Bar.h">
+      <Filter>gui\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\Drawable.h">
+      <Filter>gui\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\Player.h">
+      <Filter>gui\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\Window.h">
+      <Filter>gui\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\ClientEngine.h">
+      <Filter>engine\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\IEngine.h">
+      <Filter>engine\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\ServerEngine.h">
+      <Filter>engine\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="networking\INWManager.h">
+      <Filter>networking\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="networking\LanClientHandler.h">
+      <Filter>networking\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="networking\LanHandler.h">
+      <Filter>networking\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="networking\LanServerHandler.h">
+      <Filter>networking\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="networking\MessageHandler.h">
+      <Filter>networking\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="networking\NetworkManager.h">
+      <Filter>networking\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="networking\TimerEndMsg.h">
+      <Filter>networking\VWP messages</Filter>
+    </ClInclude>
+    <ClInclude Include="networking\MoveSetMsg.h">
+      <Filter>networking\VWP messages</Filter>
+    </ClInclude>
+    <ClInclude Include="networking\Message.h">
+      <Filter>networking\VWP messages</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\Properties.h">
+      <Filter>gui\headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".\ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include=".\stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include=".\targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Logger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Wizard.h">
-      <Filter>Header Files\drawable</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files\drawable</Filter>
-    </ClInclude>
-    <ClInclude Include="Properties.h">
-      <Filter>Header Files\drawable</Filter>
-    </ClInclude>
-    <ClInclude Include="NetworkManager.h">
-      <Filter>Header Files\networking</Filter>
-    </ClInclude>
-    <ClInclude Include="LanServerHandler.h">
-      <Filter>Header Files\networking</Filter>
-    </ClInclude>
-    <ClInclude Include="LanHandler.h">
-      <Filter>Header Files\networking</Filter>
-    </ClInclude>
-    <ClInclude Include="LanClientHandler.h">
-      <Filter>Header Files\networking</Filter>
-    </ClInclude>
-    <ClInclude Include="Window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Drawable.h">
-      <Filter>Header Files\drawable</Filter>
-    </ClInclude>
-    <ClInclude Include="Bar.h">
-      <Filter>Header Files\drawable</Filter>
-    </ClInclude>
-    <ClInclude Include="Message.h">
-      <Filter>Header Files\networking\VWP messages</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveSetMsg.h">
-      <Filter>Header Files\networking\VWP messages</Filter>
-    </ClInclude>
-    <ClInclude Include="TimerEndMsg.h">
-      <Filter>Header Files\networking\VWP messages</Filter>
-    </ClInclude>
-    <ClInclude Include="MessageHandler.h">
-      <Filter>Header Files\networking</Filter>
-    </ClInclude>
-    <ClInclude Include="INWManager.h">
-      <Filter>Header Files\networking</Filter>
-    <ClInclude Include="ClientEngine.h">
-      <Filter>Header Files\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="ServerEngine.h">
-      <Filter>Header Files\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="IEngine.h">
-      <Filter>Header Files\engine</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include=".\stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include=".\wizardworm.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Wizard.cpp">
-      <Filter>Source Files\drawable</Filter>
-    </ClCompile>
-    <ClCompile Include="Properties.cpp">
-      <Filter>Source Files\drawable</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files\drawable</Filter>
-    </ClCompile>
-    <ClCompile Include="LanClientHandler.cpp">
-      <Filter>Source Files\networking</Filter>
-    </ClCompile>
-    <ClCompile Include="LanHandler.cpp">
-      <Filter>Source Files\networking</Filter>
-    </ClCompile>
-    <ClCompile Include="LanServerHandler.cpp">
-      <Filter>Source Files\networking</Filter>
-    </ClCompile>
-    <ClCompile Include="NetworkManager.cpp">
-      <Filter>Source Files\networking</Filter>
-    </ClCompile>
-    <ClCompile Include="Drawable.cpp">
-      <Filter>Source Files\drawable</Filter>
-    </ClCompile>
-    <ClCompile Include="Bar.cpp">
-      <Filter>Source Files\drawable</Filter>
-    </ClCompile>
-    <ClCompile Include="MessageHandler.cpp">
-      <Filter>Source Files\networking</Filter>
-    <ClCompile Include="ClientEngine.cpp">
-      <Filter>Source Files\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="IEngine.cpp">
-      <Filter>Source Files\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="ServerEngine.cpp">
-      <Filter>Source Files\engine</Filter>
-    </ClCompile>
+    <Filter Include="gui">
+      <UniqueIdentifier>{de5f80af-7825-4273-8906-077e28eafbe9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gui\sources">
+      <UniqueIdentifier>{22012675-9e25-4a89-8060-5ff4fe6bec02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gui\headers">
+      <UniqueIdentifier>{9dd4459e-6d24-401f-b583-67223302078e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine">
+      <UniqueIdentifier>{805f5373-9166-41b8-9f2f-dc8e252b00c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\headers">
+      <UniqueIdentifier>{c33374a0-8112-4508-b022-989e4e9c9320}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\sources">
+      <UniqueIdentifier>{3829a879-fac1-495c-b1ea-3c10dfc18916}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="networking">
+      <UniqueIdentifier>{06c5a82b-5a78-47b3-a045-fafb7cd27cc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="networking\headers">
+      <UniqueIdentifier>{4a2641ab-5154-4a7a-9563-ede636dfd5bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="networking\sources">
+      <UniqueIdentifier>{fcba6775-3ea5-448b-892d-8edae983b733}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="networking\VWP messages">
+      <UniqueIdentifier>{72b89c57-a324-4b61-a737-4d9c96d58324}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
