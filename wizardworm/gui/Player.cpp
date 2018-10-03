@@ -23,3 +23,9 @@ void Player::draw() {
 
 	wizard->draw();
 }
+
+void Player::shoot(std::string spell_type) {
+
+	wizard->wiz_shoot(spell_type);
+
+}

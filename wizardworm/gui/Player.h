@@ -19,6 +19,7 @@ public:
 	
 	void move(int x, int y);
 	void draw();
+	void shoot(std::string spell_type);
 
 };
 

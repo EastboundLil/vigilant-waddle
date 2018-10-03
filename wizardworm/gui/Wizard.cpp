@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Wizard.h"
-
+#include<iostream>
 
 
 Wizard::Wizard(int x_ , int y_ , int id , sf::RenderWindow *w)
@@ -85,5 +85,20 @@ void Wizard::incr_mana(int m)
 {
 	//TODO: catchelni kell az exceptiont
 	manabar->incr_val(m);
+}
+
+void Wizard::wiz_shoot(std::string spell_type) {
+
+	
+	
+	
+	if (spell_type == "firebolt") {
+		std::cout << "lottem egy fireboltot \n";
+		manabar->incr_val(-7);
+	}
+	else if (spell_type == "laserbeam") {
+		std::cout << "lottem egy laserbeamet \n";
+	}
+
 }
 

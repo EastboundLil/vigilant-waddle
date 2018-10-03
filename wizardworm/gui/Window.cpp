@@ -23,19 +23,26 @@ void Window::eventhandler() {
 		{
 			if (event.type == sf::Event::Closed)
 				window->close();
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) /*TODO: && not mouse event*/)
-			{
-				// move left...
-				player->move(-1,0);
-				std::cout << "balra" << std::endl;
-			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)/* TODO: && not mouse event*/)
-			{
-				// move right...
+			if (event.type == sf::Event::KeyPressed) {
 				
-				player->move(1,0);
-				std::cout << "jobbra" << std::endl;
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+				{
+					// move left...
+					player->move(-1, 0);
+					std::cout << "balra" << std::endl;
+				}
+				else if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+				{
+					// move right...
+
+					player->move(1, 0);
+					std::cout << "jobbra" << std::endl;
+				}
+				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+					player->shoot("firebolt");
+				}
 			}
+			
 		}
 		window->clear(sf::Color::Black);
 		//window.draw(rectangle);

@@ -18,6 +18,7 @@ public:
 	void set_mana(int m);
 	void incr_life(int l);
 	void incr_mana(int m);
+	void wiz_shoot(std::string spell_type);
 
 };
 
