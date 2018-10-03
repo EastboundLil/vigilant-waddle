@@ -16,7 +16,10 @@ Wizard::Wizard(int x_ , int y_ , int id , sf::RenderWindow *w)
 }
 
 
-Wizard::~Wizard(){}
+Wizard::~Wizard(){
+	delete lifebar;
+	delete manabar;
+}
 
 
 void Wizard::draw() {
@@ -61,6 +64,7 @@ void Wizard::move(int x,int y) {
 void Wizard::set_life(int l)
 {
 	//TODO: catchelni kell az exceptiont
+	
 	lifebar->set_val(l);
 
 }

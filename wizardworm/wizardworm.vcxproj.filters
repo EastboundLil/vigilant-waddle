@@ -74,11 +74,16 @@
     <ClInclude Include="engine\ServerEngine.h">
       <Filter>engine\headers</Filter>
     </ClInclude>
+<<<<<<< Updated upstream
     <ClInclude Include="networking\INWManager.h">
       <Filter>networking\headers</Filter>
     </ClInclude>
     <ClInclude Include="networking\LanClientHandler.h">
       <Filter>networking\headers</Filter>
+=======
+    <ClInclude Include="NetworkManager.h">
+      <Filter>Header Files\networking</Filter>
+>>>>>>> Stashed changes
     </ClInclude>
     <ClInclude Include="networking\LanHandler.h">
       <Filter>networking\headers</Filter>
@@ -106,6 +111,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< Updated upstream
     <Text Include=".\ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -139,5 +145,40 @@
     <Filter Include="networking\VWP messages">
       <UniqueIdentifier>{72b89c57-a324-4b61-a737-4d9c96d58324}</UniqueIdentifier>
     </Filter>
+=======
+    <ClCompile Include=".\stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include=".\wizardworm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Wizard.cpp">
+      <Filter>Source Files\drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="LanClientHandler.cpp">
+      <Filter>Source Files\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="LanHandler.cpp">
+      <Filter>Source Files\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="LanServerHandler.cpp">
+      <Filter>Source Files\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkManager.cpp">
+      <Filter>Source Files\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="Drawable.cpp">
+      <Filter>Source Files\drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="Bar.cpp">
+      <Filter>Source Files\drawable</Filter>
+    </ClCompile>
+>>>>>>> Stashed changes
   </ItemGroup>
 </Project>

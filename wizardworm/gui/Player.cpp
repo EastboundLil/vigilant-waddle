@@ -14,7 +14,7 @@ Player::~Player()
 {}
 
 void Player::move(int x,int y){ 
-
+	
 	wizard->move(x,y);
 
 }
