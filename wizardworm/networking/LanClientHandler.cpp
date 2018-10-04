@@ -27,6 +27,7 @@ void LanClientHandler::start()
 	}
 }
 
+
 void LanClientHandler::sendData(sf::Packet packet)
 {
 	sf::Socket::Status messageStatus = socket.send(packet);

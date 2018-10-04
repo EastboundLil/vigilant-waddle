@@ -53,7 +53,7 @@ void NetworkManager::startConnection()
 
 void NetworkManager::startThread()
 {
-	connectionThread.launch();
+	connectionHandler->start();
 }
 
 void NetworkManager::setRemoteAddress(std::string ipAddress)
@@ -71,8 +71,13 @@ void NetworkManager::setRemoteAddress(std::string ipAddress)
 void NetworkManager::onMessageReceived(sf::Packet packet)
 {
 	Message* message = messageHandler.parsePacket(packet);
-	message->execute();
-	delete message;
+	if (message != nullptr)
+	{
+		message->execute();
+		delete message;
+	}
+	else LOG("message is nullptr!");
+
 }
 
 void NetworkManager::sendMoveSetMsg(std::vector<std::string> moveSet)

@@ -29,6 +29,10 @@ void LanServerHandler::start()
 	{
 		LOG("Error accepting connection!");
 	}
+	else
+	{
+		LOG("Connection accepted!");
+	}
 
 	receiveData();
 

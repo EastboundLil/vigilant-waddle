@@ -20,7 +20,7 @@ Message* MessageHandler::parsePacket(sf::Packet packet)
 	}
 
 	//extract header
-	short type;
+	int type;
 	packet >> type;
 	
 	switch (type) {

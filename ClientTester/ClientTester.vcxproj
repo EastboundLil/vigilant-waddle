@@ -91,7 +91,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\wizardworm\Libs\SFML-2.5.0\include;$(ProjectDir)..\wizardworm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\wizardworm\Libs\SFML-2.5.0\include;$(ProjectDir)..\wizardworm\networking;$(ProjectDir)..\wizardworm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -154,14 +154,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\wizardworm\LanClientHandler.h" />
-    <ClInclude Include="..\wizardworm\LanHandler.h" />
     <ClInclude Include="..\wizardworm\Logger.h" />
+    <ClInclude Include="..\wizardworm\networking\INWManager.h" />
+    <ClInclude Include="..\wizardworm\networking\LanClientHandler.h" />
+    <ClInclude Include="..\wizardworm\networking\LanHandler.h" />
+    <ClInclude Include="..\wizardworm\networking\LanServerHandler.h" />
+    <ClInclude Include="..\wizardworm\networking\Message.h" />
+    <ClInclude Include="..\wizardworm\networking\MessageHandler.h" />
+    <ClInclude Include="..\wizardworm\networking\MessageTypes.h" />
+    <ClInclude Include="..\wizardworm\networking\MoveSetMsg.h" />
+    <ClInclude Include="..\wizardworm\networking\NetworkManager.h" />
+    <ClInclude Include="..\wizardworm\networking\TimerEndMsg.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\wizardworm\LanClientHandler.cpp" />
-    <ClCompile Include="..\wizardworm\LanHandler.cpp" />
+    <ClCompile Include="..\wizardworm\networking\LanClientHandler.cpp" />
+    <ClCompile Include="..\wizardworm\networking\LanHandler.cpp" />
+    <ClCompile Include="..\wizardworm\networking\LanServerHandler.cpp" />
+    <ClCompile Include="..\wizardworm\networking\MessageHandler.cpp" />
+    <ClCompile Include="..\wizardworm\networking\NetworkManager.cpp" />
     <ClCompile Include="ClientTester.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
