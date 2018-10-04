@@ -107,6 +107,9 @@
     <ClInclude Include="networking\MessageTypes.h">
       <Filter>networking\headers</Filter>
     </ClInclude>
+    <ClInclude Include="gui\IWindow.h">
+      <Filter>gui\headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".\ReadMe.txt" />

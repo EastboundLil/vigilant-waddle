@@ -14,6 +14,10 @@ NetworkManager::~NetworkManager()
 
 }
 
+void NetworkManager::setGUIInterface(IWindow* IGuiManager)
+{
+	guiManager = IGuiManager;
+}
 
 void NetworkManager::startAsServer()
 {
@@ -71,8 +75,10 @@ void NetworkManager::setRemoteAddress(std::string ipAddress)
 void NetworkManager::onMessageReceived(sf::Packet packet)
 {
 	Message* message = messageHandler.parsePacket(packet);
+
 	if (message != nullptr)
 	{
+		message->setGuiManager(guiManager);
 		message->execute();
 		delete message;
 	}

@@ -3,9 +3,15 @@
 #include <string>
 #include <SFML/Network.hpp>
 
+#include "gui/IWindow.h"
+
+class IWindow;
+
 class INWManager
 {
 public:
+	virtual void setGUIInterface(IWindow* guiManager) = 0;
+
 	virtual void startAsServer() = 0;
 	virtual void startAsClient() = 0;
 	virtual void startConnection() = 0;

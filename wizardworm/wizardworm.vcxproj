@@ -162,6 +162,7 @@
     <ClInclude Include="gui\Bar.h" />
     <ClInclude Include="engine\ClientEngine.h" />
     <ClInclude Include="gui\Drawable.h" />
+    <ClInclude Include="gui\IWindow.h" />
     <ClInclude Include="networking\INWManager.h" />
     <ClInclude Include="engine\IEngine.h" />
     <ClInclude Include="networking\LanClientHandler.h" />
