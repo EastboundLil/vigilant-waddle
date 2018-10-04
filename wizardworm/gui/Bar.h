@@ -22,6 +22,6 @@ public:
 
 	void set_val(float v);
 	void incr_val(float v);
-	void draw();
+	void draw() override;
 	
 };

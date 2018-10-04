@@ -48,7 +48,9 @@
     <ClCompile Include="Spell.cpp">
       <Filter>gui\sources</Filter>
     </ClCompile>
-    <ClCompile Include="Firebolt.cpp" />
+    <ClCompile Include="Firebolt.cpp">
+      <Filter>gui\sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include=".\stdafx.h" />
@@ -117,7 +119,10 @@
     <ClInclude Include="Spell.h">
       <Filter>gui\headers</Filter>
     </ClInclude>
-    <ClInclude Include="Firebolt.h" />
+    <ClInclude Include="engine\Objects.hpp" />
+    <ClInclude Include="Firebolt.h">
+      <Filter>gui\headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".\ReadMe.txt" />
