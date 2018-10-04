@@ -13,7 +13,7 @@ Player::Player(sf::RenderWindow *w , std::string name)
 Player::~Player()
 {}
 
-void Player::move(int x,int y){ 
+void Player::move(float x, float y){
 	
 	wizard->move(x,y);
 

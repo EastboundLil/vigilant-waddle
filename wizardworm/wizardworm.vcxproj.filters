@@ -45,6 +45,10 @@
     <ClCompile Include="networking\LanClientHandler.cpp">
       <Filter>networking\sources</Filter>
     </ClCompile>
+    <ClCompile Include="Spell.cpp">
+      <Filter>gui\sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Firebolt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include=".\stdafx.h" />
@@ -110,6 +114,10 @@
     <ClInclude Include="gui\IWindow.h">
       <Filter>gui\headers</Filter>
     </ClInclude>
+    <ClInclude Include="Spell.h">
+      <Filter>gui\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Firebolt.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include=".\ReadMe.txt" />

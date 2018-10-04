@@ -6,8 +6,8 @@ class Bar :
 	public Drawable
 {
 protected:
-		int full_val;
-		int curr_val;
+	float full_val;
+	float curr_val;
 		sf::Color missing_color;
 		sf::RenderWindow *window;
 
@@ -17,11 +17,11 @@ protected:
 
 
 public:
-	Bar(int x_ , int y_ , sf::Color c_ , int init_val, sf::RenderWindow *w);
+	Bar(float x_ , float y_ , sf::Color c_ , float init_val, sf::RenderWindow *w);
 	~Bar();
 
-	void set_val(int v);
-	void incr_val(int v);
+	void set_val(float v);
+	void incr_val(float v);
 	void draw();
 	
 };

@@ -2,7 +2,7 @@
 #include "Bar.h"
 
 
-Bar::Bar(int x_, int y_ , sf::Color c_ , int init_val , sf::RenderWindow *w)
+Bar::Bar(float x_, float y_ , sf::Color c_ , float init_val , sf::RenderWindow *w)
 	:Drawable(x_, y_, c_)
 {
 	full_val  = init_val;
@@ -24,7 +24,7 @@ Bar::~Bar()
 {
 }
 
-void Bar::set_val(int v)
+void Bar::set_val(float v)
 {
 	if (v > full_val) {
 		curr_val = full_val;
@@ -40,7 +40,7 @@ void Bar::set_val(int v)
 	currentrectangle.setSize(sf::Vector2f(curr_val, 5));
 }
 
-void Bar::incr_val(int v)
+void Bar::incr_val(float v)
 {
 	if (curr_val + v > full_val) {
 		curr_val = full_val;
