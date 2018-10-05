@@ -14,27 +14,30 @@ LanServerHandler::~LanServerHandler()
 
 void LanServerHandler::start()
 {
-	LOG("Starting listening...");
-
-	connectionStatus = listener.listen(PORT);
-
-	if (connectionStatus != sf::Socket::Done)
+	while (true)
 	{
-		LOG("Error starting listener socket!");
-	}
+		LOG("Starting listening...");
 
-	connectionStatus = listener.accept(socket);
+		connectionStatus = listener.listen(PORT);
 
-	if (connectionStatus != sf::Socket::Done)
-	{
-		LOG("Error accepting connection!");
-	}
-	else
-	{
-		LOG("Connection accepted!");
-	}
+		if (connectionStatus != sf::Socket::Done)
+		{
+			LOG("Error starting listener socket!");
+		}
 
-	receiveData();
+		connectionStatus = listener.accept(socket);
+
+		if (connectionStatus != sf::Socket::Done)
+		{
+			LOG("Error accepting connection!");
+		}
+		else
+		{
+			LOG("Connection accepted!");
+		}
+
+		receiveData();
+	}
 
 }
 
@@ -57,13 +60,19 @@ void LanServerHandler::receiveData()
 	while (true)
 	{
 		sf::Packet packet;
-		if (socket.receive(packet) != sf::Socket::Done)
+		sf::Socket::Status receiveStatus = socket.receive(packet);
+		if (receiveStatus == sf::Socket::Done)
 		{
-			LOG("Error receiving data!");
+			onDataReceived(packet);
+		}
+		else if (receiveStatus == sf::Socket::Disconnected)
+		{
+			LOG("Socket has been disconnected!");
+			return;
 		}
 		else
 		{
-			onDataReceived(packet);
+			LOG("Error receiving data!");
 		}
 	}
 }
