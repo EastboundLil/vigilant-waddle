@@ -28,6 +28,7 @@ class Entity
 {
 public:
 	Entity() { Id = IdGenerator++; }
+	Entity(int id) { Id = id; IdGenerator++; }
 	virtual ~Entity() {}
 
 	Drawable* GetSprite() { return entity; }
@@ -43,6 +44,8 @@ protected:
 
 	static unsigned int IdGenerator;
 	int Id;
+
+	bool Selected;
 };
 
 /**
