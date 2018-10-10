@@ -2,7 +2,8 @@
 #include "NetworkManager.h"
 
 NetworkManager::NetworkManager() :
-	connectionHandler(nullptr)
+	connectionHandler(nullptr),
+	connectionThread(&NetworkManager::startThread,this)
 {
 
 }
@@ -13,12 +14,16 @@ NetworkManager::~NetworkManager()
 
 }
 
+void NetworkManager::setGUIInterface(IWindow* IGuiManager)
+{
+	guiManager = IGuiManager;
+}
 
 void NetworkManager::startAsServer()
 {
 	if (connectionHandler == nullptr)
 	{
-		connectionHandler = std::make_unique<LanServerHandler>(this);
+		connectionHandler = std::make_shared<LanServerHandler>(this);
 	}
 	else
 	{
@@ -30,7 +35,7 @@ void NetworkManager::startAsClient()
 {
 	if (connectionHandler == nullptr)
 	{
-		connectionHandler = std::make_unique<LanClientHandler>(this);
+		connectionHandler = std::make_shared<LanClientHandler>(this);
 	}
 	else
 	{
@@ -42,12 +47,17 @@ void NetworkManager::startConnection()
 {
 	if (connectionHandler != nullptr)
 	{
-		connectionHandler->start();
+		connectionThread.launch();
 	}
 	else
 	{
 		LOG("Handler is nullptr!");
 	}
+}
+
+void NetworkManager::startThread()
+{
+	connectionHandler->start();
 }
 
 void NetworkManager::setRemoteAddress(std::string ipAddress)
@@ -65,8 +75,15 @@ void NetworkManager::setRemoteAddress(std::string ipAddress)
 void NetworkManager::onMessageReceived(sf::Packet packet)
 {
 	Message* message = messageHandler.parsePacket(packet);
-	message->execute();
-	delete message;
+
+	if (message != nullptr)
+	{
+		message->setGuiManager(guiManager);
+		message->execute();
+		delete message;
+	}
+	else LOG("message is nullptr!");
+
 }
 
 void NetworkManager::sendMoveSetMsg(std::vector<std::string> moveSet)

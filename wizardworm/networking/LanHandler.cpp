@@ -3,7 +3,8 @@
 
 
 LanHandler::LanHandler(INWManager* NWManager) :
-	networkManager(NWManager)
+	networkManager(NWManager),
+	ipAddress("127.0.0.1")
 {
 }
 

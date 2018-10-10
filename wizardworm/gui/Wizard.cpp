@@ -2,8 +2,11 @@
 #include "Wizard.h"
 
 
+#include<iostream>
+#include<vector>
 
-Wizard::Wizard(int x_ , int y_ , int id , sf::RenderWindow *w)
+
+Wizard::Wizard(float x_ , float y_ , float id , sf::RenderWindow *w)
 	:Drawable(x_, y_)
 {
 	//set_value(1); //�l e m�g a var�zsl� 
@@ -13,10 +16,16 @@ Wizard::Wizard(int x_ , int y_ , int id , sf::RenderWindow *w)
 	manabar = new Bar(x_, y_-20 , sf::Color::Blue , 50 , window); //A var�zsl� man�ja
 	
 
+	
+
 }
 
 
-Wizard::~Wizard(){}
+Wizard::~Wizard(){
+	delete lifebar;
+	delete manabar;
+	
+}
 
 
 void Wizard::draw() {
@@ -31,7 +40,7 @@ void Wizard::draw() {
 	sprite.setTexture(texture);
 	sprite.setPosition(x, y);
 	//Worm nagys�ga
-	sprite.setScale(0.30, 0.30);
+	sprite.setScale(0.30f, 0.30f);
 
 	//ha kép helyett worm kéne:
 	/*sf::RectangleShape rectangle;
@@ -49,7 +58,7 @@ void Wizard::draw() {
 	manabar->draw();
 }
 
-void Wizard::move(int x,int y) {
+void Wizard::move(float x, float y) {
 	//Az �let �s a mana elheyez�s�nek be�ll�t�sa + sz�nek
 
 	incr_pos(x, y);
@@ -58,28 +67,44 @@ void Wizard::move(int x,int y) {
 
 }
 
-void Wizard::set_life(int l)
+void Wizard::set_life(float l)
 {
 	//TODO: catchelni kell az exceptiont
+	
 	lifebar->set_val(l);
 
 }
 
-void Wizard::set_mana(int m)
+void Wizard::set_mana(float m)
 {
 	//TODO: catchelni kell az exceptiont
 	manabar->set_val(m);
 }
 
-void Wizard::incr_life(int l)
+void Wizard::incr_life(float l)
 {
 	//TODO: catchelni kell az exceptiont
 	lifebar->incr_val(l);
 }
 
-void Wizard::incr_mana(int m)
+void Wizard::incr_mana(float m)
 {
 	//TODO: catchelni kell az exceptiont
 	manabar->incr_val(m);
+}
+
+void Wizard::wiz_shoot(std::string spell_type) {
+
+	
+	
+	
+	if (spell_type == "firebolt") {
+		std::cout << "lottem egy fireboltot \n";
+		
+	}
+	else if (spell_type == "laserbeam") {
+		std::cout << "lottem egy laserbeamet \n";
+	}
+
 }
 

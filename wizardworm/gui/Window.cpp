@@ -2,10 +2,23 @@
 #include "Window.h"
 #include <iostream>
 
+#include "networking/INWManager.h"
+
 Window::Window()
 {
 	window = new sf::RenderWindow(sf::VideoMode(800, 600), "WizardWorm!");
 	player = new Player(window , "elsojatekos");
+}
+
+Window::Window(INWManager* nwManager) :
+	networkManager(nwManager)
+{
+	window = new sf::RenderWindow(sf::VideoMode(800, 600), "WizardWorm!");
+	player = new Player(window, "elsojatekos");
+
+	networkManager->setGUIInterface(this);
+	networkManager->startAsServer();
+	networkManager->startConnection();
 }
 
 
@@ -23,19 +36,26 @@ void Window::eventhandler() {
 		{
 			if (event.type == sf::Event::Closed)
 				window->close();
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) /*&& not mouse event*/)
-			{
-				// move left...
-				player->move(-1,0);
-				std::cout << "balra" << std::endl;
-			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)/*&& not mouse event*/)
-			{
-				// move right...
+			if (event.type == sf::Event::KeyPressed) {
 				
-				player->move(1,0);
-				std::cout << "jobbra" << std::endl;
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+				{
+					// move left...
+					player->move(-1, 0);
+					std::cout << "balra" << std::endl;
+				}
+				else if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+				{
+					// move right...
+
+					player->move(1, 0);
+					std::cout << "jobbra" << std::endl;
+				}
+				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+					player->shoot("firebolt");
+				}
 			}
+			
 		}
 		window->clear(sf::Color::Black);
 		//window.draw(rectangle);
@@ -43,4 +63,9 @@ void Window::eventhandler() {
 		window->display();
 	}
 
+}
+
+void Window::onTimerEndMsg()
+{
+	player->move(100, 0);
 }

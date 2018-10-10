@@ -14,39 +14,66 @@ LanServerHandler::~LanServerHandler()
 
 void LanServerHandler::start()
 {
-	LOG("Starting listening...");
-
-	connectionStatus = listener.listen(PORT);
-
-	if (connectionStatus != sf::Socket::Done)
+	while (true)
 	{
-		LOG("Error starting listener socket!");
-	}
+		LOG("Starting listening...");
 
-	connectionStatus = listener.accept(socket);
+		connectionStatus = listener.listen(PORT);
 
-	if (connectionStatus != sf::Socket::Done)
-	{
-		LOG("Error accepting connection!");
-	}
+		if (connectionStatus != sf::Socket::Done)
+		{
+			LOG("Error starting listener socket!");
+		}
 
-	char data[100];
-	std::size_t received;
+		connectionStatus = listener.accept(socket);
 
-	if (socket.receive(data, 100, received) != sf::Socket::Done)
-	{
-		LOG("Error receiving data!");
+		if (connectionStatus != sf::Socket::Done)
+		{
+			LOG("Error accepting connection!");
+		}
+		else
+		{
+			LOG("Connection accepted!");
+		}
+
+		receiveData();
 	}
 
 }
 
 void LanServerHandler::sendData(sf::Packet packet)
 {
-	char data[100] = "Hello!";
+	sf::Socket::Status messageStatus = socket.send(packet);
 
-	if (socket.send(data, 100) != sf::Socket::Done)
+	if (messageStatus == sf::Socket::Done)
 	{
-		LOG("Error sending data!");
+		LOG("Message sent");
+	}
+	else
+	{
+		LOG("Error sending message: " << messageStatus);
+	}
+}
+
+void LanServerHandler::receiveData()
+{
+	while (true)
+	{
+		sf::Packet packet;
+		sf::Socket::Status receiveStatus = socket.receive(packet);
+		if (receiveStatus == sf::Socket::Done)
+		{
+			onDataReceived(packet);
+		}
+		else if (receiveStatus == sf::Socket::Disconnected)
+		{
+			LOG("Socket has been disconnected!");
+			return;
+		}
+		else
+		{
+			LOG("Error receiving data!");
+		}
 	}
 }
 

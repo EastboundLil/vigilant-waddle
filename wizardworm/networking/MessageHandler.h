@@ -18,6 +18,8 @@ public:
 	sf::Packet createTimerEndMsg();
 
 private:
+	Message* onMoveSetMsgReceived(sf::Packet& packet);
+	Message* onTimerEndMsgReceived(sf::Packet& packet);
 
 };
 

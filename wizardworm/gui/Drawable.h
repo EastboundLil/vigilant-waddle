@@ -4,28 +4,29 @@
 class Drawable
 {
 protected:
-	int x;
-	int y;
+	float x;
+	float y;
 	sf::Color color;
 public:
-	Drawable(int x_, int y_, sf::Color color_);
-	Drawable(int x_, int y_);
+	Drawable();
+	Drawable(float x_, float y_, sf::Color color_);
+	Drawable(float x_, float y_);
 	~Drawable();
 
-	void set_pos(int x_, int y_);
-	void incr_pos(int x_, int y_);
-	void set_x(int x_);
-	void set_y(int y_);
-	int get_x();
-	int get_y();
-	void incr_x(int x_);
-	void incr_y(int y_);
+	void set_pos(float x_, float y_);
+	void incr_pos(float x_, float y_);
+	void set_x(float x_);
+	void set_y(float y_);
+	float get_x();
+	float get_y();
+	void incr_x(float x_);
+	void incr_y(float y_);
 
 	void set_color(sf::Color c);
 	sf::Color  get_color();
 	
 
-	virtual void draw();
+	virtual void draw() = 0;
 
 };
 

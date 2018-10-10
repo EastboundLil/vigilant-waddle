@@ -19,7 +19,7 @@ void LanClientHandler::start()
 
 	if (connectionStatus != sf::Socket::Done)
 	{
-		LOG("Connection error!");
+		LOG("Connection error: " << connectionStatus);
 	}
 	else
 	{
@@ -27,18 +27,39 @@ void LanClientHandler::start()
 	}
 }
 
+
 void LanClientHandler::sendData(sf::Packet packet)
 {
-	char data[100] = "Hello!";
+	sf::Socket::Status messageStatus = socket.send(packet);
 
-	if (socket.send(data, 100) != sf::Socket::Done)
+	if (messageStatus == sf::Socket::Done)
 	{
-		LOG("Error sending data!");
+		LOG("Message sent");
+	}
+	else
+	{
+		LOG("Error sending message: " << messageStatus);
+	}
+}
+
+void LanClientHandler::receiveData()
+{
+	while (true)
+	{
+		sf::Packet packet;
+		if (socket.receive(packet) != sf::Socket::Done)
+		{
+			LOG("Error receiving data!");
+		}
+		else
+		{
+			onDataReceived(packet);
+		}
 	}
 }
 
 void LanClientHandler::onDataReceived(sf::Packet packet)
 {
-
+	networkManager->onMessageReceived(packet);
 }
 

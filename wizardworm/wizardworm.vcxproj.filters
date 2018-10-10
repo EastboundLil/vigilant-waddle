@@ -45,6 +45,12 @@
     <ClCompile Include="networking\LanClientHandler.cpp">
       <Filter>networking\sources</Filter>
     </ClCompile>
+    <ClCompile Include="Spell.cpp">
+      <Filter>gui\sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Firebolt.cpp">
+      <Filter>gui\sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include=".\stdafx.h" />
@@ -102,6 +108,19 @@
       <Filter>networking\VWP messages</Filter>
     </ClInclude>
     <ClInclude Include="gui\Properties.h">
+      <Filter>gui\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="networking\MessageTypes.h">
+      <Filter>networking\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\IWindow.h">
+      <Filter>gui\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Spell.h">
+      <Filter>gui\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\Objects.hpp" />
+    <ClInclude Include="Firebolt.h">
       <Filter>gui\headers</Filter>
     </ClInclude>
   </ItemGroup>

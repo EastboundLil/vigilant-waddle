@@ -14,6 +14,7 @@ public:
 	void setAddress(std::string ipAddress);
 	std::string getAddress();
 	virtual void sendData(sf::Packet) = 0;
+	virtual void receiveData() = 0;
 	virtual void onDataReceived(sf::Packet packet) = 0;
 
 protected:
