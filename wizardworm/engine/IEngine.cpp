@@ -1,6 +1,10 @@
 #include "stdafx.h"
 #include "IEngine.h"
 
+#define MOVING_SPEED 5
+#define JUMPING_SPEED 10
+#define GRAVITY 1
+
 
 IEngine::IEngine()
 {
@@ -17,8 +21,18 @@ void IEngine::Update()
 		e.Update();
 }
 
-void IEngine::IsInputPressed(int keycode)
+void IEngine::Move(bool left, bool jumping)
 {
+	if (left)
+		selectedEntity->SetSpeed(sf::Vector2f(-MOVING_SPEED, 0));
+	else
+		selectedEntity->SetSpeed(sf::Vector2f(MOVING_SPEED, 0));
+
+	if (jumping && selectedEntity->GetSpeed().y == 0)
+	{
+		selectedEntity->AjdustSpeed(sf::Vector2f(0, JUMPING_SPEED));
+		selectedEntity->AdjustAcceleration(sf::Vector2f(0, -GRAVITY));
+	}
 }
 
 Entity * IEngine::GetEntity(int id)

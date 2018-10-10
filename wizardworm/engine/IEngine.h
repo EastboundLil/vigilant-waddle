@@ -22,8 +22,9 @@ public:
 	//csináljam meg ezt osztályon belül, vagy valahol kívül lesz futtatva?
 	virtual void Update();
 
-	//ide beadhatod, hogy melyik billentyû van lenyomva
-	virtual void IsInputPressed(int keycode);
+	//ide beadhatod, hogy merre mozog
+	//a jumping mindig legyen igaz, ha nyomja a felfele nyilat
+	virtual void Move(bool left, bool jumping);
 
 	Entity* GetEntity(int id);
 	int GetEntityCount();
@@ -34,7 +35,7 @@ protected:
 	//nagyon gondolkozom, hogy a vektorba ne csak pointereket tároljak.
 	//mit gondoltok, legyen így:
 	std::vector<Entity> entities;
-	Entity* selectedEntity;
+	MovingEntity* selectedEntity;
 	//vagy így?
 	//std::vector<Entity*> entities;
 	//persze, akkor a destrucktorba mindent törölnöm kell
