@@ -27,7 +27,9 @@ struct Data
 class Entity
 {
 public:
-	Entity() { Id = IdGenerator++; }
+
+	Entity() { Id = 0; } //ezt majd kiveszem
+	Entity(int id) { Id = id;}
 	virtual ~Entity() {}
 
 	Drawable* GetSprite() { return entity; }
@@ -39,10 +41,11 @@ public:
 
 protected:
 	Drawable* entity;
-	std::vector<sf::Vector2f> positions; //ez lesz majd a moveset
+	std::vector<sf::Vector2f> positions;
 
-	static unsigned int IdGenerator;
 	int Id;
+
+	bool Selected;
 };
 
 /**
@@ -60,10 +63,8 @@ public:
 	void SetSpeed(sf::Vector2f speed) { Speed = speed; }
 	void SetAcceleration(sf::Vector2f acc) { Acceleration = acc; }
 
-	//ezek csak akkor kellenek, ha lusták akarunk lenni.
-	//ha senki nem használja õket, akkor kiveszem
-	void SetSpeed(float x, float y) { Speed.x = x; Speed.y = y; }
-	void SetAcceleration(float x, float y) { Acceleration.x = x; Acceleration.y = y; }
+	void AjdustSpeed(sf::Vector2f speed) { Speed += speed; }
+	void AdjustAcceleration(sf::Vector2f acc) { Acceleration += acc; }
 
 	//TODO:
 	//erre lehet, hogy rá kéne tenni valami idõzítõt, hogy ne fusson le minden frame-re
