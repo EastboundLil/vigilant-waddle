@@ -27,8 +27,9 @@ struct Data
 class Entity
 {
 public:
-	Entity() { Id = IdGenerator++; }
-	Entity(int id) { Id = id; IdGenerator++; }
+
+	Entity() { Id = 0; } //ezt majd kiveszem
+	Entity(int id) { Id = id;}
 	virtual ~Entity() {}
 
 	Drawable* GetSprite() { return entity; }
@@ -40,9 +41,8 @@ public:
 
 protected:
 	Drawable* entity;
-	std::vector<sf::Vector2f> positions; //ez lesz majd a moveset
+	std::vector<sf::Vector2f> positions;
 
-	static unsigned int IdGenerator;
 	int Id;
 
 	bool Selected;

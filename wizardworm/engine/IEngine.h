@@ -32,12 +32,7 @@ public:
 	void AddEntity(Drawable* drawable, int Id = -1);
 
 protected:
-	//nagyon gondolkozom, hogy a vektorba ne csak pointereket tároljak.
-	//mit gondoltok, legyen így:
 	std::vector<Entity> entities;
 	MovingEntity* selectedEntity;
-	//vagy így?
-	//std::vector<Entity*> entities;
-	//persze, akkor a destrucktorba mindent törölnöm kell
 };
 
