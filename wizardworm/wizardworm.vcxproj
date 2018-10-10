@@ -177,7 +177,6 @@
     <ClInclude Include="networking\MoveSetMsg.h" />
     <ClInclude Include="networking\NetworkManager.h" />
     <ClInclude Include="gui\Player.h" />
-    <ClInclude Include="gui\Properties.h" />
     <ClInclude Include="networking\TimerEndMsg.h" />
     <ClInclude Include="engine\ServerEngine.h" />
     <ClInclude Include="gui\Window.h" />
@@ -203,7 +202,6 @@
     <ClCompile Include="networking\MessageHandler.cpp" />
     <ClCompile Include="networking\NetworkManager.cpp" />
     <ClCompile Include="gui\Player.cpp" />
-    <ClCompile Include="gui\Properties.cpp" />
     <ClCompile Include="engine\ServerEngine.cpp" />
     <ClCompile Include="gui\Window.cpp" />
     <ClCompile Include="gui\Wizard.cpp" />

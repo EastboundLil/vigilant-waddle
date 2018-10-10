@@ -12,9 +12,6 @@
     <ClCompile Include="gui\Player.cpp">
       <Filter>gui\sources</Filter>
     </ClCompile>
-    <ClCompile Include="gui\Properties.cpp">
-      <Filter>gui\sources</Filter>
-    </ClCompile>
     <ClCompile Include="gui\Window.cpp">
       <Filter>gui\sources</Filter>
     </ClCompile>
@@ -106,9 +103,6 @@
     </ClInclude>
     <ClInclude Include="networking\Message.h">
       <Filter>networking\VWP messages</Filter>
-    </ClInclude>
-    <ClInclude Include="gui\Properties.h">
-      <Filter>gui\headers</Filter>
     </ClInclude>
     <ClInclude Include="networking\MessageTypes.h">
       <Filter>networking\headers</Filter>

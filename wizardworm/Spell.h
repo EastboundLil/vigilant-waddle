@@ -1,8 +1,8 @@
 #pragma once
+#include "Drawable.h"
 
 
-
-class Spell {
+class Spell : public Drawable {
 protected:
 	float mana_cost;
 	float damage;
