@@ -8,7 +8,7 @@ public:
 	void execute() override
 	{
 		LOG("Executing TimerEndMsg!");
-		guiManager->onTimerEndMsg();
+		ApplicationManager::getInstance().getGuiManager()->onTimerEndMsg();
 	}
 
 private:

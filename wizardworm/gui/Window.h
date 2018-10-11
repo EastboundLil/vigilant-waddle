@@ -7,7 +7,7 @@
 
 class Window : public IWindow
 {
-	INWManager* networkManager;
+	std::shared_ptr<INWManager> networkManager;
 
 	sf::RenderWindow *window;
 	Player *player;
@@ -19,7 +19,6 @@ public:
 	void onTimerEndMsg();
 
 	Window();
-	Window(INWManager* nwManager);
 	~Window();
 };
 

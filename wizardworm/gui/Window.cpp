@@ -2,23 +2,14 @@
 #include "Window.h"
 #include <iostream>
 
-#include "networking/INWManager.h"
+#include "ApplicationManager.h"
 
 Window::Window()
 {
 	window = new sf::RenderWindow(sf::VideoMode(800, 600), "WizardWorm!");
 	player = new Player(window , "elsojatekos");
-}
 
-Window::Window(INWManager* nwManager) :
-	networkManager(nwManager)
-{
-	window = new sf::RenderWindow(sf::VideoMode(800, 600), "WizardWorm!");
-	player = new Player(window, "elsojatekos");
-
-	networkManager->setGUIInterface(this);
-	networkManager->startAsServer();
-	networkManager->startConnection();
+	networkManager = ApplicationManager::getInstance().getNetworkManager();
 }
 
 

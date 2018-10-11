@@ -117,6 +117,7 @@
     <ClInclude Include="Firebolt.h">
       <Filter>gui\headers</Filter>
     </ClInclude>
+    <ClInclude Include="ApplicationManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include=".\ReadMe.txt" />

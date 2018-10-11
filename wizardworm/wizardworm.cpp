@@ -2,11 +2,14 @@
 #include "Window.h"
 #include "NetworkManager.h"
 
+#include "ApplicationManager.h"
+
 int main()
 {
-	NetworkManager* nwManager = new NetworkManager();
+	ApplicationManager::getInstance().setNetworkManager(std::make_shared<NetworkManager>());
+	ApplicationManager::getInstance().setGuiManager(std::make_shared<Window>());
 
-	Window * window = new Window(nwManager);
+	std::shared_ptr<IWindow> window = ApplicationManager::getInstance().getGuiManager();
 	window->eventhandler();
 	
 	return 0;
