@@ -14,7 +14,7 @@ NetworkManager::~NetworkManager()
 
 }
 
-void NetworkManager::setGUIInterface(IWindow* IGuiManager)
+void NetworkManager::setGUIInterface(std::shared_ptr<IWindow> IGuiManager)
 {
 	guiManager = IGuiManager;
 }
@@ -78,7 +78,6 @@ void NetworkManager::onMessageReceived(sf::Packet packet)
 
 	if (message != nullptr)
 	{
-		message->setGuiManager(guiManager);
 		message->execute();
 		delete message;
 	}

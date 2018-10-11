@@ -15,7 +15,7 @@ public:
 	NetworkManager();
 	~NetworkManager();
 
-	void setGUIInterface(IWindow* guiManager);
+	void setGUIInterface(std::shared_ptr<IWindow> guiManager);
 
 	void startAsServer() override;
 	void startAsClient() override;
@@ -32,7 +32,7 @@ public:
 private:
 	void startThread();
 
-	IWindow* guiManager;
+	std::shared_ptr<IWindow> guiManager;
 
 	std::shared_ptr<LanHandler> connectionHandler;
 	sf::Thread connectionThread;
