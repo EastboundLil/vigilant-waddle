@@ -3,7 +3,7 @@
 #include <vector>
 #include "Wizard.h"
 
-//TODO Egy Játékosnak több varázsló kell melyeket ülön kezel
+//TODO Egy Jï¿½tï¿½kosnak tï¿½bb varï¿½zslï¿½ kell melyeket ï¿½lï¿½n kezel
 
 class Player
 {
