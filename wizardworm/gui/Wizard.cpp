@@ -35,13 +35,13 @@ void Wizard::draw() {
 	
 		system("pause");
 	}
-
+	texture.setSmooth(true);
 	sf::Sprite sprite;
 	sprite.setTexture(texture);
 	sprite.setPosition(x, y);
 	//Worm nagys�ga
 	sprite.setScale(0.30f, 0.30f);
-
+	
 	//ha kép helyett worm kéne:
 	/*sf::RectangleShape rectangle;
 
