@@ -162,6 +162,7 @@
     <ClInclude Include="ApplicationManager.h" />
     <ClInclude Include="engine\Objects.hpp" />
     <ClInclude Include="Firebolt.h" />
+    <ClInclude Include="gui\Animation.h" />
     <ClInclude Include="gui\Bar.h" />
     <ClInclude Include="engine\ClientEngine.h" />
     <ClInclude Include="gui\Drawable.h" />
@@ -192,6 +193,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include=".\wizardworm.cpp" />
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Firebolt.cpp" />
     <ClCompile Include="gui\Bar.cpp" />
     <ClCompile Include="engine\ClientEngine.cpp" />

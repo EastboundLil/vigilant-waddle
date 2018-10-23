@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Window.h"
+#include "Animation.h"
 #include <iostream>
 
 #include "ApplicationManager.h"
@@ -19,12 +20,31 @@ Window::~Window()
 
 void Window::eventhandler() {
 
+	//TODO Innen folyt. köv. holnap
+	//Még átt kell rakni hogy bizonyos pontban legyen a robbanás ---- spell hatására -- adott ideig
+
+	float deltaTime = 0.0f;
+	sf::Clock clock;
+
+	sf::RectangleShape teszt(sf::Vector2f(100.0f,100.0f));
+
+	sf::Texture texture;
+	texture.loadFromFile("Gexp.png");
+	texture.setSmooth(true);
+	teszt.setTexture(&texture);
+	Animation animation(&texture, sf::Vector2u(4, 2), 0.15f);
+
 
 	while (window->isOpen())
 	{
 		sf::Event event;
+		deltaTime = clock.restart().asSeconds();
+
+
 		while (window->pollEvent(event))
 		{
+
+
 			if (event.type == sf::Event::Closed)
 				window->close();
 			if (event.type == sf::Event::KeyPressed) {
@@ -48,8 +68,16 @@ void Window::eventhandler() {
 			}
 			
 		}
-		window->clear(sf::Color::Black);
+
+
+		//TODO õket is
+		animation.Update(deltaTime);
+		teszt.setTextureRect(animation.uvRect);
+		
+
+		window->clear(sf::Color::Cyan);
 		//window.draw(rectangle);
+		window->draw(teszt);
 		player->draw();
 		window->display();
 	}

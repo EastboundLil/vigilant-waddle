@@ -48,6 +48,9 @@
     <ClCompile Include="Firebolt.cpp">
       <Filter>gui\sources</Filter>
     </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>gui\sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include=".\stdafx.h" />
@@ -118,6 +121,9 @@
       <Filter>gui\headers</Filter>
     </ClInclude>
     <ClInclude Include="ApplicationManager.h" />
+    <ClInclude Include="gui\Animation.h">
+      <Filter>gui\headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".\ReadMe.txt" />
