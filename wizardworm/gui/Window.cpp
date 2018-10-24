@@ -26,18 +26,19 @@ void Window::eventhandler() {
 	float deltaTime = 0.0f;
 	sf::Clock clock;
 
+	/*
 	sf::RectangleShape teszt(sf::Vector2f(100.0f,100.0f));
-
 	sf::Texture texture;
 	texture.loadFromFile("Gexp.png");
 	texture.setSmooth(true);
 	teszt.setTexture(&texture);
 	Animation animation(&texture, sf::Vector2u(4, 2), 0.15f);
-
+	*/
 
 	while (window->isOpen())
 	{
 		sf::Event event;
+		
 		deltaTime = clock.restart().asSeconds();
 
 
@@ -62,22 +63,31 @@ void Window::eventhandler() {
 					player->move(1, 0);
 					std::cout << "jobbra" << std::endl;
 				}
-				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+				/*else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
 					player->shoot("firebolt");
+				}*/
+			}
+			if (event.type == sf::Event::MouseButtonPressed)
+			{
+
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+
+					player->shoot("Firebolt", sf::Mouse::getPosition(*window));
 				}
 			}
-			
 		}
 
 
 		//TODO õket is
-		animation.Update(deltaTime);
+		/*animation.Update(deltaTime);
 		teszt.setTextureRect(animation.uvRect);
-		
-
+		*/
+		player->shootUpdate(deltaTime);
 		window->clear(sf::Color::Cyan);
 		//window.draw(rectangle);
-		window->draw(teszt);
+		
+		//window->draw(teszt);
+		
 		player->draw();
 		window->display();
 	}

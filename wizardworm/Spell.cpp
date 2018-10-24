@@ -6,8 +6,8 @@
 
 Spell::Spell()
 {
-	
 
+	spellImage.setSize(sf::Vector2f(100.0f, 100.0f));
 }
 
 
@@ -30,3 +30,7 @@ Spell::Spell(float m, float d) {
 	damage = d;
 }
 
+void Spell::updateAnimation(float deltaTime) {
+	animation->Update(deltaTime);
+	spellImage.setTextureRect(animation->uvRect);
+}

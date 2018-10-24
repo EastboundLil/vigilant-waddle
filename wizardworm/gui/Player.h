@@ -20,7 +20,7 @@ public:
 	
 	void move(float x, float y);
 	void draw() ;
-	void shoot(std::string spell_type);
-
+	void shoot(std::string spell_type,sf::Vector2i mousePos);
+	void shootUpdate(float deltaTime);
 };
 

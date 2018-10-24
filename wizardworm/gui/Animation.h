@@ -14,5 +14,6 @@ public:
 
 	sf::IntRect uvRect;
 	void Update(float deltaTime);
+	bool getIsLive() {return isLive;}
 };
 
