@@ -25,11 +25,13 @@ void Window::eventhandler() {
 
 	float deltaTime = 0.0f;
 	sf::Clock clock;
+	float asd = 1;
 
-	/*
-	sf::RectangleShape teszt(sf::Vector2f(100.0f,100.0f));
+
+	
+	/*sf::RectangleShape teszt(sf::Vector2f(100.0f,100.0f));
 	sf::Texture texture;
-	texture.loadFromFile("Gexp.png");
+	texture.loadFromFile("WormsAnimation.png");
 	texture.setSmooth(true);
 	teszt.setTexture(&texture);
 	Animation animation(&texture, sf::Vector2u(4, 2), 0.15f);
@@ -40,7 +42,6 @@ void Window::eventhandler() {
 		sf::Event event;
 		
 		deltaTime = clock.restart().asSeconds();
-
 
 		while (window->pollEvent(event))
 		{
@@ -53,15 +54,16 @@ void Window::eventhandler() {
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 				{
 					// move left...
-					player->move(-1, 0);
-					std::cout << "balra" << std::endl;
+					asd++;
+					player->move(-1, 0, asd);
+					std::cout << "balra" <<asd <<std::endl;
 				}
 				else if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 				{
 					// move right...
-
-					player->move(1, 0);
-					std::cout << "jobbra" << std::endl;
+					asd++;
+					player->move(1, 0, asd);
+					std::cout << "jobbra" <<asd<< std::endl;
 				}
 				/*else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
 					player->shoot("firebolt");
@@ -80,8 +82,8 @@ void Window::eventhandler() {
 
 		//TODO õket is
 		/*animation.Update(deltaTime);
-		teszt.setTextureRect(animation.uvRect);
-		*/
+		teszt.setTextureRect(animation.uvRect);*/
+		
 		player->shootUpdate(deltaTime);
 		window->clear(sf::Color::Cyan);
 		//window.draw(rectangle);
@@ -96,5 +98,5 @@ void Window::eventhandler() {
 
 void Window::onTimerEndMsg()
 {
-	player->move(100, 0);
+	player->move(100, 0, 100);
 }

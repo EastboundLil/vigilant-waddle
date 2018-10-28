@@ -1,12 +1,12 @@
 #pragma once
 #include "Spell.h"
 
-class Firebolt :
-	public Spell
-{
+class Firebolt :public Spell{
 	sf::RenderWindow *window;
-
-	//sf::RectangleShape FireboltImage;
+	float x_pos;
+	float y_pos;
+	sf::CircleShape FireboltImage;
+	
 
 
 public:

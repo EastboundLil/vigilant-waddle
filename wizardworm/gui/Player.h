@@ -18,7 +18,7 @@ public:
 	Player(sf::RenderWindow* w, std::string name);
 	~Player();
 	
-	void move(float x, float y);
+	void move(float x, float y, float deltaTime);
 	void draw() ;
 	void shoot(std::string spell_type,sf::Vector2i mousePos);
 	void shootUpdate(float deltaTime);

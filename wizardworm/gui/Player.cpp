@@ -15,9 +15,10 @@ Player::Player(sf::RenderWindow *w , std::string name)
 Player::~Player()
 {}
 
-void Player::move(float x, float y){
+void Player::move(float x, float y,float deltaTime){
 	
 	wizard->move(x,y);
+	wizard->wizAnimationUpdate(deltaTime);
 
 }
 

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Wizard.h"
+#include "Animation.h"
 
 
 #include<iostream>
@@ -15,8 +16,17 @@ Wizard::Wizard(float x_ , float y_ , float id , sf::RenderWindow *w)
 	lifebar = new Bar(x_,y_-25 , sf::Color::Red ,50 , window); //A var�zsl� �lete
 	manabar = new Bar(x_, y_-20 , sf::Color::Blue , 50 , window); //A var�zsl� man�ja
 	
+	texture.loadFromFile("WormsAnimation.png");
+	texture.setSmooth(true);
 
-	
+	wormImage.setSize(sf::Vector2f(100.0f, 100.0f));
+	wormImage.setTexture(&texture);
+	animation = new Animation(&texture, sf::Vector2u(4, 2), 10);
+
+	wormImage.setPosition(x_, y_);
+	wormImage.setScale(0.50f, 0.50f);
+	wormImage.setTextureRect(animation->uvRect);
+
 
 }
 
@@ -30,8 +40,7 @@ Wizard::~Wizard(){
 
 void Wizard::draw() {
 
-	sf::Texture texture;
-	if (!texture.loadFromFile("WizardWorm.png")) {
+	/*if (!texture.loadFromFile("WizardWorm.png")) {
 	
 		system("pause");
 	}
@@ -40,7 +49,7 @@ void Wizard::draw() {
 	sprite.setTexture(texture);
 	sprite.setPosition(x, y);
 	//Worm nagys�ga
-	sprite.setScale(0.30f, 0.30f);
+	sprite.setScale(0.30f, 0.30f);*/
 	
 	//ha kép helyett worm kéne:
 	/*sf::RectangleShape rectangle;
@@ -49,8 +58,10 @@ void Wizard::draw() {
 	rectangle.setFillColor(sf::Color::White);
 	rectangle.setPosition(get_position().get_x(), get_position().get_y());*/
 	
-	window->draw(sprite);
-	
+	//window->draw(sprite);
+
+	wormImage.setPosition(x, y);
+	window->draw(wormImage);
 
 	//TODO att� f�gg�en milyen sz�nre �ll�tod m�s az x poz�ci�ja
 		//Faszs�g
@@ -62,6 +73,7 @@ void Wizard::move(float x, float y) {
 	//Az �let �s a mana elheyez�s�nek be�ll�t�sa + sz�nek
 
 	incr_pos(x, y);
+	
 	lifebar->incr_pos(x, y);
 	manabar->incr_pos(x, y);
 
@@ -106,5 +118,10 @@ void Wizard::wiz_shoot(std::string spell_type) {
 		std::cout << "lottem egy laserbeamet \n";
 	}
 
+}
+
+void Wizard::wizAnimationUpdate(float deltaTime) {
+	animation->Update(deltaTime);
+	wormImage.setTextureRect(animation->uvRect);
 }
 
