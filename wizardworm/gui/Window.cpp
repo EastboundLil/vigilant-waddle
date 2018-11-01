@@ -87,7 +87,7 @@ void Window::eventhandler() {
 					sf::Vector2i pos = sf::Mouse::getPosition(*window);
 
 					player->shoot("Firebolt", pos);
-
+					//ezt most valamiert nem rajzolja ki
 					explosion_v.push_back(new sf::CircleShape());
 					explosion_v[explosion_v.size() - 1]->setRadius(90.0f);
 					explosion_v[explosion_v.size() - 1]->setPosition(static_cast<float>(pos.x), static_cast<float>(pos.y));
