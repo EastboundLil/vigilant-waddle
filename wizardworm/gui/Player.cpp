@@ -6,7 +6,7 @@
 Player::Player(sf::RenderWindow *w , std::string name)
 {
 	window = w;
-	wizard = new Wizard(100,100,1, window);
+	wizard = new Wizard(50,50,1, window);
 	player_name = name;
 
 }
