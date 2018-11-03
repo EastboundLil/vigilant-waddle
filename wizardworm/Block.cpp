@@ -9,6 +9,7 @@ Block::Block(sf::RenderWindow *w)
 	window = w;
 	convex_v.push_back(new sf::ConvexShape());
 	convex_v[0]->setPointCount(5);
+	currID = ++ID;
 
 	// define the points
 	convex_v[0]->setPoint(0, sf::Vector2f(0, 0));
@@ -25,7 +26,7 @@ Block::Block(float _x, float _y, sf::Color c, float _h, float _w , sf::RenderWin
 {
 	height = _h;
 	width = _w;
-
+	currID = ++ID;
 	window = w;
 	// resize it to 5 points
 	convex_v.push_back(new sf::ConvexShape());
@@ -42,13 +43,16 @@ Block::Block(float _x, float _y, sf::Color c, float _h, float _w , sf::RenderWin
 	convex_v[0]->setPoint(5, sf::Vector2f(x+width/2, y+height));
 	convex_v[0]->setPoint(6, sf::Vector2f(x, y+height));
 	convex_v[0]->setPoint(7, sf::Vector2f(x, y+height/2));
-
+	Xmin = x;
+	Xmax = x + width;
+	Ymin = y;
+	Ymax = y + height;
 
 	//convex.setOrigin(x + width / 2, y + height / 2);
 
 	convex_v[0]->setFillColor(c);
 	convex_v[0]->setOutlineColor(sf::Color::Red);
-	convex_v[0]->setOutlineThickness(3);
+	convex_v[0]->setOutlineThickness(-1);
 }
 
 Block::~Block()
@@ -151,6 +155,35 @@ float Block::check_bound(float _x , int p , float old) { //itt azt nézem hogy a 
 	}
 
 }
+
+void Block::refresh_bounds(int i)
+{
+	float xmin = convex_v[i]->getPoint(0).x;
+	float ymin = convex_v[i]->getPoint(0).y;
+	float ymax = ymin;
+	float xmax = xmin;
+
+	for (int j = 0; j < convex_v[i]->getPointCount(); j++) {
+		if (convex_v[i]->getPoint(j).x > xmax) {
+			xmax = convex_v[i]->getPoint(j).x;
+		}
+		if (convex_v[i]->getPoint(j).x < xmin) {
+			xmin = convex_v[i]->getPoint(j).x;
+		}
+		if (convex_v[i]->getPoint(j).y > ymax) {
+			ymax = convex_v[i]->getPoint(j).y;
+		}
+		if (convex_v[i]->getPoint(j).y < ymin) {
+			ymin = convex_v[i]->getPoint(j).y;
+		}
+	}
+	Xmax = xmax;
+	Xmin = xmin;
+	Ymax = ymax;
+	Ymin = ymin;
+
+}
+
 void Block::del_point(int i, std::vector<bool> delablepoints) {
 
 	int sum=0;
@@ -162,29 +195,39 @@ void Block::del_point(int i, std::vector<bool> delablepoints) {
 	
 	if (sum == convex_v[i]->getPointCount()) { return; }
 	std::cout << "maradando pontok: " << sum<<"\n";
-	sf::ConvexShape* newshape=new sf::ConvexShape();
-	newshape->setFillColor(sf::Color::Green);
-	newshape->setOutlineColor(sf::Color::Red);
-	newshape->setOutlineThickness(3);
+	if (sum > 2) {
+		sf::ConvexShape* newshape = new sf::ConvexShape();
+		newshape->setFillColor(sf::Color::Green);
+		newshape->setOutlineColor(sf::Color::Red);
+		newshape->setOutlineThickness(-1);
 
-	newshape->setPointCount(sum);
-	int nextcopyable=0;
-	for (int k = 0; k < sum; k++) {
-	
-		while (delablepoints[nextcopyable] != false) { //amig nem talál egy másolandót
-			std::cout << "nem masoljuk bele az ujba:  index=" << nextcopyable << " koord: " << convex_v[i]->getPoint(nextcopyable).x << " " << convex_v[i]->getPoint(nextcopyable).y << "\n";
+		newshape->setPointCount(sum);
+		int nextcopyable = 0;
+		for (int k = 0; k < sum; k++) {
+
+			while (delablepoints[nextcopyable] != false) { //amig nem talál egy másolandót
+				std::cout << "nem masoljuk bele az ujba:  index=" << nextcopyable << " koord: " << convex_v[i]->getPoint(nextcopyable).x << " " << convex_v[i]->getPoint(nextcopyable).y << "\n";
+				nextcopyable++;
+			}
+			std::cout << "belemasoljuk a " << nextcopyable << " elemet a " << k << ".adik helyre \n";
+			if (nextcopyable >= convex_v[i]->getPointCount()) { std::cout << "elbasztad mert tulfutott a copyable \n"; }
+			newshape->setPoint(k, convex_v[i]->getPoint(nextcopyable));
 			nextcopyable++;
+
 		}
-		std::cout << "belemasoljuk a "<<nextcopyable<<" elemet a "<<k<<".adik helyre \n";
-		if (nextcopyable >= convex_v[i]->getPointCount()) { std::cout << "elbasztad mert tulfutott a copyable \n"; }
-		newshape->setPoint(k , convex_v[i]->getPoint(nextcopyable));
-		nextcopyable++;
+		sf::ConvexShape* temp = convex_v[i];
+		convex_v[i] = newshape;
+		delete temp;
+	}
+	else {
+		for (int k = 0; k < convex_v[i]->getPointCount(); k++) {
+			convex_v[i]->setPoint(k, sf::Vector2f(-1, -1));			
+		}
+		convex_v[i]->setPointCount(0);
+		std::cout << currID << "kocka megsemmisult (igazabol nem) \n";
 	
 	}
-	sf::ConvexShape* temp = convex_v[i];
-	convex_v[i] = newshape;
-	delete temp;
-	//TODO: ha kettõ marad, akkor ki kell törölni az összeset
+	
 }
 //regebbi del_point, megtartom ha kéne
 /*void Block::del_point(int i , int j) {
@@ -218,7 +261,7 @@ void Block::del_point(int i, std::vector<bool> delablepoints) {
 /*
 todo2: eltolni nem kellene hagyni a kockát. eddig csak az eredeti kockából nem mehet ki, de mindig a saját határain belül kellene módosulnia. 
 kérdés: hogy a faszba kell egy random sokszöget csekkolni hogy benne van e a pont vagy nem? kurva nehezen -> kis kockák kellenek, maximum a robbanás sugarának fele
-
+solution: csökkentem a bounding negyzetet-> még mindig nem elég jó, de már valami
 
 */
 
@@ -227,11 +270,11 @@ void Block::modify_coords(sf::Vector2f expl, float &newx, float &newy, sf::Vecto
 	sf::Vector2f firstmodified(expl.x + (pos.x - expl.x)*r / d, expl.y + (pos.y - expl.y)*r / d);
 	//std::cout << "firstoffsetek: " << firstoffset.x << " " << firstoffset.y << "\n";
 	//std::cout<< "expl: "<<  expl.x << " " << expl.y << "\n";
-	if (firstmodified.x > x &&   firstmodified.x < x + width) { // firstoffset
+	if (firstmodified.x > Xmin &&   firstmodified.x < Xmax) { // firstoffset
 	
 			newx =  firstmodified.x;
 		//	std::cout << " az uj x benne van a negyszogben \n";
-		if ( firstmodified.y > y &&  firstmodified.y < y + height) {
+		if ( firstmodified.y > Ymin &&  firstmodified.y < Ymax) {
 			
 		//	std::cout << " az uj y benne van a negyszogben \n";
 			newy =  firstmodified.y;		
@@ -272,7 +315,7 @@ void Block::modify_coords(sf::Vector2f expl, float &newx, float &newy, sf::Vecto
 			newy =pos.y+ fminf(roots.x, roots.y);
 		}
 
-		if ( newy > y &&  newy < y + height) {
+		if ( newy > Ymin &&  newy < Ymax) {
 		//	std::cout << " az uj y benne van a negyszogben \n";			
 
 		}
@@ -318,7 +361,8 @@ bool Block::caught_by_expl(sf::Vector2f expl)
 				}
 				else {
 					set_block_point(i, j, newx, newy);
-					std::cout << "modosult a " << i << ". kocka " << j << ". edik pontja" << newx << " " << newy << std::endl;
+					refresh_bounds(i);
+					std::cout << "modosult a " << currID << ". kocka " << j << ". edik pontja" << newx << " " << newy << std::endl;
 				}
 				newx = newy = 0;
 				
@@ -331,3 +375,5 @@ bool Block::caught_by_expl(sf::Vector2f expl)
 	
 	return c>0;
 }
+
+int Block::ID = 0;

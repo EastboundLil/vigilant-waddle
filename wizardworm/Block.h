@@ -18,12 +18,17 @@ protected:
 	std::vector<sf::ConvexShape*> convex_v;
 	float height;
 	float width;
+	float Xmin , Xmax , Ymin, Ymax;
+	
+
 	void modify_coords(sf::Vector2f expl, float & newx, float & newy, sf::Vector2f pos, float r);
 private:
+	static int ID;
+	int currID;
 	void del_point(int i, std::vector<bool> delablepoints);
 	void split_shape(size_t i);
 	float check_bound(float _x, int p , float old); //most nem használom
-
+	void refresh_bounds(int i);
 
 
 };

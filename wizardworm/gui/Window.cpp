@@ -26,6 +26,9 @@ Window::Window()
 
 Window::~Window()
 {
+	delete window;
+	delete player;
+	map.clear();
 }
 
 void Window::eventhandler() {
@@ -46,13 +49,13 @@ void Window::eventhandler() {
 	teszt.setTexture(&texture);
 	Animation animation(&texture, sf::Vector2u(4, 2), 0.15f);
 	*/
-
+	std::vector<sf::CircleShape*> explosion_v;
 	while (window->isOpen())
 	{
 		sf::Event event;
 		
 		deltaTime = clock.restart().asSeconds();
-		std::vector<sf::CircleShape*> explosion_v;
+		
 		while (window->pollEvent(event))
 		{
 
@@ -68,6 +71,16 @@ void Window::eventhandler() {
 					player->move(-1, 0, asd);
 					std::cout << "balra" <<asd <<std::endl;
 				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+				{
+					//arrow degree up;
+					player->aim(true);
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+				{
+					//arrow degree up;
+					player->aim(false);
+				}
 				else if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 				{
 					// move right...
@@ -75,9 +88,17 @@ void Window::eventhandler() {
 					player->move(1, 0, asd);
 					std::cout << "jobbra" <<asd<< std::endl;
 				}
-				/*else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
-					player->shoot("firebolt");
-				}*/
+				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
+					player->possible_firebolt_shoot();
+				}
+				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+					player->switch_wizard();
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+				{
+					//arrow degree up;
+					player->changeforce();
+				}
 			}
 			if (event.type == sf::Event::MouseButtonPressed)
 			{
@@ -89,18 +110,33 @@ void Window::eventhandler() {
 					player->shoot("Firebolt", pos);
 					//ezt most valamiert nem rajzolja ki
 					explosion_v.push_back(new sf::CircleShape());
-					explosion_v[explosion_v.size() - 1]->setRadius(90.0f);
+					explosion_v[explosion_v.size() - 1]->setRadius(100.0f);
 					explosion_v[explosion_v.size() - 1]->setPosition(static_cast<float>(pos.x), static_cast<float>(pos.y));
-					explosion_v[explosion_v.size() - 1]->setOrigin(90.0f, 90.0f);
+					explosion_v[explosion_v.size() - 1]->setOrigin(100.0f, 100.0f);
 					explosion_v[explosion_v.size() - 1]->setFillColor(sf::Color::Transparent);
 					explosion_v[explosion_v.size() - 1]->setOutlineColor(sf::Color::Red);
-					explosion_v[explosion_v.size() - 1]->setOutlineThickness(2);
+					explosion_v[explosion_v.size() - 1]->setOutlineThickness(-2);
 
 					for (int i = 0; i < map.size(); i++) {
 						if (map[i]->caught_by_expl(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)))) {
 							std::cout << i << "-ik elem modosul \n";
 						}
 					}
+				}
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+				
+					explosion_v.clear();
+					map.clear();
+
+					map.push_back(new Block(100, 100, sf::Color::Green, 100, 100, window));
+					map.push_back(new Block(200, 100, sf::Color::Green, 100, 100, window));
+					map.push_back(new Block(300, 100, sf::Color::Green, 100, 100, window));
+					map.push_back(new Block(100, 200, sf::Color::Green, 100, 100, window));
+					map.push_back(new Block(200, 200, sf::Color::Green, 100, 100, window));
+					map.push_back(new Block(300, 200, sf::Color::Green, 100, 100, window));
+					map.push_back(new Block(100, 300, sf::Color::Green, 100, 100, window));
+					map.push_back(new Block(200, 300, sf::Color::Green, 100, 100, window));
+					map.push_back(new Block(300, 300, sf::Color::Green, 100, 100, window));
 				}
 			}
 		}
@@ -119,9 +155,10 @@ void Window::eventhandler() {
 			map[i]->draw();
 		}
 		for (int i = 0; i < explosion_v.size(); i++) {
+			
 			window->draw(*explosion_v[i]);
 		}
-
+		
 		player->draw();
 		window->display();
 	}

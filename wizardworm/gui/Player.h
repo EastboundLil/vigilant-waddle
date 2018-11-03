@@ -8,6 +8,7 @@
 class Player
 {
 
+	std::vector<Wizard*> wizardvector;
 	Wizard* wizard;
 	sf::RenderWindow *window;
 	std::string player_name;
@@ -22,5 +23,11 @@ public:
 	void draw() ;
 	void shoot(std::string spell_type,sf::Vector2i mousePos);
 	void shootUpdate(float deltaTime);
+	void possible_firebolt_shoot();
+	void switch_wizard();
+	void switch_wizard(int i);
+	void aim(bool up);
+	void changeforce();
+
 };
 
