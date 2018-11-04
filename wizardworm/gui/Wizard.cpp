@@ -15,8 +15,9 @@ Wizard::Wizard(float x_ , float y_ , float _id , sf::RenderWindow *w)
 	window = w;
 	lifebar = new Bar(x_,y_-25 , sf::Color::Red ,50 , window); //A var�zsl� �lete
 	manabar = new Bar(x_, y_-20 , sf::Color::Blue , 50 , window); //A var�zsl� man�ja
-	arrow = new Arrow(x_ + 47, y_ + 21, window);
-	
+	arrow_v.push_back( new Arrow(x_ + 47, y_ + 21, window , "firebolt"));
+	arrow_v.push_back( new Arrow(x_ + 47, y_ + 21, window, "laserbeam"));
+	arrow = arrow_v[0];
 	id = _id;
 	texture.loadFromFile("WormsAnimation.png");
 	texture.setSmooth(true);
@@ -68,7 +69,9 @@ void Wizard::draw() {
 	
 	lifebar->draw();
 	manabar->draw();
-	arrow->draw();
+	if (arrow != nullptr) {
+		arrow->draw();
+	}
 
 }
 
@@ -76,7 +79,11 @@ void Wizard::move(float x, float y) {
 	//Az �let �s a mana elheyez�s�nek be�ll�t�sa + sz�nek
 
 	incr_pos(x, y);
-	arrow->incr_pos(x, y);
+
+	for (Arrow * a : arrow_v) {
+		a->incr_pos(x, y);
+	}
+	
 	lifebar->incr_pos(x, y);
 	manabar->incr_pos(x, y);
 
@@ -108,23 +115,20 @@ void Wizard::incr_mana(float m)
 	manabar->incr_val(m);
 }
 
-void Wizard::wiz_shoot(std::string spell_type) {
+Arrow* Wizard::get_arrow() {
 
 	
-	
-	
-	if (spell_type == "firebolt") {
-		std::cout << "lottem egy fireboltot \n";
-		
+	if (arrow->is_opened() ) {
+
+		return arrow;
 	}
-	else if (spell_type == "laserbeam") {
-		std::cout << "lottem egy laserbeamet \n";
-	}
+	return nullptr;
 
 }
 
 void Wizard::open_arrow()
 {
+	
 	arrow->set_opened(true);
 }
 
@@ -133,13 +137,28 @@ void Wizard::close_arrow()
 	arrow->set_opened(false);
 }
 
-void Wizard::change_arrow()
+void Wizard::change_arrow_opening()
 {
 	if (arrow->is_opened()) {
 		close_arrow();
 	}
 	else {
 		open_arrow();
+	}
+}
+
+void Wizard::change_curr_arrow(int i)
+{
+	
+	if (i>=0 && i<arrow_v.size()) {
+		if ((i == 0 && arrow->get_type() == "firebolt") || (i == 1 && arrow->get_type() == "laserbeam")) {
+			change_arrow_opening();
+			return;
+		}
+		arrow->set_opened(false);
+		arrow = arrow_v[i];
+		arrow->set_opened(true);
+		
 	}
 }
 
@@ -176,4 +195,10 @@ void Wizard::wizAnimationUpdate(float deltaTime) {
 
 int Wizard::get_id() {
 	return id;
+}
+
+std::string Wizard::curr_spell()
+{
+
+	return std::string();
 }

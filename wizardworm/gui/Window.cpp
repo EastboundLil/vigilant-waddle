@@ -88,10 +88,13 @@ void Window::eventhandler() {
 					player->move(1, 0, asd);
 					std::cout << "jobbra" <<asd<< std::endl;
 				}
-				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
-					player->possible_firebolt_shoot();
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
+					player->possible_shoot(0);
 				}
-				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) {
+					player->possible_shoot(1);
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
 					player->switch_wizard();
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
@@ -99,6 +102,12 @@ void Window::eventhandler() {
 					//arrow degree up;
 					player->changeforce();
 				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+				{
+					//arrow degree up;
+					player->shoot();
+				}
+
 			}
 			if (event.type == sf::Event::MouseButtonPressed)
 			{
