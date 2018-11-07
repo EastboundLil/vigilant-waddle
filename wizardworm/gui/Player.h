@@ -3,11 +3,12 @@
 #include <vector>
 #include "Wizard.h"
 
-//TODO Egy Játékosnak több varázsló kell melyeket ülön kezel
+//TODO Egy Jï¿½tï¿½kosnak tï¿½bb varï¿½zslï¿½ kell melyeket ï¿½lï¿½n kezel
 
 class Player
 {
 
+	std::vector<Wizard*> wizardvector;
 	Wizard* wizard;
 	sf::RenderWindow *window;
 	std::string player_name;
@@ -18,9 +19,15 @@ public:
 	Player(sf::RenderWindow* w, std::string name);
 	~Player();
 	
-	void move(float x, float y);
+	void move(float x, float y, float deltaTime);
 	void draw() ;
-	void shoot(std::string spell_type);
+	void shoot(std::string spell_type,sf::Vector2i mousePos);
+	void shootUpdate(float deltaTime);
+	void possible_firebolt_shoot();
+	void switch_wizard();
+	void switch_wizard(int i);
+	void aim(bool up);
+	void changeforce();
 
 };
 

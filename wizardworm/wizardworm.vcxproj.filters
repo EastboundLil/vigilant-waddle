@@ -12,9 +12,6 @@
     <ClCompile Include="gui\Player.cpp">
       <Filter>gui\sources</Filter>
     </ClCompile>
-    <ClCompile Include="gui\Properties.cpp">
-      <Filter>gui\sources</Filter>
-    </ClCompile>
     <ClCompile Include="gui\Window.cpp">
       <Filter>gui\sources</Filter>
     </ClCompile>
@@ -51,6 +48,13 @@
     <ClCompile Include="Firebolt.cpp">
       <Filter>gui\sources</Filter>
     </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>gui\sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>gui\sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Arrow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include=".\stdafx.h" />
@@ -107,9 +111,6 @@
     <ClInclude Include="networking\Message.h">
       <Filter>networking\VWP messages</Filter>
     </ClInclude>
-    <ClInclude Include="gui\Properties.h">
-      <Filter>gui\headers</Filter>
-    </ClInclude>
     <ClInclude Include="networking\MessageTypes.h">
       <Filter>networking\headers</Filter>
     </ClInclude>
@@ -123,6 +124,14 @@
     <ClInclude Include="Firebolt.h">
       <Filter>gui\headers</Filter>
     </ClInclude>
+    <ClInclude Include="ApplicationManager.h" />
+    <ClInclude Include="gui\Animation.h">
+      <Filter>gui\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>gui\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Arrow.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include=".\ReadMe.txt" />

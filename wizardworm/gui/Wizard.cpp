@@ -1,12 +1,13 @@
 #include "stdafx.h"
 #include "Wizard.h"
+#include "Animation.h"
 
 
 #include<iostream>
 #include<vector>
 
 
-Wizard::Wizard(float x_ , float y_ , float id , sf::RenderWindow *w)
+Wizard::Wizard(float x_ , float y_ , float _id , sf::RenderWindow *w)
 	:Drawable(x_, y_)
 {
 	//set_value(1); //�l e m�g a var�zsl� 
@@ -14,9 +15,20 @@ Wizard::Wizard(float x_ , float y_ , float id , sf::RenderWindow *w)
 	window = w;
 	lifebar = new Bar(x_,y_-25 , sf::Color::Red ,50 , window); //A var�zsl� �lete
 	manabar = new Bar(x_, y_-20 , sf::Color::Blue , 50 , window); //A var�zsl� man�ja
+	arrow = new Arrow(x_ + 47, y_ + 21, window);
 	
+	id = _id;
+	texture.loadFromFile("WormsAnimation.png");
+	texture.setSmooth(true);
 
-	
+	wormImage.setSize(sf::Vector2f(100.0f, 100.0f));
+	wormImage.setTexture(&texture);
+	animation = new Animation(&texture, sf::Vector2u(4, 2), 10);
+
+	wormImage.setPosition(x_, y_);
+	wormImage.setScale(0.50f, 0.50f);
+	wormImage.setTextureRect(animation->uvRect);
+
 
 }
 
@@ -24,24 +36,23 @@ Wizard::Wizard(float x_ , float y_ , float id , sf::RenderWindow *w)
 Wizard::~Wizard(){
 	delete lifebar;
 	delete manabar;
-	
+	delete animation;
 }
 
 
 void Wizard::draw() {
 
-	sf::Texture texture;
-	if (!texture.loadFromFile("WizardWorm.png")) {
+	/*if (!texture.loadFromFile("WizardWorm.png")) {
 	
 		system("pause");
 	}
-
+	texture.setSmooth(true);
 	sf::Sprite sprite;
 	sprite.setTexture(texture);
 	sprite.setPosition(x, y);
 	//Worm nagys�ga
-	sprite.setScale(0.30f, 0.30f);
-
+	sprite.setScale(0.30f, 0.30f);*/
+	
 	//ha kép helyett worm kéne:
 	/*sf::RectangleShape rectangle;
 
@@ -49,19 +60,23 @@ void Wizard::draw() {
 	rectangle.setFillColor(sf::Color::White);
 	rectangle.setPosition(get_position().get_x(), get_position().get_y());*/
 	
-	window->draw(sprite);
-	
+	//window->draw(sprite);
 
-	//TODO att� f�gg�en milyen sz�nre �ll�tod m�s az x poz�ci�ja
-		//Faszs�g
+	wormImage.setPosition(x, y);
+	window->draw(wormImage);
+
+	
 	lifebar->draw();
 	manabar->draw();
+	arrow->draw();
+
 }
 
 void Wizard::move(float x, float y) {
 	//Az �let �s a mana elheyez�s�nek be�ll�t�sa + sz�nek
 
 	incr_pos(x, y);
+	arrow->incr_pos(x, y);
 	lifebar->incr_pos(x, y);
 	manabar->incr_pos(x, y);
 
@@ -108,3 +123,57 @@ void Wizard::wiz_shoot(std::string spell_type) {
 
 }
 
+void Wizard::open_arrow()
+{
+	arrow->set_opened(true);
+}
+
+void Wizard::close_arrow()
+{
+	arrow->set_opened(false);
+}
+
+void Wizard::change_arrow()
+{
+	if (arrow->is_opened()) {
+		close_arrow();
+	}
+	else {
+		open_arrow();
+	}
+}
+
+
+
+void Wizard::wizaim(bool up)
+{
+	if (arrow->is_opened()) {
+		if (up) {
+			arrow->incr_deg(-10);
+		}
+		else {
+			arrow->incr_deg(10);
+		}
+
+	}
+}
+
+void Wizard::wizforce()
+{
+	if (arrow->is_opened()) {	
+		
+			arrow->incr_force(0.05f);	
+
+	}
+	
+	
+}
+
+void Wizard::wizAnimationUpdate(float deltaTime) {
+	animation->Update(deltaTime);
+	wormImage.setTextureRect(animation->uvRect);
+}
+
+int Wizard::get_id() {
+	return id;
+}
