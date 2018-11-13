@@ -7,6 +7,7 @@ class Block :
 	public Drawable
 {
 public:
+	
 	Block(sf::RenderWindow *w);
 	Block(float _x, float _y, sf::Color c, float _h, float _w, sf::RenderWindow *w);
 	~Block();

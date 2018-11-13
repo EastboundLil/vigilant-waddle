@@ -51,8 +51,8 @@ Block::Block(float _x, float _y, sf::Color c, float _h, float _w , sf::RenderWin
 	//convex.setOrigin(x + width / 2, y + height / 2);
 
 	convex_v[0]->setFillColor(c);
-	convex_v[0]->setOutlineColor(sf::Color::Red);
-	convex_v[0]->setOutlineThickness(-1);
+	/*convex_v[0]->setOutlineColor(sf::Color::Red);
+	convex_v[0]->setOutlineThickness(-1);*/
 }
 
 Block::~Block()
@@ -198,8 +198,8 @@ void Block::del_point(int i, std::vector<bool> delablepoints) {
 	if (sum > 2) {
 		sf::ConvexShape* newshape = new sf::ConvexShape();
 		newshape->setFillColor(sf::Color::Green);
-		newshape->setOutlineColor(sf::Color::Red);
-		newshape->setOutlineThickness(-1);
+		/*newshape->setOutlineColor(sf::Color::Red);
+		newshape->setOutlineThickness(-1);*/
 
 		newshape->setPointCount(sum);
 		int nextcopyable = 0;

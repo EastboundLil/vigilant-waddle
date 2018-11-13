@@ -39,8 +39,10 @@ void Player::draw() {
 			livingspells[i]->draw();
 		else {
 			//TODO erase helyett lehet nem ártana más
-
+			//TODO: linzi faszom te csináltad a memory leaket itt :D 
+			Spell* temp = livingspells[i];
 			livingspells.erase(livingspells.begin() + i);
+			delete temp;
 		}
 	}
 }

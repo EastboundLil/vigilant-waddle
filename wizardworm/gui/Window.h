@@ -9,9 +9,10 @@ class Window : public IWindow
 {
 	std::shared_ptr<INWManager> networkManager;
 
+	//std::unique_ptr<sf::RenderWindow> window;
 	sf::RenderWindow *window;
-	Player *player;
-	std::vector<Block *> map; // it will be a class based on engine 
+	std::shared_ptr<Player> player;
+	std::vector<std::unique_ptr<Block>> map; // it will be a class based on engine 
 
 public:
 
