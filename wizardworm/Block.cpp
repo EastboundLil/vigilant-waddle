@@ -7,16 +7,11 @@ Block::Block(sf::RenderWindow *w)
 {
 
 	window = w;
-	convex_v.push_back(new sf::ConvexShape());
-	convex_v[0]->setPointCount(5);
+	
 	currID = ++ID;
 
-	// define the points
-	convex_v[0]->setPoint(0, sf::Vector2f(0, 0));
-	convex_v[0]->setPoint(1, sf::Vector2f(150, 10));
-	convex_v[0]->setPoint(2, sf::Vector2f(120, 90));
-	convex_v[0]->setPoint(3, sf::Vector2f(30, 100));
-	convex_v[0]->setPoint(4, sf::Vector2f(0, 50));
+	
+	
 }
 
 
@@ -48,11 +43,11 @@ Block::Block(float _x, float _y, sf::Color c, float _h, float _w , sf::RenderWin
 	Ymin = y;
 	Ymax = y + height;
 
-	//convex.setOrigin(x + width / 2, y + height / 2);
+
 
 	convex_v[0]->setFillColor(c);
-	/*convex_v[0]->setOutlineColor(sf::Color::Red);
-	convex_v[0]->setOutlineThickness(-1);*/
+	convex_v[0]->setOutlineColor(sf::Color::Red);
+	convex_v[0]->setOutlineThickness(-1);
 }
 
 Block::~Block()
@@ -75,7 +70,7 @@ void Block::split_shape(size_t i) {
 	if (s >= n) {
 		s -= n;
 	}
-	std::cout << "i: " << i << "s: " << s << "\n";
+	//std::cout << "i: " << i << "s: " << s << "\n";
 
 	if (s < i) {
 		int t = i;
@@ -189,27 +184,27 @@ void Block::del_point(int i, std::vector<bool> delablepoints) {
 	int sum=0;
 	for (int j = 0; j < delablepoints.size(); j++) {
 		if (delablepoints[j] == false) { sum++; }
-		else { std::cout << "torlendo pont: index=" << j << " koord: " << convex_v[i]->getPoint(j).x << " " << convex_v[i]->getPoint(j).y << "\n"; }
+		//else { std::cout << "torlendo pont: index=" << j << " koord: " << convex_v[i]->getPoint(j).x << " " << convex_v[i]->getPoint(j).y << "\n"; }
 		
 	}
 	
 	if (sum == convex_v[i]->getPointCount()) { return; }
-	std::cout << "maradando pontok: " << sum<<"\n";
+	//std::cout << "maradando pontok: " << sum<<"\n";
 	if (sum > 2) {
 		sf::ConvexShape* newshape = new sf::ConvexShape();
-		newshape->setFillColor(sf::Color::Green);
-		/*newshape->setOutlineColor(sf::Color::Red);
-		newshape->setOutlineThickness(-1);*/
+		newshape->setFillColor(color);
+		newshape->setOutlineColor(sf::Color::Red);
+		newshape->setOutlineThickness(-1);
 
 		newshape->setPointCount(sum);
 		int nextcopyable = 0;
 		for (int k = 0; k < sum; k++) {
 
 			while (delablepoints[nextcopyable] != false) { //amig nem talál egy másolandót
-				std::cout << "nem masoljuk bele az ujba:  index=" << nextcopyable << " koord: " << convex_v[i]->getPoint(nextcopyable).x << " " << convex_v[i]->getPoint(nextcopyable).y << "\n";
+				//std::cout << "nem masoljuk bele az ujba:  index=" << nextcopyable << " koord: " << convex_v[i]->getPoint(nextcopyable).x << " " << convex_v[i]->getPoint(nextcopyable).y << "\n";
 				nextcopyable++;
 			}
-			std::cout << "belemasoljuk a " << nextcopyable << " elemet a " << k << ".adik helyre \n";
+			//std::cout << "belemasoljuk a " << nextcopyable << " elemet a " << k << ".adik helyre \n";
 			if (nextcopyable >= convex_v[i]->getPointCount()) { std::cout << "elbasztad mert tulfutott a copyable \n"; }
 			newshape->setPoint(k, convex_v[i]->getPoint(nextcopyable));
 			nextcopyable++;
@@ -224,7 +219,7 @@ void Block::del_point(int i, std::vector<bool> delablepoints) {
 			convex_v[i]->setPoint(k, sf::Vector2f(-1, -1));			
 		}
 		convex_v[i]->setPointCount(0);
-		std::cout << currID << "kocka megsemmisult (igazabol nem) \n";
+		//std::cout << currID << "kocka megsemmisult (igazabol nem) \n";
 	
 	}
 	
@@ -362,7 +357,7 @@ bool Block::caught_by_expl(sf::Vector2f expl)
 				else {
 					set_block_point(i, j, newx, newy);
 					refresh_bounds(i);
-					std::cout << "modosult a " << currID << ". kocka " << j << ". edik pontja" << newx << " " << newy << std::endl;
+					//std::cout << "modosult a " << currID << ". kocka " << j << ". edik pontja" << newx << " " << newy << std::endl;
 				}
 				newx = newy = 0;
 				

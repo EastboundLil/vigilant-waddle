@@ -12,25 +12,7 @@ Window::Window()
 
 	networkManager = ApplicationManager::getInstance().getNetworkManager();
 
-	for (int i = 0; i < 10; i++) {
-		for (int j = 0; j < 10; j++) {
-		
-			map.push_back(std::make_unique<Block>(100+i*50, 100+j*50, sf::Color::Green, 50, 50, window));
-
-		}
-	}
-
-
-
-	/*map.push_back(std::make_unique<Block>(100, 100, sf::Color::Green, 100, 100, window));
-	map.push_back(std::make_unique<Block>(200, 100, sf::Color::Green, 100, 100, window));
-	map.push_back(std::make_unique<Block>(300, 100, sf::Color::Green, 100, 100, window));
-	map.push_back(std::make_unique<Block>(100, 200, sf::Color::Green, 100, 100, window));
-	map.push_back(std::make_unique<Block>(200, 200, sf::Color::Green, 100, 100, window));
-	map.push_back(std::make_unique<Block>(300, 200, sf::Color::Green, 100, 100, window));
-	map.push_back(std::make_unique<Block>(100, 300, sf::Color::Green, 100, 100, window));
-	map.push_back(std::make_unique<Block>(200, 300, sf::Color::Green, 100, 100, window));
-	map.push_back(std::make_unique<Block>(300, 300, sf::Color::Green, 100, 100, window));*/
+	map = std::make_unique<Map>(100, 100, sf::Color(92, 51, 23, 255), 410, 430, window);
 }
 
 
@@ -38,7 +20,7 @@ Window::~Window()
 {
 	delete window;
 	
-	map.clear();
+	
 }
 
 void Window::eventhandler() {
@@ -135,35 +117,16 @@ void Window::eventhandler() {
 					explosion_v[explosion_v.size() - 1]->setOutlineColor(sf::Color::Red);
 					explosion_v[explosion_v.size() - 1]->setOutlineThickness(-2);*/
 					
-					for (int i = 0; i < map.size(); i++) {
-						if (map[i]->caught_by_expl(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)))) {
-							std::cout << i << "-ik elem modosul \n";
-						}
-					}
+								map->explosion_happened(pos);
+
+					
 				}
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
 				
 					explosion_v.clear();
-					map.clear();
-
-					for (int i = 0; i < 7; i++) {
-						for (int j = 0; j < 5; j++) {
-
-							map.push_back(std::make_unique<Block>(100 + i * 75, 100 + j * 75, sf::Color::Green, 75, 75, window));
-
-						}
-					}
-
-
-					/*map.push_back(std::make_unique<Block>(100, 100, sf::Color::Green, 100, 100, window));
-					map.push_back(std::make_unique<Block>(200, 100, sf::Color::Green, 100, 100, window));
-					map.push_back(std::make_unique<Block>(300, 100, sf::Color::Green, 100, 100, window));
-					map.push_back(std::make_unique<Block>(100, 200, sf::Color::Green, 100, 100, window));
-					map.push_back(std::make_unique<Block>(200, 200, sf::Color::Green, 100, 100, window));
-					map.push_back(std::make_unique<Block>(300, 200, sf::Color::Green, 100, 100, window));
-					map.push_back(std::make_unique<Block>(100, 300, sf::Color::Green, 100, 100, window));
-					map.push_back(std::make_unique<Block>(200, 300, sf::Color::Green, 100, 100, window));
-					map.push_back(std::make_unique<Block>(300, 300, sf::Color::Green, 100, 100, window));*/
+					map = std::make_unique<Map>(100, 100, sf::Color(92, 51, 23, 255), 410, 430, window);
+									   
+	
 				}
 			}
 		}
@@ -178,9 +141,8 @@ void Window::eventhandler() {
 		//window.draw(rectangle);
 		
 		//window->draw(teszt);
-		for (int i = 0; i < map.size(); i++) {
-			map[i]->draw();
-		}
+		map->draw();
+
 		for (int i = 0; i < explosion_v.size(); i++) {
 			
 			window->draw(*explosion_v[i]);

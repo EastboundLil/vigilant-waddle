@@ -169,6 +169,7 @@
     <ClInclude Include="engine\ClientEngine.h" />
     <ClInclude Include="gui\Drawable.h" />
     <ClInclude Include="gui\IWindow.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="networking\INWManager.h" />
     <ClInclude Include="engine\IEngine.h" />
     <ClInclude Include="networking\LanClientHandler.h" />
@@ -203,6 +204,7 @@
     <ClCompile Include="engine\ClientEngine.cpp" />
     <ClCompile Include="gui\Drawable.cpp" />
     <ClCompile Include="engine\IEngine.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="networking\LanClientHandler.cpp" />
     <ClCompile Include="networking\LanHandler.cpp" />
     <ClCompile Include="networking\LanServerHandler.cpp" />
