@@ -8,17 +8,24 @@
 
 }
 
-Arrow::Arrow(float _x, float _y , sf::RenderWindow * w) :  Drawable(_x, _y) {
+Arrow::Arrow(float _x, float _y , sf::RenderWindow * w , std::string t) :  Drawable(_x, _y) {
 	
 	deg = mind;
 	force = minf;
 	opened = false;
-	rect.setFillColor(sf::Color(205, 51, 51, 200));
-	rect.setSize(sf::Vector2f(200 * force, 10));
+	type = t;
+	if (t == "firebolt") {
+		rect.setFillColor(sf::Color(205, 51, 51, 200));
+	}
+	else if (t == "laserbeam") {
+		rect.setFillColor(sf::Color::Magenta);
+	}
+	rect.setSize(sf::Vector2f(100 * force, 10));
 	rect.setOrigin(0, 5);
 	rect.setRotation(deg);
-
+	
 	window = w;
+	std::cout << "elso force: " << force << "\n";
 }
 
 
@@ -70,13 +77,29 @@ void Arrow::incr_force(float a)
 	if (force + a > maxf) {
 		force = fmod(force + a, maxf) + minf;
 	}
-	else if (deg + a < mind) {
+	else if (force + a < minf) {
 		force = maxf + fmod(force + a, maxf);
 	}
 	else {
 		force += a;
 	}
+	std::cout <<force <<" \n";
 	rect.setSize(sf::Vector2f(force * 100, 10));
+}
+
+std::string Arrow::get_type()
+{
+	return type;
+}
+
+float Arrow::get_deg()
+{
+	return deg;
+}
+
+float Arrow::get_force()
+{
+	return force;
 }
 
 float Arrow::mind = 0;

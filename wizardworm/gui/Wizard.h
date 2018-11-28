@@ -17,7 +17,7 @@ protected:
 	Bar* lifebar;
 	Bar* manabar;
 	Arrow* arrow;
-
+	std::vector<Arrow*> arrow_v;
 	sf::RenderWindow* window;		
 	sf::Texture texture;
 	sf::RectangleShape wormImage;
@@ -33,14 +33,16 @@ public:
 	void set_mana(float m);
 	void incr_life(float l);
 	void incr_mana(float m);
-	void wiz_shoot(std::string spell_type);
+	Arrow* get_arrow();
 	void open_arrow();
 	void close_arrow();
-	void change_arrow();
+	void change_arrow_opening();
+	void change_curr_arrow(int i);
 	void wizaim(bool up);
 	void wizforce();
 	void wizAnimationUpdate(float deltaTime);
 	int get_id();
+	std::string curr_spell();
 
 };
 

@@ -54,7 +54,12 @@
     <ClCompile Include="Block.cpp">
       <Filter>gui\sources</Filter>
     </ClCompile>
-    <ClCompile Include="Arrow.cpp" />
+    <ClCompile Include="Arrow.cpp">
+      <Filter>gui\sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>gui\sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include=".\stdafx.h" />
@@ -131,7 +136,12 @@
     <ClInclude Include="Block.h">
       <Filter>gui\headers</Filter>
     </ClInclude>
-    <ClInclude Include="Arrow.h" />
+    <ClInclude Include="Arrow.h">
+      <Filter>gui\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>gui\headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".\ReadMe.txt" />

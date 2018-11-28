@@ -8,27 +8,19 @@
 Window::Window()
 {
 	window = new sf::RenderWindow(sf::VideoMode(800, 600), "WizardWorm!");
-	player = new Player(window , "elsojatekos");
+	player =std::make_shared<Player>( window , "elsojatekos");
 
 	networkManager = ApplicationManager::getInstance().getNetworkManager();
 
-	map.push_back(new Block(100, 100, sf::Color::Green, 100, 100, window));
-	map.push_back(new Block(200, 100, sf::Color::Green, 100, 100, window));
-	map.push_back(new Block(300, 100, sf::Color::Green, 100, 100, window));
-	map.push_back(new Block(100, 200, sf::Color::Green, 100, 100, window));
-	map.push_back(new Block(200, 200, sf::Color::Green, 100, 100, window));
-	map.push_back(new Block(300, 200, sf::Color::Green, 100, 100, window));
-	map.push_back(new Block(100, 300, sf::Color::Green, 100, 100, window));
-	map.push_back(new Block(200, 300, sf::Color::Green, 100, 100, window));
-	map.push_back(new Block(300, 300, sf::Color::Green, 100, 100, window));
+	map = std::make_unique<Map>(100, 100, sf::Color(92, 51, 23, 255), 410, 430, window);
 }
 
 
 Window::~Window()
 {
 	delete window;
-	delete player;
-	map.clear();
+	
+	
 }
 
 void Window::eventhandler() {
@@ -49,11 +41,11 @@ void Window::eventhandler() {
 	teszt.setTexture(&texture);
 	Animation animation(&texture, sf::Vector2u(4, 2), 0.15f);
 	*/
-	std::vector<sf::CircleShape*> explosion_v;
+	std::vector<std::unique_ptr<sf::CircleShape>> explosion_v;
 	while (window->isOpen())
 	{
 		sf::Event event;
-		
+		sf::Vector2i pos;
 		deltaTime = clock.restart().asSeconds();
 		
 		while (window->pollEvent(event))
@@ -88,10 +80,13 @@ void Window::eventhandler() {
 					player->move(1, 0, asd);
 					std::cout << "jobbra" <<asd<< std::endl;
 				}
-				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
-					player->possible_firebolt_shoot();
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
+					player->possible_shoot(0);
 				}
-				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) {
+					player->possible_shoot(1);
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
 					player->switch_wizard();
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
@@ -99,44 +94,39 @@ void Window::eventhandler() {
 					//arrow degree up;
 					player->changeforce();
 				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+				{
+					//arrow degree up;
+					player->shoot();
+				}
+
 			}
 			if (event.type == sf::Event::MouseButtonPressed)
 			{
 
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
-					sf::Vector2i pos = sf::Mouse::getPosition(*window);
-
-					player->shoot("Firebolt", pos);
+					pos = sf::Mouse::getPosition(*window);
+								player->shoot("Firebolt", pos);
 					//ezt most valamiert nem rajzolja ki
-					explosion_v.push_back(new sf::CircleShape());
+					/*explosion_v.push_back(std::make_unique<sf::CircleShape>());
 					explosion_v[explosion_v.size() - 1]->setRadius(100.0f);
 					explosion_v[explosion_v.size() - 1]->setPosition(static_cast<float>(pos.x), static_cast<float>(pos.y));
 					explosion_v[explosion_v.size() - 1]->setOrigin(100.0f, 100.0f);
 					explosion_v[explosion_v.size() - 1]->setFillColor(sf::Color::Transparent);
 					explosion_v[explosion_v.size() - 1]->setOutlineColor(sf::Color::Red);
-					explosion_v[explosion_v.size() - 1]->setOutlineThickness(-2);
+					explosion_v[explosion_v.size() - 1]->setOutlineThickness(-2);*/
+					
+								map->explosion_happened(pos);
 
-					for (int i = 0; i < map.size(); i++) {
-						if (map[i]->caught_by_expl(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)))) {
-							std::cout << i << "-ik elem modosul \n";
-						}
-					}
+					
 				}
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
 				
 					explosion_v.clear();
-					map.clear();
-
-					map.push_back(new Block(100, 100, sf::Color::Green, 100, 100, window));
-					map.push_back(new Block(200, 100, sf::Color::Green, 100, 100, window));
-					map.push_back(new Block(300, 100, sf::Color::Green, 100, 100, window));
-					map.push_back(new Block(100, 200, sf::Color::Green, 100, 100, window));
-					map.push_back(new Block(200, 200, sf::Color::Green, 100, 100, window));
-					map.push_back(new Block(300, 200, sf::Color::Green, 100, 100, window));
-					map.push_back(new Block(100, 300, sf::Color::Green, 100, 100, window));
-					map.push_back(new Block(200, 300, sf::Color::Green, 100, 100, window));
-					map.push_back(new Block(300, 300, sf::Color::Green, 100, 100, window));
+					map = std::make_unique<Map>(100, 100, sf::Color(92, 51, 23, 255), 410, 430, window);
+									   
+	
 				}
 			}
 		}
@@ -151,9 +141,8 @@ void Window::eventhandler() {
 		//window.draw(rectangle);
 		
 		//window->draw(teszt);
-		for (int i = 0; i < map.size(); i++) {
-			map[i]->draw();
-		}
+		map->draw();
+
 		for (int i = 0; i < explosion_v.size(); i++) {
 			
 			window->draw(*explosion_v[i]);

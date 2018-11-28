@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
 #include<vector>
-
+#include <iostream>
 
 Player::Player(sf::RenderWindow *w , std::string name)
 {
@@ -39,8 +39,10 @@ void Player::draw() {
 			livingspells[i]->draw();
 		else {
 			//TODO erase helyett lehet nem ártana más
-
+			//TODO: linzi faszom te csináltad a memory leaket itt :D 
+			Spell* temp = livingspells[i];
 			livingspells.erase(livingspells.begin() + i);
+			delete temp;
 		}
 	}
 }
@@ -48,8 +50,27 @@ void Player::draw() {
 void Player::shoot(std::string spell_type,sf::Vector2i mousePos) {
 
 	
-	livingspells.push_back(new Firebolt(window,mousePos));
+	livingspells.push_back(new Firebolt(window, sf::Vector2f(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))));
 	wizard->incr_mana(-livingspells.back()->get_mana_cost());
+}
+
+void Player::shoot()
+{
+	Arrow* a = wizard->get_arrow();
+	if (a!=nullptr) {
+		float d = a->get_deg();
+		float f = a->get_force();
+		std::string type = a->get_type();
+		/*
+		float rx = 20;
+		float ry = rx * tan(d) - (pow(rx, 2)*9.8) / (2 * pow(f * 100, 2)*pow(cos(d), 2));
+		//TODO: livingspells.push_back(new Firebolt(window, sf::Vector2f(a->get_x , a->get_y) , d , f));
+		std::cout << "robbanas: " << rx << " " << ry <<"f: "<<f*100<<"d:"<<d<< "\n";
+		livingspells.push_back(new Firebolt(window, sf::Vector2f(rx*10+ a->get_x(), -ry+ a->get_y())));
+		*/
+		livingspells.push_back(new Firebolt(window, sf::Vector2f(200, 200)));
+		wizard->incr_mana(-livingspells.back()->get_mana_cost());
+	}
 }
 
 void Player::shootUpdate(float deltaTime) {
@@ -60,13 +81,17 @@ void Player::shootUpdate(float deltaTime) {
 
 }
 
-void Player::possible_firebolt_shoot()
+void Player::possible_shoot(int i)
 {
-	wizard->change_arrow();
-	//TODO: legyen a wizardnak egy nyilja, ami egy szögértéket tárol, azt lehet módosítani a nyilakkal, ha a nyil->isopened igaz.
+
+	wizard->change_curr_arrow(i);
+	
+	
 	//TODO: manabaron mutassa a costot
-	//TODO: nyíl letrehozása amit nyilakkal lehet mozgatni
+	
 }
+
+
 
 void Player::switch_wizard()
 {

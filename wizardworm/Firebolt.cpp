@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-Firebolt::Firebolt(sf::RenderWindow *window, sf::Vector2i mousePos)
+Firebolt::Firebolt(sf::RenderWindow *window, sf::Vector2f mousePos)
 {
 	mana_cost = 20;
 	damage = 30;
