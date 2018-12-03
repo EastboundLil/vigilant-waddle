@@ -12,7 +12,7 @@ Window::Window()
 
 	networkManager = ApplicationManager::getInstance().getNetworkManager();
 
-	map = std::make_unique<Map>(100, 100, sf::Color(92, 51, 23, 255), 410, 430, window);
+	map = std::make_unique<Map>(100, 100, sf::Color(92, 51, 23, 255), 200, 200, window , 50 , 50);
 }
 
 
@@ -97,9 +97,13 @@ void Window::eventhandler() {
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 				{
 					//arrow degree up;
-					player->shoot();
+					map->write_data();
 				}
-
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+				{
+					//arrow degree up;
+					map->write_data_to_file("map.txt");
+				}
 			}
 			if (event.type == sf::Event::MouseButtonPressed)
 			{
@@ -124,8 +128,8 @@ void Window::eventhandler() {
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
 				
 					explosion_v.clear();
-					map = std::make_unique<Map>(100, 100, sf::Color(92, 51, 23, 255), 410, 430, window);
-									   
+					//map = std::make_unique<Map>(100, 100, sf::Color(92, 51, 23, 255), 410, 430, window);
+					map->load_from_file("map.txt");
 	
 				}
 			}

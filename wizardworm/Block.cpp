@@ -1,17 +1,13 @@
 #include "Block.h"
-
 #include <iostream>
 #include <algorithm>
+#include <sstream>
 
 Block::Block(sf::RenderWindow *w)
 {
-
-	window = w;
-	
-	currID = ++ID;
-
-	
-	
+	window = w;	
+	currID = ++ID;	
+	Alive = true;
 }
 
 
@@ -23,55 +19,98 @@ Block::Block(float _x, float _y, sf::Color c, float _h, float _w, sf::RenderWind
 	width = _w;
 	currID = ++ID;
 	window = w;
-	// resize it to 5 points
+	Alive = true;
 	convex_v.push_back(new sf::ConvexShape());
 
 
-	//convex_v[0]->setPointCount(8);
-
-	// define the points
-	/*convex_v[0]->setPoint(0, sf::Vector2f(x, y));
-	convex_v[0]->setPoint(1, sf::Vector2f(x + width / 2, y));
-	convex_v[0]->setPoint(2, sf::Vector2f(x + width, y));
-	convex_v[0]->setPoint(3, sf::Vector2f(x + width, y + height / 2));
-	convex_v[0]->setPoint(4, sf::Vector2f(x + width, y + height));
-	convex_v[0]->setPoint(5, sf::Vector2f(x + width / 2, y + height));
-	convex_v[0]->setPoint(6, sf::Vector2f(x, y + height));
-	convex_v[0]->setPoint(7, sf::Vector2f(x, y + height / 2));*/
+	
+	
 	Xmin = x;
 	Xmax = x + width;
 	Ymin = y;
 	Ymax = y + height;
 
-	convex_v[0]->setPointCount(16);
-	convex_v[0]->setPoint(0, sf::Vector2f(x, y));
-	convex_v[0]->setPoint(1, sf::Vector2f(x + width / 4, y));
-	convex_v[0]->setPoint(2, sf::Vector2f(x + width / 2, y));
-	convex_v[0]->setPoint(3, sf::Vector2f(x + width*3 / 4, y));
-	convex_v[0]->setPoint(4, sf::Vector2f(x + width, y));
-	convex_v[0]->setPoint(5, sf::Vector2f(x + width, y + height/4));
-	convex_v[0]->setPoint(6, sf::Vector2f(x + width, y + height / 2));
-	convex_v[0]->setPoint(7, sf::Vector2f(x + width, y+3*height/4));
-	convex_v[0]->setPoint(8, sf::Vector2f(x + width, y + height));
-	convex_v[0]->setPoint(9, sf::Vector2f(x + 3*width/4, y + height));
-	convex_v[0]->setPoint(10, sf::Vector2f(x + width / 2, y + height));
-	convex_v[0]->setPoint(11, sf::Vector2f(x + width/4, y + height));
-	convex_v[0]->setPoint(12, sf::Vector2f(x, y + height));
-	convex_v[0]->setPoint(13, sf::Vector2f(x, y + 3*height/4));
-	convex_v[0]->setPoint(14, sf::Vector2f(x, y + height / 2));
-	convex_v[0]->setPoint(15, sf::Vector2f(x, y + height /4));
-
+	
+	set_res(16);
 
 	convex_v[0]->setFillColor(c);
 	convex_v[0]->setOutlineColor(sf::Color::Red);
 	convex_v[0]->setOutlineThickness(-1);
+
+
 }
+
+Block::Block(float _x, float _y, sf::Color c, float _h, float _w, sf::RenderWindow *w , int n , std::vector<sf::Vector2f> p)
+	:Drawable(_x, _y, c)
+{
+	height = _h;
+	width = _w;
+	currID = ++ID;
+	window = w;
+	Alive = true;
+	convex_v.push_back(new sf::ConvexShape());
+
+
+	if (p.size() == n) {
+		convex_v[0]->setPointCount(n);
+		for (int i = 0; i < convex_v[0]->getPointCount(); i++) {
+			convex_v[0]->setPoint(i, p[i]);
+		}
+	}
+	else {
+		std::cout <<p.size() <<" "<< n << " " << convex_v.size();
+	}
+	refresh_bounds(0);
+
+	convex_v[0]->setFillColor(c);
+	convex_v[0]->setOutlineColor(sf::Color::Red);
+	convex_v[0]->setOutlineThickness(-1);
+
+}
+
 
 Block::~Block()
 {
 	convex_v.clear();
 }
 
+void Block::set_res(int res) {
+	if (res == 8) {
+		convex_v[0]->setPointCount(8);
+		convex_v[0]->setPoint(0, sf::Vector2f(x, y));
+		convex_v[0]->setPoint(1, sf::Vector2f(x + width / 2, y));
+		convex_v[0]->setPoint(2, sf::Vector2f(x + width, y));
+		convex_v[0]->setPoint(3, sf::Vector2f(x + width, y + height / 2));
+		convex_v[0]->setPoint(4, sf::Vector2f(x + width, y + height));
+		convex_v[0]->setPoint(5, sf::Vector2f(x + width / 2, y + height));
+		convex_v[0]->setPoint(6, sf::Vector2f(x, y + height));
+		convex_v[0]->setPoint(7, sf::Vector2f(x, y + height / 2));
+	}
+	else if (res == 16) {
+	
+		convex_v[0]->setPointCount(16);
+		convex_v[0]->setPoint(0, sf::Vector2f(x, y));
+		convex_v[0]->setPoint(1, sf::Vector2f(x + width / 4, y));
+		convex_v[0]->setPoint(2, sf::Vector2f(x + width / 2, y));
+		convex_v[0]->setPoint(3, sf::Vector2f(x + width * 3 / 4, y));
+		convex_v[0]->setPoint(4, sf::Vector2f(x + width, y));
+		convex_v[0]->setPoint(5, sf::Vector2f(x + width, y + height / 4));
+		convex_v[0]->setPoint(6, sf::Vector2f(x + width, y + height / 2));
+		convex_v[0]->setPoint(7, sf::Vector2f(x + width, y + 3 * height / 4));
+		convex_v[0]->setPoint(8, sf::Vector2f(x + width, y + height));
+		convex_v[0]->setPoint(9, sf::Vector2f(x + 3 * width / 4, y + height));
+		convex_v[0]->setPoint(10, sf::Vector2f(x + width / 2, y + height));
+		convex_v[0]->setPoint(11, sf::Vector2f(x + width / 4, y + height));
+		convex_v[0]->setPoint(12, sf::Vector2f(x, y + height));
+		convex_v[0]->setPoint(13, sf::Vector2f(x, y + 3 * height / 4));
+		convex_v[0]->setPoint(14, sf::Vector2f(x, y + height / 2));
+		convex_v[0]->setPoint(15, sf::Vector2f(x, y + height / 4));
+	
+	
+	}
+
+
+}
 
 void Block::draw() {
 	for (int i = 0; i < convex_v.size(); i++) {
@@ -139,6 +178,26 @@ void Block::set_block_point(size_t i, size_t j ,  float _x , float _y)
 	//}
 
 }
+
+
+std::string Block::write_data() //returned data: "<posx> <posy> <ndbpont> <width> <height> <color_r> <color_g> <color_b> <x1> <y1> <x2> <y2> ... <xn> <yn> "
+{
+	std::stringstream ss;
+
+	//csak az elsõ blockot másolja át
+	ss <<x<<" "<<y<<" "<< convex_v[0]->getPointCount() << " "<<width<<" "<<height<<" "<<(int)convex_v[0]->getFillColor().r <<" "<<(int)convex_v[0]->getFillColor().g << " "<<(int)convex_v[0]->getFillColor().b ;
+	for (size_t i = 0; i < convex_v[0]->getPointCount(); i++) {
+		ss <<" "<< convex_v[0]->getPoint(i).x << " " << convex_v[0]->getPoint(i).y;
+	}
+
+	//std::cout << ss.str() << std::endl;
+	
+
+	return ss.str();
+}
+
+
+
 int d_to_center(sf::Vector2f blocpoint, sf::Vector2f expl) {
 	
 	return  pow((pow((blocpoint.x - expl.x), 2) + pow((blocpoint.y - expl.y), 2)), 0.5f);
@@ -146,8 +205,8 @@ int d_to_center(sf::Vector2f blocpoint, sf::Vector2f expl) {
 	
 }
 
-float Block::check_bound(float _x , int p , float old) { //itt azt nézem hogy a pontok kimozdulnak-e az eredeti négyzetbõl, de rosszul. ki kell számolni hogy meddig mozoghat el egy pont mindig.
-											// kezd túl bonyi lenni, biztos hogy megéri számolgatni? 	
+float Block::check_bound(float _x , int p , float old) { 
+											
 	if (p == 1) {
 		if (_x >= x && _x <= x + width) {
 			return _x;
@@ -236,7 +295,15 @@ void Block::del_point(int i, std::vector<bool> delablepoints) {
 			convex_v[i]->setPoint(k, sf::Vector2f(-1, -1));			
 		}
 		convex_v[i]->setPointCount(0);
-		//std::cout << currID << "kocka megsemmisult (igazabol nem) \n";
+
+		for (int j = 0; j < convex_v.size(); j++) {
+			if (convex_v[j]->getPointCount() != 0) {
+				return;
+			}
+		}
+		Alive = false;
+		convex_v.clear();
+		
 	
 	}
 	
@@ -271,7 +338,7 @@ void Block::del_point(int i, std::vector<bool> delablepoints) {
 
 
 /*
-todo2: eltolni nem kellene hagyni a kockát. eddig csak az eredeti kockából nem mehet ki, de mindig a saját határain belül kellene módosulnia. 
+
 kérdés: hogy a faszba kell egy random sokszöget csekkolni hogy benne van e a pont vagy nem? kurva nehezen -> kis kockák kellenek, maximum a robbanás sugarának fele
 solution: csökkentem a bounding negyzetet-> még mindig nem elég jó, de már valami
 
@@ -350,12 +417,11 @@ void Block::modify_coords(sf::Vector2f expl, float &newx, float &newy, sf::Vecto
 // r most csak constans. spelltõl független még 
 //random néha elszállnak pontok, furi
 
-bool Block::caught_by_expl(sf::Vector2f expl)
+bool Block::caught_by_expl(sf::Vector2f expl , float r)
 {
 
 	int c=0;
 	int d = 0;
-	int r = 100;
 	float newx;
 	float newy;
 	std::vector<bool> delable;
@@ -386,6 +452,11 @@ bool Block::caught_by_expl(sf::Vector2f expl)
 	
 	
 	return c>0;
+}
+
+bool Block::is_alive()
+{
+	return Alive;
 }
 
 int Block::ID = 0;

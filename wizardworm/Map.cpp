@@ -1,6 +1,8 @@
 #include "Map.h"
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
 
 Map::Map()
 {
@@ -146,10 +148,21 @@ Map::~Map()
 void Map::explosion_happened(sf::Vector2i pos)
 {
 	for (int i = 0; i < block_v.size(); i++) {
-		if (block_v[i]->caught_by_expl(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)))) {
+		if (block_v[i]->caught_by_expl(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)) , 50)) {
 			
 		}
 	}
+
+	if (!block_v.empty()) {
+		for (int i = block_v.size() - 1; i >= 0; i--) {
+			if (!block_v[i]->is_alive()) {
+				block_v.erase(block_v.begin()+i);
+			}
+		}
+	}
+
+
+
 }
 
 void Map::draw()
@@ -157,4 +170,107 @@ void Map::draw()
 	for (int i = 0; i < block_v.size(); i++) {
 		block_v[i]->draw();
 	}
+}
+
+std::vector<std::string> Map::write_data()
+{
+	std::vector<std::string> data_v;
+	for (int i = 0; i < block_v.size(); i++) {
+		data_v.push_back(block_v[i]->write_data());
+	}
+
+	return data_v;
+}
+
+void Map::write_data_to_file(std::string filename)
+{
+	std::ofstream of(filename);
+	
+	
+	for (int i = 0; i < block_v.size(); i++) {
+		of<<block_v[i]->write_data()<<std::endl;
+	}
+	std::cout << "kiirtam ide: " << "\n";
+	of.close();
+
+}
+
+
+
+void Map::load_from_file(std::string filename)
+{
+	std::ifstream f(filename);
+	if (f.fail()) {
+		std::cout << "rossz a fajl \n";
+		return;
+	}
+
+	std::vector<std::shared_ptr<Block>> old_v=block_v;
+
+	block_v.clear();
+
+	std::string line;	
+	std::stringstream ss;
+	std::string temp;
+
+	float posx, posy, h, w;
+	int r, g, b , n;	
+	std::vector<sf::Vector2f> points;
+
+	while (getline(f ,line)) {
+		//std::cout << line << "\n";
+		//block_v.push_back(make_new_block(line));
+		
+
+		
+		ss << line;
+		
+		ss>>temp;
+		posx = std::stof(temp);
+		ss >> temp;
+		posy = std::stof(temp);
+		ss >> temp;
+		n = std::stoi(temp);
+		ss >> temp;
+		w = std::stof(temp);
+		ss >> temp;
+		h = std::stof(temp);
+		ss >> temp;
+		r = std::stoi(temp);
+		ss >> temp;
+		g = std::stoi(temp);
+		ss >> temp;
+		b = std::stoi(temp);
+
+		
+		for (int i = 0; i < n; i++) {
+			points.push_back(sf::Vector2f(0, 0));
+			ss >> temp;
+			points[i].x=std::stof(temp);
+			ss >> temp;
+			points[i].y = std::stof(temp);
+			
+		}
+		std::cout << posx <<" "<<posy << " " <<n <<" "<< w << " " <<h << " " <<r << " " <<g << " " <<b<<" ";
+		for (int i = 0; i < points.size(); i++) {
+			std::cout << points[i].x << " " << points[i].y << " ";
+		}
+		std::cout << "\n \n";
+
+		
+		ss.clear();
+		ss.str("");
+
+		block_v.push_back(std::make_unique<Block>(posx, posy, sf::Color(r, g, b), h, w,  window , n, points ));
+		points.clear();
+			//block_v.push_back(std::make_unique<Block>(x + i * max_block_width, y + j * max_block_height, color, ry, max_block_width, window));
+		//returned data: "<posx> <posy> <ndbpont> <width> <height> <color_r> <color_g> <color_b> <x1> <y1> <x2> <y2> ... <xn> <yn> "
+	//float _x, float _y, sf::Color c, float _h, float _w, sf::RenderWindow *w
+
+
+	}
+
+
+	
+
 }
