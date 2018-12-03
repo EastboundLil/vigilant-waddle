@@ -25,5 +25,10 @@ public:
 	void write_data_to_file(std::string filename);
 	void load_from_file(std::string filename);
 	
+	/*testre vár még:*/
+
+	void make_solid(sf::Vector2i pos);
+	void make_destructible(sf::Vector2i pos);
+
 };
 

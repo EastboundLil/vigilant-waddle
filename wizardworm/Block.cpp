@@ -8,11 +8,12 @@ Block::Block(sf::RenderWindow *w)
 	window = w;	
 	currID = ++ID;	
 	Alive = true;
+	destructible = true;
 }
 
 
 
-Block::Block(float _x, float _y, sf::Color c, float _h, float _w, sf::RenderWindow *w)
+Block::Block(float _x, float _y, sf::Color c, float _h, float _w, sf::RenderWindow *w )
 	:Drawable(_x, _y, c)
 {
 	height = _h;
@@ -20,6 +21,7 @@ Block::Block(float _x, float _y, sf::Color c, float _h, float _w, sf::RenderWind
 	currID = ++ID;
 	window = w;
 	Alive = true;
+	destructible = true;
 	convex_v.push_back(new sf::ConvexShape());
 
 
@@ -40,7 +42,7 @@ Block::Block(float _x, float _y, sf::Color c, float _h, float _w, sf::RenderWind
 
 }
 
-Block::Block(float _x, float _y, sf::Color c, float _h, float _w, sf::RenderWindow *w , int n , std::vector<sf::Vector2f> p)
+Block::Block(float _x, float _y, sf::Color c, float _h, float _w, sf::RenderWindow *w , int n , std::vector<sf::Vector2f> p , bool d)
 	:Drawable(_x, _y, c)
 {
 	height = _h;
@@ -48,6 +50,7 @@ Block::Block(float _x, float _y, sf::Color c, float _h, float _w, sf::RenderWind
 	currID = ++ID;
 	window = w;
 	Alive = true;
+	destructible = d;
 	convex_v.push_back(new sf::ConvexShape());
 
 
@@ -205,8 +208,7 @@ int d_to_center(sf::Vector2f blocpoint, sf::Vector2f expl) {
 	
 }
 
-float Block::check_bound(float _x , int p , float old) { 
-											
+float Block::check_bound(float _x , int p , float old) { 											
 	if (p == 1) {
 		if (_x >= x && _x <= x + width) {
 			return _x;
@@ -214,7 +216,6 @@ float Block::check_bound(float _x , int p , float old) {
 		else {
 			return old;
 		}
-
 	}
 	else {
 		if (_x >= y && _x <= y + height) {
@@ -224,8 +225,110 @@ float Block::check_bound(float _x , int p , float old) {
 			return old;
 		}
 	}
-
 }
+
+float distance(sf::Vector2f p1, sf::Vector2f p2) {
+	return pow(pow(p1.x - p2.x, 2.0f) + pow(p1.y - p2.y, 2.0f), 0.5);
+}
+
+struct Line {
+	sf::Vector2f p1;
+	sf::Vector2f p2;
+
+	bool contains(sf::Vector2f point) const {
+		float margin = 0.01;
+		return std::abs((distance(p1, point) + distance(point, p2)) - distance(p1, p2)) < margin;
+	}
+};
+
+sf::Vector2f intersection(Line lineA, Line lineB) {
+	int x1 = lineA.p1.x;
+	int y1 = lineA.p1.y;
+	int x2 = lineA.p2.x;
+	int y2 = lineA.p2.y;
+
+	int x3 = lineB.p1.x;
+	int y3 = lineB.p1.y;
+	int x4 = lineB.p2.x;
+	int y4 = lineB.p2.y;
+
+	try {
+		if (((x1 - x2)*(y3 - y4) - (y1 - y2)*(x3 - x4)) != 0) {
+			double retX = ((x1*y2 - y1 * x2)*(x3 - x4) - (x1 - x2)*(x3*y4 - y3 * x4)) / ((x1 - x2)*(y3 - y4) - (y1 - y2)*(x3 - x4));
+			double retY = ((x1*y2 - y1 * x2)*(y3 - y4) - (y1 - y2)*(x3*y4 - y3 * x4)) / ((x1 - x2)*(y3 - y4) - (y1 - y2)*(x3 - x4));
+			return sf::Vector2f(retX, retY);
+		}
+		
+			
+			return sf::Vector2f(0, 0);
+		
+	}
+	catch (std:: exception) {
+		
+		throw new std::exception("");
+	}
+}
+
+std::vector<sf::Vector2f> getIntersectionPoints(sf::ConvexShape shape, sf::Vector2f point) {
+	std::vector<sf::Vector2f> intersectPoints;
+	sf::Vector2f p;
+	bool crossingLine;  // This will be used to avoid duplicated points on special cases
+
+	if (shape.getPointCount() < 3) {
+		return intersectPoints;
+	}
+
+	sf::FloatRect bounds = shape.getLocalBounds();
+
+	// To determine horizontal line, we use two points, one at leftmost side of the shape (in fact, its bound) and the other at rightmost side
+	Line pointLine;
+	Line shapeLine;
+	pointLine.p1 = sf::Vector2f(bounds.left, point.y);
+	pointLine.p2 = sf::Vector2f(bounds.left + bounds.width, point.y);
+
+	unsigned int nPoints = shape.getPointCount();
+
+	for (int i = 0; i < nPoints; ++i) {
+		try {
+			shapeLine.p1 = shape.getPoint(i % nPoints);         // Last one will be nPoints-1
+			shapeLine.p2 = shape.getPoint((i + 1) % nPoints);   // So this one must be 0 in order to check last side (returning to origin)
+			crossingLine = (shapeLine.p1.y >= point.y && shapeLine.p2.y <= point.y) || (shapeLine.p2.y >= point.y && shapeLine.p1.y <= point.y);
+			p = intersection(shapeLine, pointLine);
+			if (crossingLine && shapeLine.contains(p))
+				intersectPoints.push_back(p);
+		}
+		catch (std::runtime_error e) {
+			std::cout << "error \n";
+		}
+	}
+
+	return intersectPoints;
+}
+
+bool Block::contains( sf::Vector2f point) {
+	sf::ConvexShape shape = *convex_v[0];
+	std::vector<sf::Vector2f> intersectPoints = getIntersectionPoints(shape, point);
+	int nodesAtLeft = 0;
+	int nodesAtRight = 0;
+	for (sf::Vector2f po : intersectPoints) {
+		if (po.x < point.x) {
+			nodesAtLeft++;
+		}
+		else if (po.x > point.x) {
+			nodesAtRight++;
+		}
+	}
+	return ((nodesAtLeft % 2) == 1) && ((nodesAtRight % 2) == 1);
+}
+
+
+
+
+
+
+
+
+
 
 void Block::refresh_bounds(int i)
 {
@@ -341,7 +444,7 @@ void Block::del_point(int i, std::vector<bool> delablepoints) {
 
 kérdés: hogy a faszba kell egy random sokszöget csekkolni hogy benne van e a pont vagy nem? kurva nehezen -> kis kockák kellenek, maximum a robbanás sugarának fele
 solution: csökkentem a bounding negyzetet-> még mindig nem elég jó, de már valami
-
+TODO: talaltam egy jó algoritmust, a belekattintást már azzal nézem, ha van idõm a modifykoordsot is csinálom
 */
 
 void Block::modify_coords(sf::Vector2f expl, float &newx, float &newy, sf::Vector2f pos ,float r ) {
@@ -419,44 +522,61 @@ void Block::modify_coords(sf::Vector2f expl, float &newx, float &newy, sf::Vecto
 
 bool Block::caught_by_expl(sf::Vector2f expl , float r)
 {
+	if (destructible) {
+		int c = 0;
+		int d = 0;
+		float newx;
+		float newy;
+		std::vector<bool> delable;
+		for (int i = 0; i < convex_v.size(); i++) {
+			delable.clear();
+			delable.resize(convex_v[i]->getPointCount(), false);
+			for (int j = 0; j < (int)convex_v[i]->getPointCount(); j++) {
+				d = d_to_center(convex_v[i]->getPoint(j), expl);
+				if (d < r) {   //robbanássugár
+					modify_coords(expl, newx, newy, convex_v[i]->getPoint(j), r);
 
-	int c=0;
-	int d = 0;
-	float newx;
-	float newy;
-	std::vector<bool> delable;
-	for (int i = 0; i < convex_v.size(); i++) {
-		delable.clear();
-		delable.resize(convex_v[i]->getPointCount(), false);
-		for(int j=0 ; j<(int)convex_v[i]->getPointCount();j++){
-			d = d_to_center(convex_v[i]->getPoint(j), expl);
-			if (d<r) {   //robbanássugár
-				modify_coords(expl, newx, newy, convex_v[i]->getPoint(j) , r );
-				
-				if (newx == convex_v[i]->getPoint(j).x && newy == convex_v[i]->getPoint(j).y) {
-					//std::cout << newx << " " << convex_v[i]->getPoint(j).x << " y: " << newy << " " << convex_v[i]->getPoint(j).y << "\n";
-					delable[j] = true;
+					if (newx == convex_v[i]->getPoint(j).x && newy == convex_v[i]->getPoint(j).y) {
+						//std::cout << newx << " " << convex_v[i]->getPoint(j).x << " y: " << newy << " " << convex_v[i]->getPoint(j).y << "\n";
+						delable[j] = true;
+					}
+					else {
+						set_block_point(i, j, newx, newy);
+						refresh_bounds(i);
+						//std::cout << "modosult a " << currID << ". kocka " << j << ". edik pontja" << newx << " " << newy << std::endl;
+					}
+					newx = newy = 0;
+
 				}
-				else {
-					set_block_point(i, j, newx, newy);
-					refresh_bounds(i);
-					//std::cout << "modosult a " << currID << ". kocka " << j << ". edik pontja" << newx << " " << newy << std::endl;
-				}
-				newx = newy = 0;
-				
-			}			
+			}
+			del_point(i, delable);
 		}
-		del_point(i, delable);
+
+		return c > 0;
 	}
-	
-	
-	
-	return c>0;
+	return false;
 }
 
 bool Block::is_alive()
 {
 	return Alive;
 }
+
+
+void Block::set_destructible(sf::Vector2i pos, bool destr)
+{
+	if (contains(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)) )) {
+		std::cout << "Benne \n";
+		destructible = destr;
+		if (!destr) {
+			convex_v[0]->setFillColor(sf::Color::Black);
+		}
+		else {
+			convex_v[0]->setFillColor(sf::Color(92, 51, 23, 255));
+		}
+	}
+}
+
+
 
 int Block::ID = 0;

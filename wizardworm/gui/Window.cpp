@@ -12,7 +12,7 @@ Window::Window()
 
 	networkManager = ApplicationManager::getInstance().getNetworkManager();
 
-	map = std::make_unique<Map>(100, 100, sf::Color(92, 51, 23, 255), 200, 200, window , 50 , 50);
+	map = std::make_unique<Map>(100, 100, sf::Color(92, 51, 23, 255), 400, 400, window , 50 , 50);
 }
 
 
@@ -26,8 +26,8 @@ Window::~Window()
 
 void Window::eventhandler() {
 
-	//TODO Innen folyt. köv. holnap
-	//Még átt kell rakni hogy bizonyos pontban legyen a robbanás ---- spell hatására -- adott ideig
+	//TODO Innen folyt. kï¿½v. holnap
+	//Mï¿½g ï¿½tt kell rakni hogy bizonyos pontban legyen a robbanï¿½s ---- spell hatï¿½sï¿½ra -- adott ideig
 
 
 	float deltaTime = 0.0f;
@@ -99,6 +99,13 @@ void Window::eventhandler() {
 					//arrow degree up;
 					map->write_data_to_file("map.txt");
 				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+				{
+					
+					map->make_solid(sf::Mouse::getPosition(*window));
+				}
+
+				
 			}
 			if (event.type == sf::Event::MouseButtonPressed)
 			{
@@ -118,22 +125,24 @@ void Window::eventhandler() {
 					explosion_v[explosion_v.size() - 1]->setOutlineColor(sf::Color::Red);
 					explosion_v[explosion_v.size() - 1]->setOutlineThickness(-2);*/
 					
-					map->explosion_happened(pos);
-
+								map->explosion_happened(pos);
+								
+					
 					
 				}
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
 				
-					explosion_v.clear();
+					//explosion_v.clear();
 					//map = std::make_unique<Map>(100, 100, sf::Color(92, 51, 23, 255), 410, 430, window);
-					map->load_from_file("map.txt");
+					//map->load_from_file("map.txt");
+					map->make_destructible(sf::Mouse::getPosition(*window));
 	
 				}
 			}
 		}
 
 
-		//TODO õket is
+		//TODO ï¿½ket is
 		/*animation.Update(deltaTime);
 		teszt.setTextureRect(animation.uvRect);*/
 		
