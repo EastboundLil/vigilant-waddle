@@ -121,3 +121,7 @@ void Player::changeforce()
 {
 	wizard->wizforce();
 }
+
+Arrow* Player::get_arrow() {
+	return wizard->get_arrow();
+}

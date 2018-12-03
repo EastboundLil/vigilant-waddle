@@ -14,7 +14,7 @@ Arrow::Arrow(float _x, float _y , sf::RenderWindow * w , std::string t) :  Drawa
 	force = minf;
 	opened = false;
 	type = t;
-	if (t == "firebolt") {
+	/*if (t == "firebolt") {
 		rect.setFillColor(sf::Color(205, 51, 51, 200));
 	}
 	else if (t == "laserbeam") {
@@ -23,9 +23,22 @@ Arrow::Arrow(float _x, float _y , sf::RenderWindow * w , std::string t) :  Drawa
 	rect.setSize(sf::Vector2f(100 * force, 10));
 	rect.setOrigin(0, 5);
 	rect.setRotation(deg);
-	
+	*/
+
 	window = w;
 	std::cout << "elso force: " << force << "\n";
+
+	if (!texture.loadFromFile("arrow.png")) {
+		system("pause");
+	}
+	texture.setSmooth(true);
+	float scale = 0.07f;
+	sprite.setScale(scale, scale);
+	sprite.setTexture(texture);
+	sprite.setOrigin(0, 5);
+	sprite.setRotation(deg);
+
+	
 }
 
 
@@ -37,10 +50,14 @@ void Arrow::draw()
 {
 
 	if (opened) {
-
-		rect.setRotation(deg);
-		rect.setPosition(x, y);
-		window->draw(rect);
+		
+		//rect.setRotation(deg);
+		//rect.setPosition(x, y);
+		//window->draw(rect);
+		
+		sprite.setRotation(deg);
+		sprite.setPosition(x, y-10);
+		window->draw(sprite);
 		
 	}
 }
@@ -69,7 +86,9 @@ void Arrow::incr_deg(float a)
 	else {
 		deg += a;
 	}
-	rect.setRotation(deg);
+	//rect.setRotation(deg);
+
+	sprite.setRotation(deg);
 }
 
 void Arrow::incr_force(float a)
@@ -84,7 +103,9 @@ void Arrow::incr_force(float a)
 		force += a;
 	}
 	std::cout <<force <<" \n";
-	rect.setSize(sf::Vector2f(force * 100, 10));
+	//rect.setSize(sf::Vector2f(force * 100, 10));
+
+	sprite.setScale(sf::Vector2f(force/8 + 0.07f, 0.07f));
 }
 
 std::string Arrow::get_type()

@@ -23,24 +23,19 @@ Window::~Window()
 	
 }
 
+
 void Window::eventhandler() {
 
 	//TODO Innen folyt. köv. holnap
 	//Még átt kell rakni hogy bizonyos pontban legyen a robbanás ---- spell hatására -- adott ideig
+
 
 	float deltaTime = 0.0f;
 	sf::Clock clock;
 	float asd = 1;
 
 
-	
-	/*sf::RectangleShape teszt(sf::Vector2f(100.0f,100.0f));
-	sf::Texture texture;
-	texture.loadFromFile("WormsAnimation.png");
-	texture.setSmooth(true);
-	teszt.setTexture(&texture);
-	Animation animation(&texture, sf::Vector2u(4, 2), 0.15f);
-	*/
+
 	std::vector<std::unique_ptr<sf::CircleShape>> explosion_v;
 	while (window->isOpen())
 	{
@@ -111,7 +106,9 @@ void Window::eventhandler() {
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
 					pos = sf::Mouse::getPosition(*window);
-								player->shoot("Firebolt", pos);
+					player->shoot("Firebolt", pos);
+
+
 					//ezt most valamiert nem rajzolja ki
 					/*explosion_v.push_back(std::make_unique<sf::CircleShape>());
 					explosion_v[explosion_v.size() - 1]->setRadius(100.0f);
@@ -121,7 +118,7 @@ void Window::eventhandler() {
 					explosion_v[explosion_v.size() - 1]->setOutlineColor(sf::Color::Red);
 					explosion_v[explosion_v.size() - 1]->setOutlineThickness(-2);*/
 					
-								map->explosion_happened(pos);
+					map->explosion_happened(pos);
 
 					
 				}
@@ -144,6 +141,7 @@ void Window::eventhandler() {
 		window->clear(sf::Color::Cyan);
 		//window.draw(rectangle);
 		
+
 		//window->draw(teszt);
 		map->draw();
 

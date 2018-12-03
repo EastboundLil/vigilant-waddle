@@ -30,5 +30,7 @@ public:
 	void aim(bool up);
 	void changeforce();
 
+	Arrow* get_arrow();
+
 };
 

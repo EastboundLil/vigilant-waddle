@@ -11,6 +11,10 @@ class Arrow : public Drawable
 	sf::RenderWindow *window;
 	sf::RectangleShape rect;
 	std::string type;
+
+	sf::Texture texture;
+	sf::Sprite sprite;
+
 public:
 	Arrow();
 	Arrow(float _x, float _y , sf::RenderWindow *w, std::string type);
