@@ -16,7 +16,7 @@ public:
 	bool caught_by_expl(sf::Vector2f expl);
 protected:
 	sf::RenderWindow *window;
-	std::vector<sf::ConvexShape*> convex_v;
+	std::vector<sf::ConvexShape*> convex_v;  //
 	float height;
 	float width;
 	float Xmin , Xmax , Ymin, Ymax;

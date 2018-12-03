@@ -16,7 +16,7 @@ Block::Block(sf::RenderWindow *w)
 
 
 
-Block::Block(float _x, float _y, sf::Color c, float _h, float _w , sf::RenderWindow *w)
+Block::Block(float _x, float _y, sf::Color c, float _h, float _w, sf::RenderWindow *w)
 	:Drawable(_x, _y, c)
 {
 	height = _h;
@@ -27,22 +27,39 @@ Block::Block(float _x, float _y, sf::Color c, float _h, float _w , sf::RenderWin
 	convex_v.push_back(new sf::ConvexShape());
 
 
-	convex_v[0]->setPointCount(8);
-	
+	//convex_v[0]->setPointCount(8);
+
 	// define the points
-	convex_v[0]->setPoint(0, sf::Vector2f(x, y ));
-	convex_v[0]->setPoint(1, sf::Vector2f(x+width/2, y));
-	convex_v[0]->setPoint(2, sf::Vector2f(x+width, y));
-	convex_v[0]->setPoint(3, sf::Vector2f(x+width, y+height/2));
-	convex_v[0]->setPoint(4, sf::Vector2f(x+width, y+height));
-	convex_v[0]->setPoint(5, sf::Vector2f(x+width/2, y+height));
-	convex_v[0]->setPoint(6, sf::Vector2f(x, y+height));
-	convex_v[0]->setPoint(7, sf::Vector2f(x, y+height/2));
+	/*convex_v[0]->setPoint(0, sf::Vector2f(x, y));
+	convex_v[0]->setPoint(1, sf::Vector2f(x + width / 2, y));
+	convex_v[0]->setPoint(2, sf::Vector2f(x + width, y));
+	convex_v[0]->setPoint(3, sf::Vector2f(x + width, y + height / 2));
+	convex_v[0]->setPoint(4, sf::Vector2f(x + width, y + height));
+	convex_v[0]->setPoint(5, sf::Vector2f(x + width / 2, y + height));
+	convex_v[0]->setPoint(6, sf::Vector2f(x, y + height));
+	convex_v[0]->setPoint(7, sf::Vector2f(x, y + height / 2));*/
 	Xmin = x;
 	Xmax = x + width;
 	Ymin = y;
 	Ymax = y + height;
 
+	convex_v[0]->setPointCount(16);
+	convex_v[0]->setPoint(0, sf::Vector2f(x, y));
+	convex_v[0]->setPoint(1, sf::Vector2f(x + width / 4, y));
+	convex_v[0]->setPoint(2, sf::Vector2f(x + width / 2, y));
+	convex_v[0]->setPoint(3, sf::Vector2f(x + width*3 / 4, y));
+	convex_v[0]->setPoint(4, sf::Vector2f(x + width, y));
+	convex_v[0]->setPoint(5, sf::Vector2f(x + width, y + height/4));
+	convex_v[0]->setPoint(6, sf::Vector2f(x + width, y + height / 2));
+	convex_v[0]->setPoint(7, sf::Vector2f(x + width, y+3*height/4));
+	convex_v[0]->setPoint(8, sf::Vector2f(x + width, y + height));
+	convex_v[0]->setPoint(9, sf::Vector2f(x + 3*width/4, y + height));
+	convex_v[0]->setPoint(10, sf::Vector2f(x + width / 2, y + height));
+	convex_v[0]->setPoint(11, sf::Vector2f(x + width/4, y + height));
+	convex_v[0]->setPoint(12, sf::Vector2f(x, y + height));
+	convex_v[0]->setPoint(13, sf::Vector2f(x, y + 3*height/4));
+	convex_v[0]->setPoint(14, sf::Vector2f(x, y + height / 2));
+	convex_v[0]->setPoint(15, sf::Vector2f(x, y + height /4));
 
 
 	convex_v[0]->setFillColor(c);
@@ -52,7 +69,7 @@ Block::Block(float _x, float _y, sf::Color c, float _h, float _w , sf::RenderWin
 
 Block::~Block()
 {
-
+	convex_v.clear();
 }
 
 
@@ -62,7 +79,7 @@ void Block::draw() {
 	}
 	
 }
-
+/*
 void Block::split_shape(size_t i) {
 
 	int n = convex_v[0]->getPointCount();
@@ -106,7 +123,7 @@ void Block::split_shape(size_t i) {
 	delete d;
 
 }
-
+*/
 
 void Block::set_block_point(size_t i, size_t j ,  float _x , float _y)
 {
