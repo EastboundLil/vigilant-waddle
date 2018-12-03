@@ -22,7 +22,7 @@ Block::Block(float _x, float _y, sf::Color c, float _h, float _w, sf::RenderWind
 	window = w;
 	Alive = true;
 	destructible = true;
-	convex_v.push_back(new sf::ConvexShape());
+	convex_v=std::make_shared<sf::ConvexShape>();
 
 
 	
@@ -35,9 +35,9 @@ Block::Block(float _x, float _y, sf::Color c, float _h, float _w, sf::RenderWind
 	
 	set_res(16);
 
-	convex_v[0]->setFillColor(c);
-	convex_v[0]->setOutlineColor(sf::Color::Red);
-	convex_v[0]->setOutlineThickness(-1);
+	convex_v->setFillColor(c);
+	convex_v->setOutlineColor(sf::Color::Red);
+	convex_v->setOutlineThickness(-1);
 
 
 }
@@ -51,63 +51,61 @@ Block::Block(float _x, float _y, sf::Color c, float _h, float _w, sf::RenderWind
 	window = w;
 	Alive = true;
 	destructible = d;
-	convex_v.push_back(new sf::ConvexShape());
+	convex_v = std::make_shared<sf::ConvexShape>();
 
 
 	if (p.size() == n) {
-		convex_v[0]->setPointCount(n);
-		for (int i = 0; i < convex_v[0]->getPointCount(); i++) {
-			convex_v[0]->setPoint(i, p[i]);
+		convex_v->setPointCount(n);
+		for (int i = 0; i < convex_v->getPointCount(); i++) {
+			convex_v->setPoint(i, p[i]);
 		}
 	}
-	else {
-		std::cout <<p.size() <<" "<< n << " " << convex_v.size();
-	}
-	refresh_bounds(0);
+	
+	refresh_bounds();
 
-	convex_v[0]->setFillColor(c);
-	convex_v[0]->setOutlineColor(sf::Color::Red);
-	convex_v[0]->setOutlineThickness(-1);
+	convex_v->setFillColor(c);
+	convex_v->setOutlineColor(sf::Color::Red);
+	convex_v->setOutlineThickness(-1);
 
 }
 
 
 Block::~Block()
 {
-	convex_v.clear();
+	
 }
 
 void Block::set_res(int res) {
 	if (res == 8) {
-		convex_v[0]->setPointCount(8);
-		convex_v[0]->setPoint(0, sf::Vector2f(x, y));
-		convex_v[0]->setPoint(1, sf::Vector2f(x + width / 2, y));
-		convex_v[0]->setPoint(2, sf::Vector2f(x + width, y));
-		convex_v[0]->setPoint(3, sf::Vector2f(x + width, y + height / 2));
-		convex_v[0]->setPoint(4, sf::Vector2f(x + width, y + height));
-		convex_v[0]->setPoint(5, sf::Vector2f(x + width / 2, y + height));
-		convex_v[0]->setPoint(6, sf::Vector2f(x, y + height));
-		convex_v[0]->setPoint(7, sf::Vector2f(x, y + height / 2));
+		convex_v->setPointCount(8);
+		convex_v->setPoint(0, sf::Vector2f(x, y));
+		convex_v->setPoint(1, sf::Vector2f(x + width / 2, y));
+		convex_v->setPoint(2, sf::Vector2f(x + width, y));
+		convex_v->setPoint(3, sf::Vector2f(x + width, y + height / 2));
+		convex_v->setPoint(4, sf::Vector2f(x + width, y + height));
+		convex_v->setPoint(5, sf::Vector2f(x + width / 2, y + height));
+		convex_v->setPoint(6, sf::Vector2f(x, y + height));
+		convex_v->setPoint(7, sf::Vector2f(x, y + height / 2));
 	}
 	else if (res == 16) {
 	
-		convex_v[0]->setPointCount(16);
-		convex_v[0]->setPoint(0, sf::Vector2f(x, y));
-		convex_v[0]->setPoint(1, sf::Vector2f(x + width / 4, y));
-		convex_v[0]->setPoint(2, sf::Vector2f(x + width / 2, y));
-		convex_v[0]->setPoint(3, sf::Vector2f(x + width * 3 / 4, y));
-		convex_v[0]->setPoint(4, sf::Vector2f(x + width, y));
-		convex_v[0]->setPoint(5, sf::Vector2f(x + width, y + height / 4));
-		convex_v[0]->setPoint(6, sf::Vector2f(x + width, y + height / 2));
-		convex_v[0]->setPoint(7, sf::Vector2f(x + width, y + 3 * height / 4));
-		convex_v[0]->setPoint(8, sf::Vector2f(x + width, y + height));
-		convex_v[0]->setPoint(9, sf::Vector2f(x + 3 * width / 4, y + height));
-		convex_v[0]->setPoint(10, sf::Vector2f(x + width / 2, y + height));
-		convex_v[0]->setPoint(11, sf::Vector2f(x + width / 4, y + height));
-		convex_v[0]->setPoint(12, sf::Vector2f(x, y + height));
-		convex_v[0]->setPoint(13, sf::Vector2f(x, y + 3 * height / 4));
-		convex_v[0]->setPoint(14, sf::Vector2f(x, y + height / 2));
-		convex_v[0]->setPoint(15, sf::Vector2f(x, y + height / 4));
+		convex_v->setPointCount(16);
+		convex_v->setPoint(0, sf::Vector2f(x, y));
+		convex_v->setPoint(1, sf::Vector2f(x + width / 4, y));
+		convex_v->setPoint(2, sf::Vector2f(x + width / 2, y));
+		convex_v->setPoint(3, sf::Vector2f(x + width * 3 / 4, y));
+		convex_v->setPoint(4, sf::Vector2f(x + width, y));
+		convex_v->setPoint(5, sf::Vector2f(x + width, y + height / 4));
+		convex_v->setPoint(6, sf::Vector2f(x + width, y + height / 2));
+		convex_v->setPoint(7, sf::Vector2f(x + width, y + 3 * height / 4));
+		convex_v->setPoint(8, sf::Vector2f(x + width, y + height));
+		convex_v->setPoint(9, sf::Vector2f(x + 3 * width / 4, y + height));
+		convex_v->setPoint(10, sf::Vector2f(x + width / 2, y + height));
+		convex_v->setPoint(11, sf::Vector2f(x + width / 4, y + height));
+		convex_v->setPoint(12, sf::Vector2f(x, y + height));
+		convex_v->setPoint(13, sf::Vector2f(x, y + 3 * height / 4));
+		convex_v->setPoint(14, sf::Vector2f(x, y + height / 2));
+		convex_v->setPoint(15, sf::Vector2f(x, y + height / 4));
 	
 	
 	}
@@ -116,85 +114,21 @@ void Block::set_res(int res) {
 }
 
 void Block::draw() {
-	for (int i = 0; i < convex_v.size(); i++) {
-		window->draw(*convex_v[i]);
-	}
-	
-}
-/*
-void Block::split_shape(size_t i) {
-
-	int n = convex_v[0]->getPointCount();
-	int s = (i + n / 2);
-	if (s >= n) {
-		s -= n;
-	}
-	//std::cout << "i: " << i << "s: " << s << "\n";
-
-	if (s < i) {
-		int t = i;
-		i = s;
-		s = t;
-	}
-
-	sf::ConvexShape* c1=new sf::ConvexShape();
-	sf::ConvexShape* c2= new sf::ConvexShape();
-	c1->setPointCount(i + 1 + n - s);
-	c2->setPointCount(s-i+1);
-	for (int k = 0; k <= i; k++) {
-		c1->setPoint(k, convex_v[0]->getPoint(k));
-	}
-	for (int k = 0; k <= s-i; k++) {
-		c2->setPoint(k, convex_v[0]->getPoint(i + k));
-	}
-	//c nek a 
-	for (int k =0 ; k <n-s ; k++) {
-		c1->setPoint(i + 1 + k, convex_v[0]->getPoint(s + k));
-	}
-
-	c1->setFillColor(sf::Color::Green);
-	c2->setFillColor(sf::Color::Green);
-	c1->setOutlineColor(sf::Color::Red);
-	c2->setOutlineColor(sf::Color::Red);
-	c1->setOutlineThickness(3);
-	c2->setOutlineThickness(3);
-	sf::ConvexShape* d = convex_v[0];
-	convex_v.pop_back();
-	convex_v.push_back(c1);
-	convex_v.push_back(c2);
-	delete d;
-
-}
-*/
-
-void Block::set_block_point(size_t i, size_t j ,  float _x , float _y)
-{
-	//std::cout << "x: " << _x << " _y. " << _y << std::endl;
-
-	//if (_x > x && _x<x+width &&  _y> y && _y < y+height) {
-
-		convex_v[i]->setPoint(j, sf::Vector2f(_x, _y));
-		/*if (_y > y + height / 2) {
-			split_shape(i);
-			std::cout << "split \n";
-		}*/
-	//}
-
+		window->draw(*convex_v);	
 }
 
 
-std::string Block::write_data() //returned data: "<posx> <posy> <ndbpont> <width> <height> <color_r> <color_g> <color_b> <x1> <y1> <x2> <y2> ... <xn> <yn> "
+
+
+
+std::string Block::write_data() //returned data: "<posx> <posy> <ndbpont> <width> <height> <color_r> <color_g> <color_b> <destructible> <x1> <y1> <x2> <y2> ... <xn> <yn> "
 {
 	std::stringstream ss;
-
-	//csak az elsõ blockot másolja át
-	ss <<x<<" "<<y<<" "<< convex_v[0]->getPointCount() << " "<<width<<" "<<height<<" "<<(int)convex_v[0]->getFillColor().r <<" "<<(int)convex_v[0]->getFillColor().g << " "<<(int)convex_v[0]->getFillColor().b ;
-	for (size_t i = 0; i < convex_v[0]->getPointCount(); i++) {
-		ss <<" "<< convex_v[0]->getPoint(i).x << " " << convex_v[0]->getPoint(i).y;
-	}
-
-	//std::cout << ss.str() << std::endl;
 	
+	ss <<x<<" "<<y<<" "<< convex_v->getPointCount() << " "<<width<<" "<<height<<" "<<(int)convex_v->getFillColor().r <<" "<<(int)convex_v->getFillColor().g << " "<<(int)convex_v->getFillColor().b<<" "<<destructible ;
+	for (size_t i = 0; i < convex_v->getPointCount(); i++) {
+		ss <<" "<< convex_v->getPoint(i).x << " " << convex_v->getPoint(i).y;
+	}
 
 	return ss.str();
 }
@@ -306,8 +240,8 @@ std::vector<sf::Vector2f> getIntersectionPoints(sf::ConvexShape shape, sf::Vecto
 }
 
 bool Block::contains( sf::Vector2f point) {
-	sf::ConvexShape shape = *convex_v[0];
-	std::vector<sf::Vector2f> intersectPoints = getIntersectionPoints(shape, point);
+	
+	std::vector<sf::Vector2f> intersectPoints = getIntersectionPoints(*convex_v, point);
 	int nodesAtLeft = 0;
 	int nodesAtRight = 0;
 	for (sf::Vector2f po : intersectPoints) {
@@ -330,25 +264,25 @@ bool Block::contains( sf::Vector2f point) {
 
 
 
-void Block::refresh_bounds(int i)
+void Block::refresh_bounds()
 {
-	float xmin = convex_v[i]->getPoint(0).x;
-	float ymin = convex_v[i]->getPoint(0).y;
+	float xmin = convex_v->getPoint(0).x;
+	float ymin = convex_v->getPoint(0).y;
 	float ymax = ymin;
 	float xmax = xmin;
 
-	for (int j = 0; j < convex_v[i]->getPointCount(); j++) {
-		if (convex_v[i]->getPoint(j).x > xmax) {
-			xmax = convex_v[i]->getPoint(j).x;
+	for (int j = 0; j < convex_v->getPointCount(); j++) {
+		if (convex_v->getPoint(j).x > xmax) {
+			xmax = convex_v->getPoint(j).x;
 		}
-		if (convex_v[i]->getPoint(j).x < xmin) {
-			xmin = convex_v[i]->getPoint(j).x;
+		if (convex_v->getPoint(j).x < xmin) {
+			xmin = convex_v->getPoint(j).x;
 		}
-		if (convex_v[i]->getPoint(j).y > ymax) {
-			ymax = convex_v[i]->getPoint(j).y;
+		if (convex_v->getPoint(j).y > ymax) {
+			ymax = convex_v->getPoint(j).y;
 		}
-		if (convex_v[i]->getPoint(j).y < ymin) {
-			ymin = convex_v[i]->getPoint(j).y;
+		if (convex_v->getPoint(j).y < ymin) {
+			ymin = convex_v->getPoint(j).y;
 		}
 	}
 	Xmax = xmax;
@@ -358,7 +292,7 @@ void Block::refresh_bounds(int i)
 
 }
 
-void Block::del_point(int i, std::vector<bool> delablepoints) {
+void Block::del_point( std::vector<bool> delablepoints) {
 
 	int sum=0;
 	for (int j = 0; j < delablepoints.size(); j++) {
@@ -367,10 +301,10 @@ void Block::del_point(int i, std::vector<bool> delablepoints) {
 		
 	}
 	
-	if (sum == convex_v[i]->getPointCount()) { return; }
+	if (sum == convex_v->getPointCount()) { return; }
 	//std::cout << "maradando pontok: " << sum<<"\n";
 	if (sum > 2) {
-		sf::ConvexShape* newshape = new sf::ConvexShape();
+		std::shared_ptr<sf::ConvexShape> newshape = std::make_shared<sf::ConvexShape>();
 		newshape->setFillColor(color);
 		newshape->setOutlineColor(sf::Color::Red);
 		newshape->setOutlineThickness(-1);
@@ -384,28 +318,28 @@ void Block::del_point(int i, std::vector<bool> delablepoints) {
 				nextcopyable++;
 			}
 			//std::cout << "belemasoljuk a " << nextcopyable << " elemet a " << k << ".adik helyre \n";
-			if (nextcopyable >= convex_v[i]->getPointCount()) { std::cout << "elbasztad mert tulfutott a copyable \n"; }
-			newshape->setPoint(k, convex_v[i]->getPoint(nextcopyable));
+			if (nextcopyable >= convex_v->getPointCount()) { std::cout << "elbasztad mert tulfutott a copyable \n"; }
+			newshape->setPoint(k, convex_v->getPoint(nextcopyable));
 			nextcopyable++;
 
 		}
-		sf::ConvexShape* temp = convex_v[i];
-		convex_v[i] = newshape;
-		delete temp;
+		std::shared_ptr<sf::ConvexShape> temp = convex_v;
+		convex_v = newshape;
+		
 	}
 	else {
-		for (int k = 0; k < convex_v[i]->getPointCount(); k++) {
-			convex_v[i]->setPoint(k, sf::Vector2f(-1, -1));			
+		for (int k = 0; k < convex_v->getPointCount(); k++) {
+			convex_v->setPoint(k, sf::Vector2f(-1, -1));			
 		}
-		convex_v[i]->setPointCount(0);
+		convex_v->setPointCount(0);
 
-		for (int j = 0; j < convex_v.size(); j++) {
-			if (convex_v[j]->getPointCount() != 0) {
+		
+			if (convex_v->getPointCount() != 0) {
 				return;
 			}
-		}
+		
 		Alive = false;
-		convex_v.clear();
+		
 		
 	
 	}
@@ -528,29 +462,29 @@ bool Block::caught_by_expl(sf::Vector2f expl , float r)
 		float newx;
 		float newy;
 		std::vector<bool> delable;
-		for (int i = 0; i < convex_v.size(); i++) {
+		
 			delable.clear();
-			delable.resize(convex_v[i]->getPointCount(), false);
-			for (int j = 0; j < (int)convex_v[i]->getPointCount(); j++) {
-				d = d_to_center(convex_v[i]->getPoint(j), expl);
+			delable.resize(convex_v->getPointCount(), false);
+			for (int j = 0; j < (int)convex_v->getPointCount(); j++) {
+				d = d_to_center(convex_v->getPoint(j), expl);
 				if (d < r) {   //robbanássugár
-					modify_coords(expl, newx, newy, convex_v[i]->getPoint(j), r);
+					modify_coords(expl, newx, newy, convex_v->getPoint(j), r);
 
-					if (newx == convex_v[i]->getPoint(j).x && newy == convex_v[i]->getPoint(j).y) {
+					if (newx == convex_v->getPoint(j).x && newy == convex_v->getPoint(j).y) {
 						//std::cout << newx << " " << convex_v[i]->getPoint(j).x << " y: " << newy << " " << convex_v[i]->getPoint(j).y << "\n";
 						delable[j] = true;
 					}
 					else {
-						set_block_point(i, j, newx, newy);
-						refresh_bounds(i);
+						convex_v->setPoint(j , sf::Vector2f(newx,newy));
+						refresh_bounds();
 						//std::cout << "modosult a " << currID << ". kocka " << j << ". edik pontja" << newx << " " << newy << std::endl;
 					}
 					newx = newy = 0;
 
 				}
 			}
-			del_point(i, delable);
-		}
+			del_point( delable);
+		
 
 		return c > 0;
 	}
@@ -565,16 +499,16 @@ bool Block::is_alive()
 
 void Block::set_destructible(sf::Vector2i pos, bool destr)
 {
-	if (contains(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)) )) {
+	
 		std::cout << "Benne \n";
 		destructible = destr;
 		if (!destr) {
-			convex_v[0]->setFillColor(sf::Color::Black);
+			convex_v->setFillColor(sf::Color::Black);
 		}
 		else {
-			convex_v[0]->setFillColor(sf::Color(92, 51, 23, 255));
+			convex_v->setFillColor(sf::Color(92, 51, 23, 255));
 		}
-	}
+	
 }
 
 

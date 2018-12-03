@@ -104,6 +104,11 @@ void Window::eventhandler() {
 					
 					map->make_solid(sf::Mouse::getPosition(*window));
 				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
+				{
+
+					map->load_from_file("map.txt");
+				}
 
 				
 			}
