@@ -266,10 +266,7 @@ void Map::load_from_file(std::string filename)
 
 		block_v.push_back(std::make_unique<Block>(posx, posy, sf::Color(r, g, b), h, w,  window , n, points , d ));
 		points.clear();
-			//block_v.push_back(std::make_unique<Block>(x + i * max_block_width, y + j * max_block_height, color, ry, max_block_width, window));
-		//returned data: "<posx> <posy> <ndbpont> <width> <height> <color_r> <color_g> <color_b> <x1> <y1> <x2> <y2> ... <xn> <yn> "
-	//float _x, float _y, sf::Color c, float _h, float _w, sf::RenderWindow *w
-
+		
 
 	}
 
@@ -281,8 +278,11 @@ void Map::load_from_file(std::string filename)
 void Map::make_solid(sf::Vector2i pos)
 {
 	for (int i = 0; i < block_v.size(); i++) {
-		if (block_v[i]->contains(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)))) {
-			block_v[i]->set_destructible(pos, false);
+		if (block_v[i]->check_bound(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)))) {
+			//std::cout << "benne a boundingboxban \n";
+			if (block_v[i]->contains(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)))) {
+				block_v[i]->set_destructible(pos, false);
+			}
 		}
 	}
 
@@ -291,8 +291,13 @@ void Map::make_solid(sf::Vector2i pos)
 void Map::make_destructible(sf::Vector2i pos)
 {
 	for (int i = 0; i < block_v.size(); i++) {
-		if (block_v[i]->contains(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)))) {
-			block_v[i]->set_destructible(pos, true);
+		
+		if (block_v[i]->check_bound(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)))) {
+			//std::cout << "benne a boundingboxban \n";
+			if (block_v[i]->contains(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)))) {
+				
+				block_v[i]->set_destructible(pos, true);
+			}
 		}
 	
 	}

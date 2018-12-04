@@ -142,23 +142,9 @@ int d_to_center(sf::Vector2f blocpoint, sf::Vector2f expl) {
 	
 }
 
-float Block::check_bound(float _x , int p , float old) { 											
-	if (p == 1) {
-		if (_x >= x && _x <= x + width) {
-			return _x;
-		}
-		else {
-			return old;
-		}
-	}
-	else {
-		if (_x >= y && _x <= y + height) {
-			return _x;
-		}
-		else {
-			return old;
-		}
-	}
+float Block::check_bound(sf::Vector2f pos) { 											
+	
+	return pos.x >= Xmin && pos.x <= Xmax && pos.y <= Ymax && pos.y >= Ymin;
 }
 
 float distance(sf::Vector2f p1, sf::Vector2f p2) {
@@ -170,7 +156,7 @@ struct Line {
 	sf::Vector2f p2;
 
 	bool contains(sf::Vector2f point) const {
-		float margin = 0.01;
+		float margin = 0.5;
 		return std::abs((distance(p1, point) + distance(point, p2)) - distance(p1, p2)) < margin;
 	}
 };

@@ -19,6 +19,7 @@ public:
 	bool is_alive();
 	void set_destructible(sf::Vector2i pos, bool destr);
 	bool contains(sf::Vector2f point);
+	float check_bound(sf::Vector2f pos); //most nem használom
 protected:
 	sf::RenderWindow *window;
 	std::shared_ptr<sf::ConvexShape> convex_v;  //
@@ -35,7 +36,7 @@ private:
 	int currID;
 	void del_point( std::vector<bool> delablepoints);
 	//void split_shape(size_t i);
-	float check_bound(float _x, int p , float old); //most nem használom
+	
 	void refresh_bounds();
 	void set_res(int res);
 	void set_block_point(size_t i, size_t j, float _x, float _y);
