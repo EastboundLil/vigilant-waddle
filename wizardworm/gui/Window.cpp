@@ -12,7 +12,7 @@ Window::Window()
 
 	networkManager = ApplicationManager::getInstance().getNetworkManager();
 
-	map = std::make_unique<Map>(100, 100, sf::Color(92, 51, 23, 255), 400, 400, window , 50 , 50);
+	map = std::make_unique<Map>(new MinorMap(100, 100, sf::Color(92, 51, 23, 255), 400, 400, window , 50 , 50));
 }
 
 
