@@ -187,7 +187,6 @@
     <ClInclude Include="engine\ServerEngine.h" />
     <ClInclude Include="gui\Window.h" />
     <ClInclude Include="gui\Wizard.h" />
-    <ClInclude Include="RoundBlock.h" />
     <ClInclude Include="Spell.h" />
   </ItemGroup>
   <ItemGroup>
@@ -217,7 +216,6 @@
     <ClCompile Include="engine\ServerEngine.cpp" />
     <ClCompile Include="gui\Window.cpp" />
     <ClCompile Include="gui\Wizard.cpp" />
-    <ClCompile Include="RoundBlock.cpp" />
     <ClCompile Include="Spell.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

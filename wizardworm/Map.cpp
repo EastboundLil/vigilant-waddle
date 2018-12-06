@@ -4,15 +4,17 @@
 #include <fstream>
 #include <sstream>
 
-Map::Map()
+Map::Map(sf::RenderWindow *w)
 {
-	
+	window = w;
 	
 }
 
-Map::Map(std::shared_ptr<MinorMap> minormap)
+Map::Map(std::shared_ptr<MinorMap> minormap , sf::RenderWindow *w)
 
 {
+	
+	window = w;
 	minormap_v.push_back(minormap);
 	
 }
@@ -23,6 +25,11 @@ Map::Map(std::shared_ptr<MinorMap> minormap)
 
 Map::~Map()
 {
+}
+
+void Map::add_minormap(std::shared_ptr<MinorMap> new_mmap)
+{
+	minormap_v.push_back(new_mmap);
 }
 
 void Map::explosion_happened(sf::Vector2i pos)
@@ -43,34 +50,26 @@ void Map::draw()
 
 }
 
-std::vector<std::string> Map::write_data()
+std::stringstream Map::write_data()
 {
-	std::vector<std::string> data_v;
-	std::vector<std::string> temp;
+	std::stringstream ss;
+	
 	for (int i = 0; i < minormap_v.size(); i++) {
-		temp=(minormap_v[i]->write_data);
-		for (int j = 0; j < temp.size(); j++) {
-			data_v.push_back(temp[j]);
-		}
+		ss<<(minormap_v[i]->write_data()).str();
+		ss << "\n";
 	}
 
 	
 
-	return data_v;
+	return ss;
 }
 
 void Map::write_data_to_file(std::string filename)
 {
 	std::ofstream of(filename);
-	std::vector<std::string> temp;
 	
-	for (int i = 0; i < minormap_v.size(); i++) {
-		
-		temp = minormap_v[i]->write_data();
-		for (int j = 0; j < temp.size(); j++) {
-			of<<temp[i]<<std::endl;
-		}
-	}
+	
+	of << write_data().str();
 	std::cout << "kiirtam ide: " << "\n";
 	of.close();
 
@@ -80,12 +79,70 @@ void Map::write_data_to_file(std::string filename)
 
 void Map::load_from_file(std::string filename)
 {
-	/*std::ifstream f(filename);
+	
+
+	std::ifstream f(filename);
+	std::stringstream ss;
+	std::string line;
+
+		//std::cout << "benivagyok es buzi";
+
 	if (f.fail()) {
 		std::cout << "rossz a fajl \n";
 		return;
 	}
-	*/
+	
+	minormap_v.clear();
+
+	while (getline(f, line)) {
+		
+		ss.clear();
+		ss.str("");
+		ss << line;
+		std::string w;
+		ss >> w;
+		if (w != "begin") {
+			
+			continue;
+
+		}else {
+			//std::cout << "minormap: \n";
+			ss.clear();
+			ss.str( "");
+			
+			while(getline(f, line)){
+
+				
+				
+				
+				if ( line.substr(0, line.find(" ")) == "end") {
+					
+					
+					break;
+				}
+				else {
+					ss << line << "\n";
+				}
+					
+					
+				
+			}
+			
+			minormap_v.push_back(std::make_shared<MinorMap>(window));
+			//std::cout << ss.str()<<"minorvege \n";
+
+			minormap_v[minormap_v.size() - 1]->load(ss.str());
+			ss.clear();
+			ss << "";
+		
+		}
+
+	}
+	
+	
+	std::cout << "a mapnak " << minormap_v.size() << " eleme van";
+
+
 	//TODO: egy fájl van az egész mapra, ezért valszeg a fájlszerkezetet meg kell változtatni. itt dolgozom fel a fajlt, és a loadot a minormapoknak adom
 
 	/*minormap_v.clear();
@@ -158,28 +215,33 @@ void Map::load_from_file(std::string filename)
 
 void Map::make_solid(sf::Vector2i pos)
 {
-	for (int i = 0; i < block_v.size(); i++) {
-		if (block_v[i]->check_bound(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)))) {
+	for (int i = 0; i < minormap_v.size(); i++) {
+
+		minormap_v[i]->make_solid(pos);
+
+		/*if (block_v[i]->check_bound(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)))) {
 			//std::cout << "benne a boundingboxban \n";
 			if (block_v[i]->contains(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)))) {
 				block_v[i]->set_destructible(pos, false);
 			}
-		}
+		}*/
 	}
 
 }
 
 void Map::make_destructible(sf::Vector2i pos)
 {
-	for (int i = 0; i < block_v.size(); i++) {
+	for (int i = 0; i < minormap_v.size(); i++) {
 		
-		if (block_v[i]->check_bound(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)))) {
+		minormap_v[i]->make_destructible(pos);
+
+		/*if (block_v[i]->check_bound(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)))) {
 			//std::cout << "benne a boundingboxban \n";
 			if (block_v[i]->contains(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)))) {
 				
 				block_v[i]->set_destructible(pos, true);
 			}
-		}
+		}*/
 	
 	}
 }

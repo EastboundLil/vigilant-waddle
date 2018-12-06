@@ -12,7 +12,7 @@ class MinorMap :
 	sf::RenderWindow* window;
 public:
 
-	MinorMap();
+	MinorMap(sf::RenderWindow *w);
 	MinorMap(float _x, float _y, sf::Color c, float _h, float _w, sf::RenderWindow *w);
 	MinorMap(float _x, float _y, sf::Color c, float _h, float _w, sf::RenderWindow *w, float mbh, float mbw);
 
@@ -20,12 +20,12 @@ public:
 
 	void explosion_happened(sf::Vector2i pos);
 	void draw();
-	std::vector<std::string> write_data();
+	std::stringstream write_data();
 	void write_data_to_file(std::string filename);
-	void load_from_file(std::string filename);
+	void load(std::string to_load);
 
 	/*testre vár még:*/
-
+	void make_me_round();
 	void make_solid(sf::Vector2i pos);
 	void make_destructible(sf::Vector2i pos);
 

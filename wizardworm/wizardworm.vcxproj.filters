@@ -60,7 +60,6 @@
     <ClCompile Include="Map.cpp">
       <Filter>gui\sources</Filter>
     </ClCompile>
-    <ClCompile Include="RoundBlock.cpp" />
     <ClCompile Include="MinorMap.cpp">
       <Filter>gui\sources</Filter>
     </ClCompile>
@@ -146,7 +145,6 @@
     <ClInclude Include="Map.h">
       <Filter>gui\headers</Filter>
     </ClInclude>
-    <ClInclude Include="RoundBlock.h" />
     <ClInclude Include="MinorMap.h">
       <Filter>gui\headers</Filter>
     </ClInclude>

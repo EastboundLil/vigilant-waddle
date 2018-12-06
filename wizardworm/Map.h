@@ -6,17 +6,18 @@
 
 class Map {
 	std::vector<std::shared_ptr<MinorMap>> minormap_v;
+	sf::RenderWindow *window;
 public:
 
-	Map();
-	Map(std::shared_ptr<MinorMap> minormap);
+	Map(sf::RenderWindow *w);
+	Map(std::shared_ptr<MinorMap> minormap , sf::RenderWindow *w);
 
 
 	~Map();
-
+	void add_minormap(std::shared_ptr<MinorMap> new_mmap);
 	void explosion_happened(sf::Vector2i pos);
 	void draw();
-	std::vector<std::string> write_data();
+	std::stringstream write_data();
 	void write_data_to_file(std::string filename);
 	void load_from_file(std::string filename);
 	

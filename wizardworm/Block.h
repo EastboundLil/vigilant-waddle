@@ -20,6 +20,7 @@ public:
 	void set_destructible(sf::Vector2i pos, bool destr);
 	bool contains(sf::Vector2f point);
 	float check_bound(sf::Vector2f pos); //most nem használom
+	bool inside_an_ellipse(sf::Vector2f c, sf::Vector2f r);
 protected:
 	sf::RenderWindow *window;
 	std::shared_ptr<sf::ConvexShape> convex_v;  //

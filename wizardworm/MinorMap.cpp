@@ -6,10 +6,12 @@
 #include <fstream>
 #include <sstream>
 
-MinorMap::MinorMap()
+MinorMap::MinorMap(sf::RenderWindow *w)
 {
 	width = 0;
 	height = 0;
+	
+	window = w;
 
 }
 
@@ -174,14 +176,15 @@ void MinorMap::draw()
 	}
 }
 
-std::vector<std::string> MinorMap::write_data()
+std::stringstream MinorMap::write_data()
 {
-	std::vector<std::string> data_v;
+	std::stringstream data_ss;
+	data_ss << "begin" << " " << block_v.size()<<"\n";
 	for (int i = 0; i < block_v.size(); i++) {
-		data_v.push_back(block_v[i]->write_data());
+		data_ss<<(block_v[i]->write_data());
 	}
-
-	return data_v;
+	data_ss << "end " << "\n";
+	return data_ss;
 }
 
 void MinorMap::write_data_to_file(std::string filename)
@@ -199,13 +202,9 @@ void MinorMap::write_data_to_file(std::string filename)
 
 
 
-void MinorMap::load_from_file(std::string filename)
+void MinorMap::load(std::string to_load)
 {
-	std::ifstream f(filename);
-	if (f.fail()) {
-		std::cout << "rossz a fajl \n";
-		return;
-	}
+	
 
 	std::vector<std::shared_ptr<Block>> old_v = block_v;
 
@@ -213,20 +212,22 @@ void MinorMap::load_from_file(std::string filename)
 
 	std::string line;
 	std::stringstream ss;
+	std::stringstream ssfull;
 	std::string temp;
 
 	float posx, posy, h, w;
 	int r, g, b, n;
 	bool d;
 	std::vector<sf::Vector2f> points;
-
-	while (getline(f, line)) {
-		//std::cout << line << "\n";
+	ssfull << to_load;
+	//std::cout << "ebbol epitkezek: " << ssfull.str() << "\n";
+	while (std::getline(ssfull, line)) {
+		
 		//block_v.push_back(make_new_block(line));
 
 
-
 		ss << line;
+		
 
 		ss >> temp;
 		posx = std::stof(temp);
@@ -256,25 +257,44 @@ void MinorMap::load_from_file(std::string filename)
 			points[i].y = std::stof(temp);
 
 		}
-		std::cout << posx << " " << posy << " " << n << " " << w << " " << h << " " << r << " " << g << " " << b << " ";
-		for (int i = 0; i < points.size(); i++) {
-			std::cout << points[i].x << " " << points[i].y << " ";
-		}
-		std::cout << "\n \n";
+		
 
 
 		ss.clear();
 		ss.str("");
-
+	
 		block_v.push_back(std::make_unique<Block>(posx, posy, sf::Color(r, g, b), h, w, window, n, points, d));
 		points.clear();
 
 
 	}
 
+	std::cout << "az egyik minornak " << block_v.size() <<" eleme van \n";
+
+
+}
+
+void MinorMap::make_me_round()
+{
+	if (height != 0 && width != 0) {
+		
+		sf::Vector2f c = sf::Vector2f(static_cast<float>(x + width / 2), static_cast<float>(y + height / 2));
+		sf::Vector2f r = sf::Vector2f(static_cast<float>(width / 2), static_cast<float>(width / 2));
 
 
 
+		for (int i = 0; i < block_v.size(); i++) {
+		
+			if (!block_v[i]->inside_an_ellipse(c , r)) {
+				block_v[i]=block_v[block_v.size()-1];
+				block_v.pop_back();
+			}
+
+
+
+
+		}
+	}
 }
 
 void MinorMap::make_solid(sf::Vector2i pos)

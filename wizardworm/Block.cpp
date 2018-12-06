@@ -114,6 +114,7 @@ void Block::set_res(int res) {
 }
 
 void Block::draw() {
+	
 		window->draw(*convex_v);	
 }
 
@@ -129,7 +130,7 @@ std::string Block::write_data() //returned data: "<posx> <posy> <ndbpont> <width
 	for (size_t i = 0; i < convex_v->getPointCount(); i++) {
 		ss <<" "<< convex_v->getPoint(i).x << " " << convex_v->getPoint(i).y;
 	}
-
+	ss << "\n";
 	return ss.str();
 }
 
@@ -145,6 +146,25 @@ int d_to_center(sf::Vector2f blocpoint, sf::Vector2f expl) {
 float Block::check_bound(sf::Vector2f pos) { 											
 	
 	return pos.x >= Xmin && pos.x <= Xmax && pos.y <= Ymax && pos.y >= Ymin;
+}
+
+
+bool point_inside_an_ellipse(sf::Vector2f p ,sf::Vector2f c, sf::Vector2f r) {
+	
+	return ( powf(p.x - c.x, 2) / powf(r.x, 2) ) + (powf(p.y - c.y, 2) / powf(r.y, 2)) <= 1;
+
+}
+
+bool Block::inside_an_ellipse(sf::Vector2f c, sf::Vector2f r)
+{
+	int sum = 0;
+
+	for (int i = 0; i < convex_v->getPointCount(); i++) {
+		if (point_inside_an_ellipse(convex_v->getPoint(i), c, r))
+			sum++;
+	}
+
+	return sum == convex_v->getPointCount();
 }
 
 float distance(sf::Vector2f p1, sf::Vector2f p2) {

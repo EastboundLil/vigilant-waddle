@@ -12,7 +12,11 @@ Window::Window()
 
 	networkManager = ApplicationManager::getInstance().getNetworkManager();
 
-	map = std::make_unique<Map>(new MinorMap(100, 100, sf::Color(92, 51, 23, 255), 400, 400, window , 50 , 50));
+	std::shared_ptr<MinorMap> round = std::make_shared<MinorMap>(100, 100, sf::Color(92, 51, 23, 255), 400, 400, window, 20, 20);
+	round->make_me_round();
+
+	map = std::make_unique<Map>(round , window);
+	//map->add_minormap(std::make_shared<MinorMap>(300, 100, sf::Color(92, 51, 23, 255), 160, 160, window, 30, 30));
 }
 
 
@@ -92,7 +96,7 @@ void Window::eventhandler() {
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 				{
 					//arrow degree up;
-					map->write_data();
+					//map->write_data();
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
 				{
