@@ -155,21 +155,71 @@ bool point_inside_an_ellipse(sf::Vector2f p ,sf::Vector2f c, sf::Vector2f r) {
 
 }
 
-bool Block::inside_an_ellipse(sf::Vector2f c, sf::Vector2f r)
-{
-	int sum = 0;
-
-	for (int i = 0; i < convex_v->getPointCount(); i++) {
-		if (point_inside_an_ellipse(convex_v->getPoint(i), c, r))
-			sum++;
-	}
-
-	return sum == convex_v->getPointCount();
-}
-
 float distance(sf::Vector2f p1, sf::Vector2f p2) {
 	return pow(pow(p1.x - p2.x, 2.0f) + pow(p1.y - p2.y, 2.0f), 0.5);
 }
+
+sf::Vector2f new_point(sf::Vector2f old, sf::Vector2f c, sf::Vector2f r) {
+
+	while (!point_inside_an_ellipse(old, c, r)) {
+		old.x = old.x +   (c.x - old.x) / distance(old, c);
+		old.y = old.y +   (c.y - old.y) / distance(old, c);
+	}
+	return old;
+
+	/*std::cout << "regi ami kint volt : " << old.x << " " << old.y << " center: " << c.x << " " << c.y << "sugarak: " << r.x << " " << r.y << "\n";
+	//1.step: old and c defined line and c,r defined ellipse intersection:
+	float m = (old.y-c.y)/(old.x-c.x);
+	float bl =c.y-c.x*m;
+	float a = 1 + powf((r.x*m) / r.y, 2);
+	float be = powf(r.x / r.y, 2) * 2 * m*(bl - c.y) - 2 * c.x;
+	float c1 = -powf(r.x, 2) + powf((r.x*c.x) / r.y, 2) - powf(r.x / r.y, 2) * 2 * bl*c.y + powf(c.x, 2) + powf((r.x*bl) / r.y, 2);
+
+	
+
+	sf::Vector2f x(((-be + powf(powf(be, 2) - 4*c1*a, 0.5)) / 2*a), (-be - powf(powf(be, 2) - 4 * c1*a, 0.5)) / 2*a);
+	sf::Vector2f y(m*x.x + bl, m*x.y + bl);
+
+	std::cout << "uj lehetséges pontok: " << x.x << " " << y.x << " es: " << x.y << " " << y.y << "\n";
+
+
+	if (distance(old, sf::Vector2f(x.x, y.x)) < distance(old, sf::Vector2f(x.y, y.y))) {
+		std::cout << "választott: " << x.x << " " << y.x << "\n";
+		return sf::Vector2f(x.x, y.x);
+	}
+	else {
+		std::cout << "választott: " << x.y << " " << y.y << "\n";
+		return sf::Vector2f(x.y, y.y);
+	}*/
+	
+	
+
+	
+}
+
+bool Block::inside_an_ellipse(sf::Vector2f c, sf::Vector2f r)
+{
+	std::vector<int> bad;
+
+	for (int i = 0; i < convex_v->getPointCount(); i++) {
+		if (!point_inside_an_ellipse(convex_v->getPoint(i), c, r)) {
+			bad.push_back(i);
+		}		
+	}
+	if (bad.size() == convex_v->getPointCount()) { return false; }
+	else if (bad.size() == 0) { return true; }
+
+	for (int i = 0; i < bad.size(); i++) {
+		convex_v->setPoint(bad[i] , new_point(convex_v->getPoint(bad[i]) , c , r));
+	}
+	
+	//convex_v->setPoint(0, new_point(convex_v->getPoint(0), c, r));
+
+
+	return true;
+}
+
+
 
 struct Line {
 	sf::Vector2f p1;
@@ -503,10 +553,10 @@ bool Block::is_alive()
 }
 
 
-void Block::set_destructible(sf::Vector2i pos, bool destr)
+void Block::set_destructible( bool destr)
 {
 	
-		std::cout << "Benne \n";
+		
 		destructible = destr;
 		if (!destr) {
 			convex_v->setFillColor(sf::Color::Black);

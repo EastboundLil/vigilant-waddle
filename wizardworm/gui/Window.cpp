@@ -1,9 +1,11 @@
 #include "stdafx.h"
 #include "Window.h"
 #include "Animation.h"
+
 #include <iostream>
 
 #include "ApplicationManager.h"
+
 
 Window::Window()
 {
@@ -12,11 +14,12 @@ Window::Window()
 
 	networkManager = ApplicationManager::getInstance().getNetworkManager();
 
-	std::shared_ptr<MinorMap> round = std::make_shared<MinorMap>(100, 100, sf::Color(92, 51, 23, 255), 400, 400, window, 20, 20);
+	std::shared_ptr<MinorMap> round = std::make_shared<MinorMap>(100, 100, sf::Color(92, 51, 23, 255), 200, 400, window, 40, 40);
 	round->make_me_round();
 
 	map = std::make_unique<Map>(round , window);
-	//map->add_minormap(std::make_shared<MinorMap>(300, 100, sf::Color(92, 51, 23, 255), 160, 160, window, 30, 30));
+	map->add_minormap(std::make_shared<MinorMap>(500, 100, sf::Color(92, 51, 23, 255), 160, 160, window, 50, 30));
+	map->add_minormap(std::make_shared<MinorMap>(100, 300, sf::Color(92, 51, 23, 255), 160, 160, window, 10, 30));
 }
 
 
@@ -37,6 +40,10 @@ void Window::eventhandler() {
 	float deltaTime = 0.0f;
 	sf::Clock clock;
 	float asd = 1;
+	sf::CircleShape ellipse(200);
+	ellipse.setScale(1, 1);
+	ellipse.setPosition(100,100);
+	ellipse.setFillColor(sf::Color::Green);
 
 
 
@@ -159,9 +166,10 @@ void Window::eventhandler() {
 		window->clear(sf::Color::Cyan);
 		//window.draw(rectangle);
 		
-
+		
 		//window->draw(teszt);
 		map->draw();
+		//window->draw(ellipse);
 
 		for (int i = 0; i < explosion_v.size(); i++) {
 			
@@ -169,7 +177,9 @@ void Window::eventhandler() {
 		}
 		
 		player->draw();
+		
 		window->display();
+		
 	}
 
 }

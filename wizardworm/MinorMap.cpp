@@ -279,20 +279,15 @@ void MinorMap::make_me_round()
 	if (height != 0 && width != 0) {
 		
 		sf::Vector2f c = sf::Vector2f(static_cast<float>(x + width / 2), static_cast<float>(y + height / 2));
-		sf::Vector2f r = sf::Vector2f(static_cast<float>(width / 2), static_cast<float>(width / 2));
+		sf::Vector2f r = sf::Vector2f(static_cast<float>(width / 2), static_cast<float>(height / 2));
 
 
 
-		for (int i = 0; i < block_v.size(); i++) {
-		
-			if (!block_v[i]->inside_an_ellipse(c , r)) {
-				block_v[i]=block_v[block_v.size()-1];
-				block_v.pop_back();
+		for (int i = block_v.size()-1; i >=0 ; i--) {		
+			if (!block_v[i]->inside_an_ellipse(c , r)) {				
+				block_v.erase(block_v.begin() + i);				
+				//block_v[i]->set_destructible(false);
 			}
-
-
-
-
 		}
 	}
 }
@@ -303,7 +298,7 @@ void MinorMap::make_solid(sf::Vector2i pos)
 		if (block_v[i]->check_bound(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)))) {
 			//std::cout << "benne a boundingboxban \n";
 			if (block_v[i]->contains(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)))) {
-				block_v[i]->set_destructible(pos, false);
+				block_v[i]->set_destructible( false);
 			}
 		}
 	}
@@ -318,7 +313,7 @@ void MinorMap::make_destructible(sf::Vector2i pos)
 			//std::cout << "benne a boundingboxban \n";
 			if (block_v[i]->contains(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)))) {
 
-				block_v[i]->set_destructible(pos, true);
+				block_v[i]->set_destructible( true);
 			}
 		}
 
