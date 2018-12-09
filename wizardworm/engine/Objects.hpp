@@ -106,7 +106,7 @@ public:
 	Entity* GetCurrentEntity() { return entities[currentEntity]; }
 	void SetCurrentEntity(int id) { currentEntity = id; }
 	int GetEntityCount() { return entities.size(); }
-	Entity* GetEntityWithNum(int id) { return entities[id]; }
+	Entity* GetEntityWithNum(int id) { if (id > 0 && id < entities.size()) return entities[id]; return nullptr; }
 	void ResetAllToStart() {
 		for (Entity* ent : entities)
 			ent->ResetToStart();
