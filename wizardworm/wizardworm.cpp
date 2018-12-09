@@ -12,9 +12,7 @@ int main()
 	ApplicationManager::getInstance().setGuiManager(std::make_shared<Window>());
 	ApplicationManager::getInstance().setEngineManager(std::make_shared<ServerEngine>());
 
-	std::shared_ptr<IWindow> window = ApplicationManager::getInstance().getGuiManager();
-	
-	window->eventhandler();
+	ApplicationManager::getInstance().getGuiManager()->eventhandler();
 	
 	return 0;
 }

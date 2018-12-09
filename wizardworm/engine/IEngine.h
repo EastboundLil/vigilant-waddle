@@ -2,14 +2,12 @@
 #include "Objects.hpp"
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include "ApplicationManager.h"
+
 class IEngine
 {
 public:
 	IEngine();
 	virtual ~IEngine();
-
-	void setNetworkManager();
 
 	//még ki kell találni, hogy milyen formában küldjék a movesetet
 	virtual std::vector<Data> GenerateMoveset() = 0;
