@@ -2,6 +2,7 @@
 #include "Objects.hpp"
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include "Wizard.h"
 
 class IEngine
 {
@@ -15,7 +16,7 @@ public:
 
 	virtual void Move(bool up, bool left, bool right);
 
-	virtual void AddPlayer(std::vector<Drawable*> entities);
+	virtual void AddPlayer(std::vector<Wizard*> entities);
 
 	virtual void SendData();
 	virtual void ReceiveData();

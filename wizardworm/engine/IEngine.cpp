@@ -17,6 +17,7 @@ IEngine::IEngine()
 
 	engineType = EngineType::Undefined;
 	currentEngineState = EngineState::Waiting;
+	currentPlayer = 0;
 }
 
 
@@ -85,9 +86,12 @@ void IEngine::Move(bool up, bool left, bool right)
 		data.Right = true;
 }
 
-void IEngine::AddPlayer(std::vector<Drawable*> entities)
+void IEngine::AddPlayer(std::vector<Wizard*> entities)
 {
-	PlayerData* pd = new PlayerData(entities);
+	std::vector<Drawable*> items;
+	for (Wizard* w : entities)
+		items.push_back(w);
+	PlayerData* pd = new PlayerData(items);
 	players.push_back(pd);
 }
 
