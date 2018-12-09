@@ -16,6 +16,8 @@ public:
 	void draw();
 	std::string write_data();
 	bool caught_by_expl(sf::Vector2f expl , float r);
+	//bool laser_exp(sf::Vector2f pos,float deg);
+
 	bool is_alive();
 	void set_destructible( bool destr);
 	bool contains(sf::Vector2f point);

@@ -330,7 +330,6 @@ void Window::eventhandler() {
 						player_v[0]->shoot(deg, laserBeam);
 					}
 
-					map->explosion_happened(pos);
 
 
 				}

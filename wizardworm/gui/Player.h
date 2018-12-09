@@ -36,6 +36,8 @@ public:
 	void aim(bool up);
 	void changeforce();
 	Wizard* getWizard();
+	sf::Vector2i getPosition() { return sf::Vector2i(wizard->get_x(), wizard->get_y()); };
+
 	Arrow* get_arrow();
 
 };

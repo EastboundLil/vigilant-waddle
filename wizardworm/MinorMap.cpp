@@ -151,8 +151,9 @@ MinorMap::~MinorMap()
 
 void MinorMap::explosion_happened(sf::Vector2i pos)
 {
+	m.lock();
 	for (int i = 0; i < block_v.size(); i++) {
-		if (block_v[i]->caught_by_expl(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)), 50)) {
+		if (block_v[i]->caught_by_expl(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)), 25)) {
 
 		}
 	}
@@ -164,9 +165,27 @@ void MinorMap::explosion_happened(sf::Vector2i pos)
 			}
 		}
 	}
+	m.unlock();
+}
 
 
+void MinorMap::laserExp_happened(sf::Vector2i pos_, float deg_) {
+	pos = pos_;
+	deg = deg_;
+	sf::Thread* thread = new sf::Thread(&MinorMap::expThread, this);
+	thread->launch();
+}
 
+void MinorMap::expThread()
+{
+	float y;
+	for (float i = 0; i < 500; i += 25) {
+		//int i = 0;
+			//std::cout << deg << " degree" << std::endl;
+		y = (tan(deg)*i);
+		//std::cout << y << " y position" << y + pos.y << " y plus worm positon" << std::endl;
+		explosion_happened(sf::Vector2i(static_cast<float>(pos.x + i + 25), static_cast<float>(pos.y + y)));
+	}
 }
 
 void MinorMap::draw()

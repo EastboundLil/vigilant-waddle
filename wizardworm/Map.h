@@ -16,6 +16,8 @@ public:
 	~Map();
 	void add_minormap(std::shared_ptr<MinorMap> new_mmap);
 	void explosion_happened(sf::Vector2i pos);
+	void laserExp_happened(sf::Vector2i pos,float deg);
+
 	void draw();
 	std::stringstream write_data();
 	void write_data_to_file(std::string filename);

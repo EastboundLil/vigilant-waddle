@@ -547,6 +547,18 @@ bool Block::caught_by_expl(sf::Vector2f expl , float r)
 	return false;
 }
 
+/*
+bool Block::laser_exp(sf::Vector2f pos,float deg) {
+
+	float y;
+	for (float i = 0; i < 100; i+=25) {
+		y = tan(deg);
+		std::cout << y << " y position" <<y+pos.y<< " y plus worm positon"<< std::endl;
+		caught_by_expl(sf::Vector2f((i + pos.x), y + pos.y), 50);
+	}
+}
+*/
+
 bool Block::is_alive()
 {
 	return Alive;

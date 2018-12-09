@@ -38,9 +38,14 @@ void Map::explosion_happened(sf::Vector2i pos)
 		minormap_v[i]->explosion_happened(pos);
 	}
 
-
-
 }
+
+void Map::laserExp_happened(sf::Vector2i pos, float deg) {
+	for (int i = 0; i < minormap_v.size(); i++) {
+		minormap_v[i]->laserExp_happened(pos,deg);
+	}
+}
+
 
 void Map::draw()
 {

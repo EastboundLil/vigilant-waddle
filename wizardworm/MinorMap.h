@@ -10,6 +10,10 @@ class MinorMap :
 	float max_block_width;
 	float max_block_height;
 	sf::RenderWindow* window;
+	sf::Vector2i pos;
+	float deg;
+
+	sf::Mutex m;
 public:
 
 	MinorMap(sf::RenderWindow *w);
@@ -19,6 +23,8 @@ public:
 	~MinorMap();
 
 	void explosion_happened(sf::Vector2i pos);
+	void laserExp_happened(sf::Vector2i pos,float deg);
+	void expThread();
 	void draw();
 	std::stringstream write_data();
 	void write_data_to_file(std::string filename);
