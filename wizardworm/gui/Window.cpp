@@ -27,7 +27,7 @@ Window::Window()
 	map->add_minormap(std::make_shared<MinorMap>(500, 100, sf::Color(92, 51, 23, 255), 160, 160, window, 50, 30));
 	map->add_minormap(std::make_shared<MinorMap>(100, 300, sf::Color(92, 51, 23, 255), 160, 160, window, 10, 30));
 
-	ApplicationManager::getInstance().getEngineManager()->AddPlayer(player_v[0]->getWizard_v());
+
 }
 
 
@@ -219,7 +219,7 @@ void Window::eventhandler() {
 	//TODO Innen folyt. k�v. holnap
 	//M�g �tt kell rakni hogy bizonyos pontban legyen a robban�s ---- spell hat�s�ra -- adott ideig
 
-
+	ApplicationManager::getInstance().getEngineManager()->AddPlayer(player_v[0]->getWizard_v());
 	float deltaTime = 0.0f;
 	sf::Clock clock;
 	float asd = 1;
@@ -253,12 +253,12 @@ void Window::eventhandler() {
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 				{
 					//arrow degree up;
-					player->aim(true);
+					player_v[0]->aim(true);
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 				{
 					//arrow degree up;
-					player->aim(false);
+					player_v[0]->aim(false);
 				}
 				if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 				{
@@ -266,20 +266,20 @@ void Window::eventhandler() {
 
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
-					player->possible_shoot(0);
+					player_v[0]->possible_shoot(0);
 					spellBar->setSelected(1);
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) {
-					player->possible_shoot(1);
+					player_v[0]->possible_shoot(1);
 					spellBar->setSelected(2);
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
-					player->switch_wizard();
+					player_v[0]->switch_wizard();
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 				{
 					//arrow degree up;
-					player->changeforce();
+					player_v[0]->changeforce();
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 				{
@@ -312,10 +312,10 @@ void Window::eventhandler() {
 					pos = sf::Mouse::getPosition(*window);
 
 					if (1 == spellBar->getSelected()) {
-						player->shoot(pos, fireBolt);
+						player_v[0]->shoot(pos, fireBolt);
 					}
 					else {
-						player->shoot(player->get_arrow()->get_deg(), laserBeam);
+						player_v[0]->shoot(player_v[0]->get_arrow()->get_deg(), laserBeam);
 					}
 
 					map->explosion_happened(pos);
@@ -333,7 +333,7 @@ void Window::eventhandler() {
 
 
 
-		player->shootUpdate(deltaTime);
+		player_v[0]->shootUpdate(deltaTime);
 		window->clear(sf::Color::Cyan);
 		window->draw(sf::Sprite(background));
 
@@ -344,12 +344,12 @@ void Window::eventhandler() {
 		}
 		
 
-		for (int i = 0; i < player->getWizard_v().size(); i++) {
-			player->set_Pos(ApplicationManager::getInstance().getEngineManager()->Find(player->getWizard_v()[i]), asd);
+		for (int i = 0; i < player_v[0]->getWizard_v().size(); i++) {
+			player_v[0]->set_Pos(ApplicationManager::getInstance().getEngineManager()->Find(player_v[0]->getWizard_v()[i]), asd);
 		}
 			//player->set_Pos(ApplicationManager::getInstance().getEngineManager()->Find(player->getWizard_v()[1]), asd);
 
-		player->draw();
+		player_v[0]->draw();
 
 		spellBar->draw();
 
@@ -360,5 +360,5 @@ void Window::eventhandler() {
 
 void Window::onTimerEndMsg()
 {
-	player->move(100, 0, 100);
+	player_v[0]->move(100, 0, 100);
 }
