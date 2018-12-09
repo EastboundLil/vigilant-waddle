@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Window.h"
 #include "Animation.h"
-
+#include "Button.h"
 #include <iostream>
 
 #include "ApplicationManager.h"
@@ -45,7 +45,18 @@ void Window::mapeditor() {
 	sf::Vector2i startpoint(-1, -1);
 	sf::Vector2i endpoint;
 	bool isdrag = false;
+	
 
+
+
+	Button* rectorroundselector=new Button(10.0f,10.0f,100.0f,100.0f,sf::Color::Black , "rect or round" , window, [this]() {
+		if (rectorround) {
+			rectorround = false;
+		}
+		else {
+			rectorround = true;
+		}
+	});
 
 
 
@@ -116,7 +127,8 @@ void Window::mapeditor() {
 
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
-
+					if (rectorroundselector->inside(sf::Mouse::getPosition(*window))) { rectorroundselector->make_action(); }
+					else
 					if (!isdrag) {
 						isdrag = true;
 						startpoint = sf::Mouse::getPosition(*window);
@@ -158,7 +170,8 @@ void Window::mapeditor() {
 					}
 					std::cout << "mapadded,  kezdete:  " << s.x << " " << s.y << "mérete: " << e.x - s.x << " " << e.y - s.y << "\n";
 					std::shared_ptr<MinorMap> newmap = std::make_shared<MinorMap>(s.x, s.y, sf::Color(92, 51, 23, 255), e.y - s.y, e.x - s.x, window, 30, 30);
-					newmap->make_me_round();
+					if(!rectorround)
+						newmap->make_me_round();
 					map->add_minormap(newmap);
 					
 					std::cout << "felengedtem a balt \n";
@@ -188,7 +201,7 @@ void Window::mapeditor() {
 
 		map->draw();
 
-
+		rectorroundselector->draw();
 		window->draw(rect);
 		window->display();
 	}
@@ -298,27 +311,14 @@ void Window::eventhandler() {
 
 					pos = sf::Mouse::getPosition(*window);
 					player->shoot("Firebolt", pos,fireBolt);
-
-
-					//ezt most valamiert nem rajzolja ki
-					/*explosion_v.push_back(std::make_unique<sf::CircleShape>());
-					explosion_v[explosion_v.size() - 1]->setRadius(100.0f);
-					explosion_v[explosion_v.size() - 1]->setPosition(static_cast<float>(pos.x), static_cast<float>(pos.y));
-					explosion_v[explosion_v.size() - 1]->setOrigin(100.0f, 100.0f);
-					explosion_v[explosion_v.size() - 1]->setFillColor(sf::Color::Transparent);
-					explosion_v[explosion_v.size() - 1]->setOutlineColor(sf::Color::Red);
-					explosion_v[explosion_v.size() - 1]->setOutlineThickness(-2);*/
 					
-								map->explosion_happened(pos);
-								
+								map->explosion_happened(pos);					
 					
 					
 				}
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
 				
-					//explosion_v.clear();
-					//map = std::make_unique<Map>(100, 100, sf::Color(92, 51, 23, 255), 410, 430, window);
-					//map->load_from_file("map.txt");
+					
 					map->make_destructible(sf::Mouse::getPosition(*window));
 	
 				}
