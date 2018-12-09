@@ -22,7 +22,7 @@ class Window : public IWindow
 public:
 
 	void eventhandler() override;
-
+	void mapeditor();
 	void onTimerEndMsg();
 
 	Window();
