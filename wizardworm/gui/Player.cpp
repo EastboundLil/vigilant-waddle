@@ -42,6 +42,10 @@ std::vector<Wizard*> Player::getWizard_v()
 }
 
 
+Wizard* Player::getWizard() {
+	return wizard;
+}
+
 void Player::draw() {
 	for (Wizard* w : wizardvector) {
 		w->draw();

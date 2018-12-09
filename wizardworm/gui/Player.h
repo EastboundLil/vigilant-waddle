@@ -1,8 +1,9 @@
 #pragma once
 #include "Firebolt.h"
-#include "LaserBeam.h"
+
 #include <vector>
 #include "Wizard.h"
+#include "LaserBeam.h"
 
 //TODO Egy J�t�kosnak t�bb var�zsl� kell melyeket �l�n kezel
 
@@ -34,7 +35,7 @@ public:
 	void switch_wizard(int i);
 	void aim(bool up);
 	void changeforce();
-
+	Wizard* getWizard();
 	Arrow* get_arrow();
 
 };
