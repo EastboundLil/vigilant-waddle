@@ -64,6 +64,8 @@ public:
 	void ResetToStart() { position = startPosition; }
 	void SetToStart() { startPosition = position; }
 
+	Drawable* GetDrawable() { return drawable; }
+
 private:
 	Drawable* drawable;
 	sf::Vector2f position;

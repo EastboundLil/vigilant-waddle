@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "IEngine.h"
+#include "ApplicationManager.h"
 
 #define MOVING_SPEED 5
 #define GRAVITY 1
@@ -38,7 +39,7 @@ void IEngine::Update()
 			if (data.Left && !data.Right)
 			{
 				current_entity->AdjustPosition(-1, 0);
-				//check in ground
+				
 			}
 			else if (!data.Left && data.Right)
 			{
@@ -53,6 +54,9 @@ void IEngine::Update()
 				//check in ground
 			}
 
+			data.Up = false;
+			data.Left = false;
+			data.Right = false;
 			keyboardInput = false;
 		}
 
@@ -60,10 +64,10 @@ void IEngine::Update()
 	}
 	else if (roundTimer.getElapsedTime().asSeconds() >= 30)
 	{
-		//if (engineType == EngineType::Client)
-			//SendData();
-		//else
-			//ReceiveData();
+		if (engineType == EngineType::Client)
+			SendData();
+		else
+			ReceiveData();
 		//send data to server
 		//server calculate response
 		//???
@@ -73,17 +77,35 @@ void IEngine::Update()
 
 void IEngine::Move(bool up, bool left, bool right)
 {
-	if (!keyboardInput)
-	{
-		keyboardInput = true;
-		data.Up = up;
-		data.Left = left;
-		data.Right = right;
-	}
+	if (up)
+		data.Up = true;
+	if (left)
+		data.Left = true;
+	if (right)
+		data.Right = true;
 }
 
 void IEngine::AddPlayer(std::vector<Drawable*> entities)
 {
 	PlayerData* pd = new PlayerData(entities);
 	players.push_back(pd);
+}
+
+void IEngine::SendData()
+{
+}
+
+void IEngine::ReceiveData()
+{
+}
+
+sf::Vector2f IEngine::Find(Drawable * item)
+{
+	for (int i = 0; i < players[currentPlayer]->GetEntityCount(); i++)
+	{
+		if (players[currentPlayer]->GetEntityWithNum(i)->GetDrawable() == item)
+			return players[currentPlayer]->GetEntityWithNum(i)->GetPosition();
+	}
+
+	return sf::Vector2f(-1, -1);
 }
