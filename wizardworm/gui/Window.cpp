@@ -260,8 +260,8 @@ void Window::eventhandler() {
 				}
 				if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 				{
-					// move right...
-					//player->move(1, 0, asd);
+					ApplicationManager::getInstance().getEngineManager()->Move(sf::Keyboard::isKeyPressed(sf::Keyboard::Space), sf::Keyboard::isKeyPressed(sf::Keyboard::Left), sf::Keyboard::isKeyPressed(sf::Keyboard::Right));
+
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
 					player->possible_shoot(0);
@@ -341,6 +341,12 @@ void Window::eventhandler() {
 			window->draw(*explosion_v[i]);
 		}
 		//text.setPosition(posx, posy);
+
+		//for (int i = 0; i < player->getWizard_v().size(); i++) {
+			player->set_Pos(ApplicationManager::getInstance().getEngineManager()->Find(player->getWizard_v()[0]), asd);
+		//}
+			player->set_Pos(ApplicationManager::getInstance().getEngineManager()->Find(player->getWizard_v()[1]), asd);
+
 		player->draw();
 
 		spellBar->draw();

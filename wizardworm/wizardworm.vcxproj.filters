@@ -64,10 +64,14 @@
       <Filter>gui\sources</Filter>
     </ClCompile>
     <ClCompile Include="SpellBar.cpp">
-      <Filter>gui</Filter>
+      <Filter>gui\sources</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp" />
-    <ClCompile Include="LaserBeam.cpp" />
+    <ClCompile Include="Button.cpp">
+      <Filter>gui\sources</Filter>
+    </ClCompile>
+    <ClCompile Include="LaserBeam.cpp">
+      <Filter>gui\sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include=".\stdafx.h" />
@@ -152,16 +156,20 @@
     <ClInclude Include="MinorMap.h">
       <Filter>gui\headers</Filter>
     </ClInclude>
-    <ClInclude Include="SpellBar.h">
-      <Filter>gui</Filter>
-    </ClInclude>
     <ClInclude Include="engine\Objects.hpp" />
-    <ClInclude Include="Button.h" />
     <ClInclude Include="networking\NewMapMsg.h">
       <Filter>networking\VWP messages</Filter>
     </ClInclude>
     <ClInclude Include="engine\Objects.hpp" />
-    <ClInclude Include="LaserBeam.h" />
+    <ClInclude Include="LaserBeam.h">
+      <Filter>gui\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>gui\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SpellBar.h">
+      <Filter>gui\headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".\ReadMe.txt" />
