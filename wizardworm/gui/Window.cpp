@@ -128,7 +128,7 @@ void Window::mapeditor() {
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
 					if (rectorroundselector->inside(sf::Mouse::getPosition(*window))) { rectorroundselector->make_action(); }
-					else
+					
 					if (!isdrag) {
 						isdrag = true;
 						startpoint = sf::Mouse::getPosition(*window);

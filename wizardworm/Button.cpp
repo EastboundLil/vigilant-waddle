@@ -14,12 +14,14 @@ Button::Button(float posx, float posy, float width , float height ,sf::Color col
 	text.setPosition(posx, posy);
 	text.setFillColor(sf::Color::White);
 	text.setCharacterSize(15);
-	sf::Font f;
-	if (!f.loadFromFile("font.ttf")) {
+	sf::Font font;
+	if (!font.loadFromFile("Roboto-Regular.ttf")) {
 		std::cout << "szar afajl  \n";
 	}
-	text.setFont(f);
-	
+	else {
+		std::cout << "jó a fajl \n";
+		text.setFont(font);
+	}
 }
 
 bool Button::inside(sf::Vector2i click)
@@ -43,7 +45,7 @@ void Button::make_action() {
 void Button::draw() {
 
 	window->draw(rect);
-	window->draw(text);
+	//window->draw(text);
 
 
 }
