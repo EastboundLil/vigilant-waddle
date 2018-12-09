@@ -61,11 +61,10 @@ void Window::eventhandler() {
 		while (window->pollEvent(event))
 		{
 
-
 			if (event.type == sf::Event::Closed)
 				window->close();
 			if (event.type == sf::Event::KeyPressed) {
-				
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) exit(0);
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 				{
 					// move left...
