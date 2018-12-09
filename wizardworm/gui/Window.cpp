@@ -12,6 +12,8 @@ Window::Window()
 	window = new sf::RenderWindow(sf::VideoMode(800, 600), "WizardWorm!");
 	player =std::make_shared<Player>( window , "elsojatekos");
 
+	spellBar = new SpellBar(350.0f,530.0f,window);
+
 	networkManager = ApplicationManager::getInstance().getNetworkManager();
 
 	std::shared_ptr<MinorMap> round = std::make_shared<MinorMap>(100, 100, sf::Color(92, 51, 23, 255), 200, 400, window, 40, 40);
@@ -88,9 +90,11 @@ void Window::eventhandler() {
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
 					player->possible_shoot(0);
+					spellBar->setSelected(1);
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) {
 					player->possible_shoot(1);
+					spellBar->setSelected(2);
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
 					player->switch_wizard();
@@ -176,8 +180,12 @@ void Window::eventhandler() {
 			window->draw(*explosion_v[i]);
 		}
 		
+
+
 		player->draw();
 		
+		spellBar->draw();
+
 		window->display();
 		
 	}

@@ -63,6 +63,9 @@
     <ClCompile Include="MinorMap.cpp">
       <Filter>gui\sources</Filter>
     </ClCompile>
+    <ClCompile Include="SpellBar.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include=".\stdafx.h" />
@@ -147,6 +150,9 @@
     </ClInclude>
     <ClInclude Include="MinorMap.h">
       <Filter>gui\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SpellBar.h">
+      <Filter>gui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

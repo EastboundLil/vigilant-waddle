@@ -188,6 +188,7 @@
     <ClInclude Include="gui\Window.h" />
     <ClInclude Include="gui\Wizard.h" />
     <ClInclude Include="Spell.h" />
+    <ClInclude Include="SpellBar.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include=".\stdafx.cpp">
@@ -217,6 +218,7 @@
     <ClCompile Include="gui\Window.cpp" />
     <ClCompile Include="gui\Wizard.cpp" />
     <ClCompile Include="Spell.cpp" />
+    <ClCompile Include="SpellBar.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
