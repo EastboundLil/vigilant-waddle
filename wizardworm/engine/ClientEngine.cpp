@@ -4,6 +4,7 @@
 
 ClientEngine::ClientEngine() : IEngine()
 {
+	engineType = EngineType::Client;
 }
 
 
