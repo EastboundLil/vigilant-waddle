@@ -14,8 +14,11 @@ Window::Window()
 
 	spellBar = new SpellBar(350.0f,530.0f,window);
 	fireBolt.loadFromFile("Gexp.png");
+	laserBeam.loadFromFile("LaserBeamFragmentFull.png");
 
-	background.loadFromFile("background.jpg");
+	//background.loadFromFile("background.jpg");
+	background.loadFromFile("DonaldTrump.jpg");
+	
 
 	std::shared_ptr<MinorMap> round = std::make_shared<MinorMap>(100, 100, sf::Color(92, 51, 23, 255), 200, 400, window, 40, 40);
 	round->make_me_round();
@@ -126,7 +129,7 @@ void Window::mapeditor() {
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
 					if (rectorroundselector->inside(sf::Mouse::getPosition(*window))) { rectorroundselector->make_action(); }
-					else
+					
 					if (!isdrag) {
 						isdrag = true;
 						startpoint = sf::Mouse::getPosition(*window);
@@ -242,7 +245,7 @@ void Window::eventhandler() {
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 				{
 					// move left...
-					asd++;
+					asd--;
 					player->move(-1, 0, asd);
 					std::cout << "balra" <<asd <<std::endl;
 				}
@@ -308,7 +311,12 @@ void Window::eventhandler() {
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
 					pos = sf::Mouse::getPosition(*window);
-					player->shoot("Firebolt", pos,fireBolt);
+					else {
+					if (1 == spellBar->getSelected()) {
+						player->shoot(pos, fireBolt);
+					}
+						player->shoot(player->get_arrow()->get_deg(), laserBeam);
+					}
 					
 								map->explosion_happened(pos);					
 					
@@ -327,7 +335,7 @@ void Window::eventhandler() {
 		
 		player->shootUpdate(deltaTime);
 		window->clear(sf::Color::Cyan);
-
+		
 		window->draw(sf::Sprite(background));
 
 		map->draw();

@@ -67,6 +67,7 @@
       <Filter>gui</Filter>
     </ClCompile>
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="LaserBeam.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include=".\stdafx.h" />
@@ -159,6 +160,8 @@
     <ClInclude Include="networking\NewMapMsg.h">
       <Filter>networking\VWP messages</Filter>
     </ClInclude>
+    <ClInclude Include="engine\Objects.hpp" />
+    <ClInclude Include="LaserBeam.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include=".\ReadMe.txt" />

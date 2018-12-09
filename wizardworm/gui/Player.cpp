@@ -47,10 +47,14 @@ void Player::draw() {
 	}
 }
 
-void Player::shoot(std::string spell_type,sf::Vector2i mousePos, sf::Texture &texture) {
+void Player::shoot(sf::Vector2i mousePos, sf::Texture &texture) {
 
-	
-	livingspells.push_back(new Firebolt(window, sf::Vector2f(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)),texture));
+	livingspells.push_back(new Firebolt(window, sf::Vector2f(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)), texture));
+	wizard->incr_mana(-livingspells.back()->get_mana_cost());
+}
+
+void Player::shoot(float deg, sf::Texture &texture) {
+	livingspells.push_back(new LaserBeam(window,sf::Vector2f(wizard->get_x(),wizard->get_y()),deg, texture));
 	wizard->incr_mana(-livingspells.back()->get_mana_cost());
 
 }

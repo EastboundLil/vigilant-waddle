@@ -170,6 +170,7 @@
     <ClInclude Include="engine\ClientEngine.h" />
     <ClInclude Include="gui\Drawable.h" />
     <ClInclude Include="gui\IWindow.h" />
+    <ClInclude Include="LaserBeam.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MinorMap.h" />
     <ClInclude Include="networking\INWManager.h" />
@@ -209,6 +210,7 @@
     <ClCompile Include="engine\ClientEngine.cpp" />
     <ClCompile Include="gui\Drawable.cpp" />
     <ClCompile Include="engine\IEngine.cpp" />
+    <ClCompile Include="LaserBeam.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MinorMap.cpp" />
     <ClCompile Include="networking\LanClientHandler.cpp" />

@@ -143,7 +143,7 @@ int d_to_center(sf::Vector2f blocpoint, sf::Vector2f expl) {
 	
 }
 
-float Block::check_bound(sf::Vector2f pos) { 											
+bool Block::check_bound(sf::Vector2f pos) { 											
 	
 	return pos.x >= Xmin && pos.x <= Xmax && pos.y <= Ymax && pos.y >= Ymin;
 }

@@ -11,9 +11,10 @@ Firebolt::Firebolt(sf::RenderWindow *window, sf::Vector2f mousePos , sf::Texture
 	texture.setSmooth(true);
 	
 	spellImage.setTexture(&texture);
-	animation = new Animation(&texture, sf::Vector2u(4, 2), 0.15f);
+	animation = new Animation(&texture, sf::Vector2u(4, 2), 0.1f);
 
-
+	spellImage.setSize(sf::Vector2f(100.0f, 100.0f));
+	//TODO
 	spellImage.setPosition(mousePos.x-50.0f,mousePos.y-54.375f);
 
 
