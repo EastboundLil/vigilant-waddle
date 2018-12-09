@@ -223,7 +223,7 @@ void Window::eventhandler() {
 	float asd = 1;
 	sf::CircleShape ellipse(200);
 	ellipse.setScale(1, 1);
-	ellipse.setPosition(100,100);
+	ellipse.setPosition(100, 100);
 	ellipse.setFillColor(sf::Color::Green);
 
 
@@ -234,7 +234,7 @@ void Window::eventhandler() {
 		sf::Event event;
 		sf::Vector2i pos;
 		deltaTime = clock.restart().asSeconds();
-		
+
 		while (window->pollEvent(event))
 		{
 
@@ -247,7 +247,6 @@ void Window::eventhandler() {
 					// move left...
 					asd--;
 					player->move(-1, 0, asd);
-					std::cout << "balra" <<asd <<std::endl;
 				}*/
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 				{
@@ -262,10 +261,7 @@ void Window::eventhandler() {
 				if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 				{
 					// move right...
-					//asd++;
 					//player->move(1, 0, asd);
-					ApplicationManager::getInstance().getEngineManager()->Move(sf::Keyboard::isKeyPressed(sf::Keyboard::Space), sf::Keyboard::isKeyPressed(sf::Keyboard::Left), sf::Keyboard::isKeyPressed(sf::Keyboard::Right));
-					
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
 					player->possible_shoot(0);
@@ -295,7 +291,7 @@ void Window::eventhandler() {
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 				{
-					
+
 					map->make_solid(sf::Mouse::getPosition(*window));
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
@@ -304,7 +300,7 @@ void Window::eventhandler() {
 					map->load_from_file("map.txt");
 				}
 
-				
+
 			}
 			if (event.type == sf::Event::MouseButtonPressed)
 			{
@@ -312,64 +308,46 @@ void Window::eventhandler() {
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
 					pos = sf::Mouse::getPosition(*window);
-					else {
+
 					if (1 == spellBar->getSelected()) {
 						player->shoot(pos, fireBolt);
 					}
+					else {
 						player->shoot(player->get_arrow()->get_deg(), laserBeam);
 					}
-					
-								map->explosion_happened(pos);					
-					
-					
+
+					map->explosion_happened(pos);
+
+
 				}
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
-				
-					
+
+
 					map->make_destructible(sf::Mouse::getPosition(*window));
-	
+
 				}
 			}
 		}
 
 
-		
+
 		player->shootUpdate(deltaTime);
 		window->clear(sf::Color::Cyan);
 		window->draw(sf::Sprite(background));
 
 		map->draw();
-	
 
 		for (int i = 0; i < explosion_v.size(); i++) {			
 			window->draw(*explosion_v[i]);
 		}
-		
-		sf::Text text;
-		text.setString("fasz");
 		//text.setPosition(posx, posy);
-		text.setFillColor(sf::Color::White);
-		text.setCharacterSize(20);
-		sf::Font font;
-		if (!font.loadFromFile("Roboto-Regular.ttf")) {
-			std::cout << "szar afajl  \n";
-		}
-		else {
-			std::cout << "jó a fajl \n";
-			text.setFont(font);
-		}
-		window->draw(text);
-		for (int i = 0; i < player->getWizard_v().size(); i++) {
-			player->set_Pos(ApplicationManager::getInstance().getEngineManager()->Find(player->getWizard_v()[i]), asd);
-		}
 		player->draw();
-		
+
 		spellBar->draw();
 
 		window->display();
-		
-	}
 
+	}
 }
 
 void Window::onTimerEndMsg()
