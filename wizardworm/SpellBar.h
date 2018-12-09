@@ -14,6 +14,7 @@ class SpellBar : public Drawable {
 public:
 	SpellBar(float x,float y,sf::RenderWindow *w);
 	void setSelected(int select);
+	int getSelected() { return selected; };
 	void draw() override;
 
 };

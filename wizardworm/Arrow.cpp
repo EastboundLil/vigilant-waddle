@@ -35,7 +35,7 @@ Arrow::Arrow(float _x, float _y , sf::RenderWindow * w , std::string t) :  Drawa
 	float scale = 0.07f;
 	sprite.setScale(scale, scale);
 	sprite.setTexture(texture);
-	sprite.setOrigin(0, 5);
+	sprite.setOrigin(sf::Vector2f(0.0f,sprite.getTexture()->getSize().y*0.5));
 	sprite.setRotation(deg);
 
 	
@@ -56,7 +56,7 @@ void Arrow::draw()
 		//window->draw(rect);
 		
 		sprite.setRotation(deg);
-		sprite.setPosition(x, y-10);
+		sprite.setPosition(x, y);
 		window->draw(sprite);
 		
 	}

@@ -6,7 +6,7 @@
 
 Spell::Spell()
 {
-	spellImage.setSize(sf::Vector2f(100.0f, 100.0f));
+	
 }
 
 

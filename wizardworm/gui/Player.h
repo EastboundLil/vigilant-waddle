@@ -1,5 +1,6 @@
 #pragma once
 #include "Firebolt.h"
+#include "LaserBeam.h"
 #include <vector>
 #include "Wizard.h"
 
@@ -21,7 +22,9 @@ public:
 	
 	void move(float x, float y, float deltaTime);
 	void draw() ;
-	void shoot(std::string spell_type,sf::Vector2i mousePos,sf::Texture &texture);
+	//void shoot(std::string spell_type,sf::Vector2i mousePos,float deg,sf::Texture &texture);
+	void shoot(sf::Vector2i mousePos,sf::Texture &texture);
+	void shoot(float deg,sf::Texture &texture);
 	//void shoot();
 	void shootUpdate(float deltaTime);
 	void possible_shoot(int i);
