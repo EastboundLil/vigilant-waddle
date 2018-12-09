@@ -64,6 +64,8 @@ void Window::mapeditor() {
 
 	});
 
+
+
 	
 
 
@@ -282,6 +284,7 @@ void Window::eventhandler() {
 					spellBar->setSelected(2);
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
+					ApplicationManager::getInstance().getEngineManager()->Switch();
 					player_v[0]->switch_wizard();
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
