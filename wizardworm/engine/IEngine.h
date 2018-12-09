@@ -29,6 +29,20 @@ protected:
 	bool keyboardInput;
 	KeyboardData data;
 	float fpsTime;
+
 	sf::Clock timer;
+	sf::Clock roundTimer;
+
+	int currentEngineState;
+
+	enum EngineState
+	{
+		Working = 0,
+		Sending = 1,
+		Receiveing = 2,
+		Calculating = 3,
+		Playing = 4,
+		Waiting = 5
+	};
 };
 
