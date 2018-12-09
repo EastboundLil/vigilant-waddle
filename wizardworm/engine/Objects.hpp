@@ -27,62 +27,89 @@ struct Data
 *
 * Jó, legyen benne egy pointer ami egy drawable dologra mutat, és onnan frissítgeti
 */
+struct KeyboardData
+{
+	bool Up;
+	bool Left;
+	bool Right;
+
+	KeyboardData(bool up = false, bool left = false, bool right = false)
+	{
+		Up = up;
+		Left = left;
+		Right = right;
+	}
+};
+
+class PlayerData
+{
+public:
+	PlayerData(std::vector<Drawable*>& drawables) {
+		for (Drawable* dw : drawables)
+			entities.push_back(new Entity(dw));
+		currentEntity = 0;
+	}
+	~PlayerData() {}
+
+	void SetUsername(std::string name) { username = name; }
+	std::string GetUsername() { return username; }
+	void AddKeyboardData(bool up, bool left, bool right) {
+		if (keyspressed.size() < 1800) keyspressed.push_back(KeyboardData(up, left, right));
+	}
+
+	void EmptyKeyboardData() { keyspressed.empty(); }
+	bool GetKeyboardData(int step, bool up, bool left) {
+		if (step >= 0 && step < 1800)
+		{
+			if (up)
+				return keyspressed[step].Up;
+			else if (left)
+				return keyspressed[step].Left;
+			else
+				return keyspressed[step].Right;
+		}
+	}
+
+	Entity* GetCurrentEntity() { return entities[currentEntity]; }
+	void SetCurrentEntity(int id) { currentEntity = id; }
+	int GetEntityCount() { return entities.size(); }
+	Entity* GetEntityWithNum(int id) { return entities[id]; }
+
+	void NextEntity() {
+		currentEntity++;
+		if (currentEntity == entities.size()) currentEntity = 0;
+	}
+private:
+	std::string username;
+
+	std::vector<Entity*> entities;
+	int currentEntity;
+	std::vector<KeyboardData> keyspressed; //60 fps * 30 sec = 1800 frame
+};
+
 class Entity
 {
 public:
+	Entity(Drawable* item) { drawable = item; UpSpeed = 0; }
+	~Entity() {}
 
-	Entity() { Id = 0; } //ezt majd kiveszem
-	Entity(int id) { Id = id;}
-	virtual ~Entity() {}
+	sf::Vector2f GetPosition() { return position; }
+	float GetXPosition() { return position.x; }
+	float GetYPosition() { return position.y; }
 
-	Drawable* GetSprite() { return entity; }
-	void SetSprite(Drawable* sprite) { entity = sprite; }
-	virtual void Update() {
-		forces.push_back(sf::Vector2f(0, 0));
-		positions.push_back(moveset(0x00));
-		Reset();
-	}
-	virtual void EmptyMovent() { positions.clear(); forces.clear(); }
-	std::vector<sf::Vector2f> GetForces() { return forces; }
-	std::vector<moveset> GetMoveset() { return positions; }
+	void SetPosition(sf::Vector2f pos) { position = pos; }
+	void SetPosition(float x, float y) { position = sf::Vector2f(x, y); }
 
-	void SetInput(bool left, bool right, bool up) { this->left = left; this->right = right; this->up = up; }
+	void AdjustPosition(sf::Vector2f pos) { position += pos; }
+	void AdjustPosition(float x, float y) { position += sf::Vector2f(x, y); }
 
-	int GetId() { return Id; }
+	float GetJumpSpeed() { return UpSpeed; }
+	void SetJumpSpeed(float speed) { UpSpeed = speed; }
+	void AdjustJumpSpeed(float speed) { UpSpeed += speed; }
 
-protected:
-	Drawable* entity;
-	std::vector<sf::Vector2f> forces; //ha van rajta valamilyen erõhatás
-	std::vector<moveset> positions; //ha irányítva van
+private:
+	Drawable* drawable;
+	sf::Vector2f position;
 
-	int Id;
-	bool left, right, up;
-	void Reset() { left = false; right = false; up = false; }
+	float UpSpeed;
 };
-
-/**
-* Minden ami mozog
-*/
-/*class MovingEntity : public Entity
-{
-public:
-	MovingEntity():Entity() {}
-	virtual ~MovingEntity() {}
-
-	sf::Vector2f GetSpeed() { return Speed; }
-	sf::Vector2f GetAcceleration() { return Acceleration; }
-
-	void SetSpeed(sf::Vector2f speed) { Speed = speed; }
-	void SetAcceleration(sf::Vector2f acc) { Acceleration = acc; }
-
-	void AjdustSpeed(sf::Vector2f speed) { Speed += speed; }
-	void AdjustAcceleration(sf::Vector2f acc) { Acceleration += acc; }
-
-	virtual void Update() {
-		//positions.push_back(sf::Vector2f(entity->get_x(), entity->get_y()));
-	}
-
-protected:
-	sf::Vector2f Speed;
-	sf::Vector2f Acceleration;
-};*/

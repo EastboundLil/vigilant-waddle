@@ -30,11 +30,13 @@ Message* MessageHandler::parsePacket(sf::Packet packet)
 		case TIMER_END_MSG:
 			return onTimerEndMsgReceived(packet);
 			break;
+		case NEW_MAP_MSG:
+			return onNewMapMsgReceived(packet);
+			break;
 		default:
 			LOG("Error: invalid packet header: " << type);
 			break;
 	}
-
 
 	return nullptr;
 }
@@ -65,6 +67,18 @@ sf::Packet MessageHandler::createTimerEndMsg()
 	return message;
 }
 
+sf::Packet MessageHandler::createNewMapMsg(std::stringstream map)
+{
+	sf::Packet message;
+
+	//add header
+	message << NEW_MAP_MSG;
+
+	message << map.str();
+
+	return message;
+}
+
 Message* MessageHandler::onMoveSetMsgReceived(sf::Packet& packet)
 {
 	std::vector<std::string> moves;
@@ -82,4 +96,18 @@ Message* MessageHandler::onMoveSetMsgReceived(sf::Packet& packet)
 Message* MessageHandler::onTimerEndMsgReceived(sf::Packet& packet)
 {
 	return new TimerEndMsg();
+}
+
+Message* MessageHandler::onNewMapMsgReceived(sf::Packet& packet)
+{
+	std::stringstream map;
+
+	while (!packet.endOfPacket())
+	{
+		std::string s;
+		packet >> s;
+		map << s;
+	}
+
+	return new NewMapMsg(map);
 }

@@ -25,3 +25,10 @@ std::vector<Data> ClientEngine::GenerateMoveset()
 
 	return movesets;
 }
+
+void ClientEngine::Update()
+{
+	bool up, left, right;
+	//get values from gui
+	currentPlayer->AddKeyboardData(up, left, right);
+}

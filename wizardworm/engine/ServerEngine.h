@@ -11,6 +11,7 @@ public:
 
 	std::vector<Data> GenerateMoveset();
 	void SetMoveset(int player, std::vector<Data>& dataset);
+	void Update();
 
 private:
 	std::map<int, bool> PlayerReady;

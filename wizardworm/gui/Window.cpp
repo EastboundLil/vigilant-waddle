@@ -15,6 +15,7 @@ Window::Window()
 	spellBar = new SpellBar(350.0f,530.0f,window);
 	fireBolt.loadFromFile("Gexp.png");
 
+	background.loadFromFile("background.jpg");
 
 	networkManager = ApplicationManager::getInstance().getNetworkManager();
 
@@ -236,11 +237,10 @@ void Window::eventhandler() {
 		while (window->pollEvent(event))
 		{
 
-
 			if (event.type == sf::Event::Closed)
 				window->close();
 			if (event.type == sf::Event::KeyPressed) {
-				
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) exit(0);
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 				{
 					// move left...
@@ -329,10 +329,9 @@ void Window::eventhandler() {
 		
 		player->shootUpdate(deltaTime);
 		window->clear(sf::Color::Cyan);
-		
-		
-		
-		
+
+		window->draw(sf::Sprite(background));
+
 		map->draw();
 	
 

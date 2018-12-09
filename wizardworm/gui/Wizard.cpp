@@ -43,10 +43,8 @@ Wizard::~Wizard(){
 
 void Wizard::draw() {
 
-
-	wormImage.setPosition(x, y);
+	wormImage.setPosition(x+X_OFFSET, y);
 	window->draw(wormImage);
-
 	
 	lifebar->draw();
 	manabar->draw();
@@ -57,6 +55,17 @@ void Wizard::draw() {
 }
 
 void Wizard::move(float x, float y) {
+
+	if ((x + this->x) > this->x)
+	{
+		X_OFFSET = 0;
+		wormImage.setScale(0.50f, 0.50f);
+	}
+	else
+	{	
+		X_OFFSET = 50;
+		wormImage.setScale(-0.50f, 0.50f);
+	}
 
 	incr_pos(x, y);
 

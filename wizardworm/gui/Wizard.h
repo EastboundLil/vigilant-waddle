@@ -13,6 +13,8 @@ class Wizard : public Drawable
 protected:
 	int id;
 	std::string name;
+
+	int X_OFFSET = 0;
 	
 	Bar* lifebar;
 	Bar* manabar;

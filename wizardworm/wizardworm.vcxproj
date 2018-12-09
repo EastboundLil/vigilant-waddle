@@ -184,6 +184,7 @@
     <ClInclude Include="networking\MoveSetMsg.h" />
     <ClInclude Include="networking\NetworkManager.h" />
     <ClInclude Include="gui\Player.h" />
+    <ClInclude Include="networking\NewMapMsg.h" />
     <ClInclude Include="networking\TimerEndMsg.h" />
     <ClInclude Include="engine\ServerEngine.h" />
     <ClInclude Include="gui\Window.h" />

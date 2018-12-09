@@ -32,3 +32,7 @@ void ServerEngine::SetMoveset(int player, std::vector<Data>& dataset)
 {
 	PlayerReady[player] = true;
 }
+
+void ServerEngine::Update()
+{
+}
