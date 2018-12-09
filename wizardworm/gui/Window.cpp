@@ -28,6 +28,8 @@ Window::Window()
 	map->add_minormap(std::make_shared<MinorMap>(100, 300, sf::Color(92, 51, 23, 255), 160, 160, window, 10, 30));
 
 
+	
+
 }
 
 
@@ -49,17 +51,23 @@ void Window::mapeditor() {
 	sf::Vector2i endpoint;
 	bool isdrag = false;
 	
-
-
-
-	Button* rectorroundselector=new Button(10.0f,10.0f,100.0f,100.0f,sf::Color::Black , "rect or round" , window, [this]() {
+	Button *rectorroundselector = new Button(10.0f, 10.0f, 120.0f, 25.0f, sf::Color::Black, "  rect or round", window, [this]() ->bool{
 		if (rectorround) {
 			rectorround = false;
+			return false;
 		}
 		else {
 			rectorround = true;
+			return true;
 		}
+
+
 	});
+
+	
+
+
+	
 
 
 
@@ -345,9 +353,9 @@ void Window::eventhandler() {
 		
 
 		for (int i = 0; i < player_v[0]->getWizard_v().size(); i++) {
-			player_v[0]->set_Pos(ApplicationManager::getInstance().getEngineManager()->Find(player_v[0]->getWizard_v()[i]), asd);
+			player_v[0]->set_Pos(ApplicationManager::getInstance().getEngineManager()->Find(player_v[0]->getWizard()), asd);
 		}
-			//player->set_Pos(ApplicationManager::getInstance().getEngineManager()->Find(player->getWizard_v()[1]), asd);
+			
 
 		player_v[0]->draw();
 

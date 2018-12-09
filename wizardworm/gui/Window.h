@@ -20,6 +20,7 @@ class Window : public IWindow
 	sf::Texture laserBeam;
 	sf::Texture background;
 
+
 public:
 
 	void eventhandler() override;

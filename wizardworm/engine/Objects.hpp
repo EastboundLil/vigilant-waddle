@@ -122,7 +122,8 @@ public:
 
 	void NextEntity() {
 		currentEntity++;
-		if (currentEntity == entities.size()) currentEntity = 0;
+		if (currentEntity == entities.size())
+			currentEntity = 0;
 	}
 private:
 	std::string username;
