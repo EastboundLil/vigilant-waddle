@@ -3,9 +3,9 @@
 #include "ApplicationManager.h"
 
 #define MOVING_SPEED 5
-#define GRAVITY 1
+#define GRAVITY 0.0000007
 #define FPS 60
-#define JUMP_FORCE 10
+#define JUMP_FORCE 0.01
 #define UP_STEP 10
 
 IEngine::IEngine() : thread(&IEngine::StartThread, this)
@@ -49,19 +49,22 @@ void IEngine::Update()
 				//check in ground
 			}
 
-			if (current_entity->GetJumpSpeed() != 0)
-			{
-				current_entity->AdjustPosition(0, current_entity->GetJumpSpeed());
-				current_entity->AdjustJumpSpeed(-GRAVITY);
-				//check in ground
-			}
-
 			data.Up = false;
 			data.Left = false;
 			data.Right = false;
 			keyboardInput = false;
 
 			mut2.unlock();
+		}
+
+		if (players[currentPlayer]->GetCurrentEntity()->GetJumping())
+		{
+			players[currentPlayer]->GetCurrentEntity()->AdjustPosition(0, -players[currentPlayer]->GetCurrentEntity()->GetJumpSpeed());
+			players[currentPlayer]->GetCurrentEntity()->AdjustJumpSpeed(-(GRAVITY / 2));
+			//check in ground
+
+			if (players[currentPlayer]->GetCurrentEntity()->GetYPosition() > 650)
+				players[currentPlayer]->GetCurrentEntity()->SetJumping(false);
 		}
 
 		timer.restart();
