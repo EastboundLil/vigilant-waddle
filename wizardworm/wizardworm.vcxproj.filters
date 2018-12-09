@@ -125,7 +125,6 @@
     <ClInclude Include="Spell.h">
       <Filter>gui\headers</Filter>
     </ClInclude>
-    <ClInclude Include="engine\Objects.hpp" />
     <ClInclude Include="Firebolt.h">
       <Filter>gui\headers</Filter>
     </ClInclude>
@@ -141,6 +140,9 @@
     </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>gui\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\Objects.hpp">
+      <Filter>engine\headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
