@@ -28,6 +28,19 @@ void Player::move(float x, float y,float deltaTime){
 
 }
 
+void Player::set_Pos(sf::Vector2f pos , float deltaTime)
+{
+	wizard->close_arrow();
+	wizard->set_x(pos.x);
+	wizard->set_y(pos.y);
+	wizard->wizAnimationUpdate(deltaTime);
+}
+
+std::vector<Wizard*> Player::getWizard_v()
+{
+	return wizardvector;
+}
+
 
 void Player::draw() {
 	for (Wizard* w : wizardvector) {

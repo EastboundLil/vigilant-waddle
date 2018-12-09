@@ -359,7 +359,9 @@ void Window::eventhandler() {
 			text.setFont(font);
 		}
 		window->draw(text);
-
+		for (int i = 0; i < player->getWizard_v().size(); i++) {
+			player->set_Pos(ApplicationManager::getInstance().getEngineManager()->Find(player->getWizard_v()[i]), asd);
+		}
 		player->draw();
 		
 		spellBar->draw();
