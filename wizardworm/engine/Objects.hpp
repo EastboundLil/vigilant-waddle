@@ -2,6 +2,9 @@
 #include <SFML/Graphics.hpp>
 #include "Drawable.h"
 #include <vector>
+#include <bitset>
+
+typedef std::bitset<3> moveset;
 //itt röviden structok és osztályok fognak szerepelni, amik a gui-n látható
 //objektumokhoz fognak kapcsolódni
 //pl varázsló, varázslat
@@ -34,24 +37,33 @@ public:
 
 	Drawable* GetSprite() { return entity; }
 	void SetSprite(Drawable* sprite) { entity = sprite; }
-	virtual void Update() {}
-	virtual void EmptyMovent() { positions.clear(); }
-	std::vector<sf::Vector2f> GetMovement() { return positions; }
+	virtual void Update() {
+		forces.push_back(sf::Vector2f(0, 0));
+		positions.push_back(moveset(0x00));
+		Reset();
+	}
+	virtual void EmptyMovent() { positions.clear(); forces.clear(); }
+	std::vector<sf::Vector2f> GetForces() { return forces; }
+	std::vector<moveset> GetMoveset() { return positions; }
+
+	void SetInput(bool left, bool right, bool up) { this->left = left; this->right = right; this->up = up; }
+
 	int GetId() { return Id; }
 
 protected:
 	Drawable* entity;
-	std::vector<sf::Vector2f> positions;
+	std::vector<sf::Vector2f> forces; //ha van rajta valamilyen erõhatás
+	std::vector<moveset> positions; //ha irányítva van
 
 	int Id;
-
-	bool Selected;
+	bool left, right, up;
+	void Reset() { left = false; right = false; up = false; }
 };
 
 /**
 * Minden ami mozog
 */
-class MovingEntity : public Entity
+/*class MovingEntity : public Entity
 {
 public:
 	MovingEntity():Entity() {}
@@ -66,15 +78,11 @@ public:
 	void AjdustSpeed(sf::Vector2f speed) { Speed += speed; }
 	void AdjustAcceleration(sf::Vector2f acc) { Acceleration += acc; }
 
-	//TODO:
-	//erre lehet, hogy rá kéne tenni valami idõzítõt, hogy ne fusson le minden frame-re
 	virtual void Update() {
-		Speed += Acceleration;
-		entity->set_pos(entity->get_x() + Speed.x, entity->get_y() + Speed.y);
-		positions.push_back(sf::Vector2f(entity->get_x(), entity->get_y()));
+		//positions.push_back(sf::Vector2f(entity->get_x(), entity->get_y()));
 	}
 
 protected:
 	sf::Vector2f Speed;
 	sf::Vector2f Acceleration;
-};
+};*/
