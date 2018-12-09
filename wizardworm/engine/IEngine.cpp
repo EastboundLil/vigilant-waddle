@@ -25,7 +25,7 @@ IEngine::~IEngine()
 
 void IEngine::Update()
 {
-	if (timer.getElapsedTime().asMilliseconds() >= fpsTime && roundTimer.getElapsedTime().asSeconds < 30)
+	if (timer.getElapsedTime().asMilliseconds() >= fpsTime && roundTimer.getElapsedTime().asSeconds() < 30)
 	{
 		if (keyboardInput)
 		{
@@ -58,12 +58,12 @@ void IEngine::Update()
 
 		timer.restart();
 	}
-	else if (roundTimer.getElapsedTime().asSeconds >= 30)
+	else if (roundTimer.getElapsedTime().asSeconds() >= 30)
 	{
-		if (engineType == EngineType::Client)
-			SendData();
-		else
-			ReceiveData();
+		//if (engineType == EngineType::Client)
+			//SendData();
+		//else
+			//ReceiveData();
 		//send data to server
 		//server calculate response
 		//???

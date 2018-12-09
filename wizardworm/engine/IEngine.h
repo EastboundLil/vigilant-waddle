@@ -17,8 +17,8 @@ public:
 
 	virtual void AddPlayer(std::vector<Drawable*> entities);
 
-	virtual void SendData();
-	virtual void ReceiveData();
+	//virtual void SendData();
+	//virtual void ReceiveData();
 
 protected:
 	std::vector<PlayerData*> players;
