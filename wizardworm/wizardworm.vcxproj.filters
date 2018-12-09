@@ -154,6 +154,9 @@
     <ClInclude Include="SpellBar.h">
       <Filter>gui</Filter>
     </ClInclude>
+    <ClInclude Include="networking\NewMapMsg.h">
+      <Filter>networking\VWP messages</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".\ReadMe.txt" />
