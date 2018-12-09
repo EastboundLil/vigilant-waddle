@@ -9,12 +9,6 @@ public:
 	IEngine();
 	virtual ~IEngine();
 
-	//még ki kell találni, hogy milyen formában küldjék a movesetet
-	virtual std::vector<Data> GenerateMoveset() = 0;
-
-	//itt bejön a moveset az adott playertõl
-	virtual void SetMoveset(int player, std::vector<Data>& dataset) = 0;
-
 	//ezt kell futtatni a fõ cikluson belül.
 	//csináljam meg ezt osztályon belül, vagy valahol kívül lesz futtatva?
 	virtual void Update();
@@ -22,6 +16,9 @@ public:
 	virtual void Move(bool up, bool left, bool right);
 
 	virtual void AddPlayer(std::vector<Drawable*> entities);
+
+	virtual void SendData();
+	virtual void ReceiveData();
 
 protected:
 	std::vector<PlayerData*> players;
@@ -34,6 +31,7 @@ protected:
 	sf::Clock roundTimer;
 
 	int currentEngineState;
+	int engineType;
 
 	enum EngineState
 	{
@@ -43,6 +41,13 @@ protected:
 		Calculating = 3,
 		Playing = 4,
 		Waiting = 5
+	};
+
+	enum EngineType
+	{
+		Server = 0,
+		Client = 1,
+		Undefined = 2
 	};
 };
 

@@ -6,7 +6,7 @@ class ServerEngine :
 	public IEngine
 {
 public:
-	ServerEngine(int playerNum);
+	ServerEngine(int playerNum = 0);
 	~ServerEngine();
 
 private:

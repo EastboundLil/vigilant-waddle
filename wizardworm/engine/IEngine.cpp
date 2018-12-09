@@ -13,6 +13,9 @@ IEngine::IEngine()
 	fpsTime = (1 / FPS) * 1000;
 	timer.restart();
 	roundTimer.restart();
+
+	engineType = EngineType::Undefined;
+	currentEngineState = EngineState::Waiting;
 }
 
 
@@ -57,6 +60,10 @@ void IEngine::Update()
 	}
 	else if (roundTimer.getElapsedTime().asSeconds >= 30)
 	{
+		if (engineType == EngineType::Client)
+			SendData();
+		else
+			ReceiveData();
 		//send data to server
 		//server calculate response
 		//???
