@@ -5,7 +5,7 @@
 #include "IWindow.h"
 #include "Map.h"
 #include "SpellBar.h"
-
+#include "ApplicationManager.h"
 
 class Window : public IWindow
 {

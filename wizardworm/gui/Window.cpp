@@ -242,13 +242,13 @@ void Window::eventhandler() {
 				window->close();
 			if (event.type == sf::Event::KeyPressed) {
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) exit(0);
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+				/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 				{
 					// move left...
 					asd--;
 					player->move(-1, 0, asd);
 					std::cout << "balra" <<asd <<std::endl;
-				}
+				}*/
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 				{
 					//arrow degree up;
@@ -259,12 +259,13 @@ void Window::eventhandler() {
 					//arrow degree up;
 					player->aim(false);
 				}
-				else if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+				if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 				{
 					// move right...
-					asd++;
-					player->move(1, 0, asd);
-					std::cout << "jobbra" <<asd<< std::endl;
+					//asd++;
+					//player->move(1, 0, asd);
+					ApplicationManager::getInstance().getEngineManager()->Move(sf::Keyboard::isKeyPressed(sf::Keyboard::Space), sf::Keyboard::isKeyPressed(sf::Keyboard::Left), sf::Keyboard::isKeyPressed(sf::Keyboard::Right));
+					
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
 					player->possible_shoot(0);
@@ -335,18 +336,29 @@ void Window::eventhandler() {
 		
 		player->shootUpdate(deltaTime);
 		window->clear(sf::Color::Cyan);
-		
 		window->draw(sf::Sprite(background));
 
 		map->draw();
 	
 
-		for (int i = 0; i < explosion_v.size(); i++) {
-			
+		for (int i = 0; i < explosion_v.size(); i++) {			
 			window->draw(*explosion_v[i]);
 		}
 		
-
+		sf::Text text;
+		text.setString("fasz");
+		//text.setPosition(posx, posy);
+		text.setFillColor(sf::Color::White);
+		text.setCharacterSize(20);
+		sf::Font font;
+		if (!font.loadFromFile("Roboto-Regular.ttf")) {
+			std::cout << "szar afajl  \n";
+		}
+		else {
+			std::cout << "jó a fajl \n";
+			text.setFont(font);
+		}
+		window->draw(text);
 
 		player->draw();
 		

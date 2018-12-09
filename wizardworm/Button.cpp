@@ -11,9 +11,9 @@ Button::Button(float posx, float posy, float width , float height ,sf::Color col
 	rect.setPosition(posx, posy);
 	rect.setSize(sf::Vector2f(width, height));
 	text.setString(t);
-	text.setPosition(posx, posy);
+	//text.setPosition(posx, posy);
 	text.setFillColor(sf::Color::White);
-	text.setCharacterSize(15);
+	text.setCharacterSize(20);
 	sf::Font font;
 	if (!font.loadFromFile("Roboto-Regular.ttf")) {
 		std::cout << "szar afajl  \n";
@@ -45,7 +45,6 @@ void Button::make_action() {
 void Button::draw() {
 
 	window->draw(rect);
-	//window->draw(text);
-
+	window->draw(text);
 
 }
