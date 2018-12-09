@@ -22,7 +22,7 @@ Player::~Player()
 
 void Player::move(float x, float y,float deltaTime){
 	
-	wizard->close_arrow();
+	
 	wizard->move(x,y);
 	wizard->wizAnimationUpdate(deltaTime);
 
@@ -30,7 +30,6 @@ void Player::move(float x, float y,float deltaTime){
 
 void Player::set_Pos(sf::Vector2f pos , float deltaTime)
 {
-	wizard->close_arrow();
 	wizard->set_Pos(pos);
 	
 	wizard->wizAnimationUpdate(deltaTime);
@@ -108,7 +107,7 @@ void Player::possible_shoot(int i)
 
 	wizard->change_curr_arrow(i);
 	
-	
+	std::cout << "arrow nyilik \n";
 	//TODO: manabaron mutassa a costot
 	
 }

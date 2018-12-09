@@ -69,7 +69,7 @@ void Wizard::set_Pos(sf::Vector2f pos) {
 	set_pos(pos.x ,pos.y);
 
 	for (Arrow * a : arrow_v) {
-		a->set_pos(x, y);
+		a->set_pos(x+40, y+20);
 	}
 
 	lifebar->set_pos(x, y-25);
@@ -144,21 +144,24 @@ Arrow* Wizard::get_arrow() {
 
 void Wizard::open_arrow()
 {
-	
+	std::cout << arrow->get_type() << "kinyit \n";
 	arrow->set_opened(true);
 }
 
 void Wizard::close_arrow()
 {
+	std::cout << arrow->get_type() << "bezár \n";
 	arrow->set_opened(false);
 }
 
 void Wizard::change_arrow_opening()
 {
 	if (arrow->is_opened()) {
+		
 		close_arrow();
 	}
 	else {
+		
 		open_arrow();
 	}
 }
@@ -167,13 +170,19 @@ void Wizard::change_curr_arrow(int i)
 {
 	
 	if (i>=0 && i<arrow_v.size()) {
+		
 		if ((i == 0 && arrow->get_type() == "firebolt") || (i == 1 && arrow->get_type() == "laserbeam")) {
 			change_arrow_opening();
 			return;
 		}
+		arrow = arrow_v[i];
 		arrow->set_opened(false);
 		arrow = arrow_v[i];
 		arrow->set_opened(true);
+
+		
+		
+		
 		
 	}
 }

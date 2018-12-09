@@ -26,7 +26,7 @@ Arrow::Arrow(float _x, float _y , sf::RenderWindow * w , std::string t) :  Drawa
 	*/
 
 	window = w;
-	std::cout << "elso force: " << force << "\n";
+	//std::cout << "elso force: " << force << "\n";
 
 	if (!texture.loadFromFile("arrow.png")) {
 		system("pause");
@@ -69,10 +69,10 @@ bool Arrow::is_opened()
 
 void Arrow::set_opened(bool t)
 {
-	
+	std::cout << type << t<<" \n";
 		opened = t;
 	
-	std::cout << "arrow: " << opened << "\n";
+	
 }
 
 void Arrow::incr_deg(float a)
@@ -102,7 +102,7 @@ void Arrow::incr_force(float a)
 	else {
 		force += a;
 	}
-	std::cout <<force <<" \n";
+	//std::cout <<force <<" \n";
 	//rect.setSize(sf::Vector2f(force * 100, 10));
 
 	sprite.setScale(sf::Vector2f(force/8 + 0.07f, 0.07f));
