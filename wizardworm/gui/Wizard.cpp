@@ -43,25 +43,6 @@ Wizard::~Wizard(){
 
 void Wizard::draw() {
 
-	/*if (!texture.loadFromFile("WizardWorm.png")) {
-	
-		system("pause");
-	}
-	texture.setSmooth(true);
-	sf::Sprite sprite;
-	sprite.setTexture(texture);
-	sprite.setPosition(x, y);
-	//Worm nagys�ga
-	sprite.setScale(0.30f, 0.30f);*/
-	
-	//ha kép helyett worm kéne:
-	/*sf::RectangleShape rectangle;
-
-	rectangle.setSize(sf::Vector2f(10, 25));
-	rectangle.setFillColor(sf::Color::White);
-	rectangle.setPosition(get_position().get_x(), get_position().get_y());*/
-	
-	//window->draw(sprite);
 
 	wormImage.setPosition(x, y);
 	window->draw(wormImage);
@@ -76,7 +57,6 @@ void Wizard::draw() {
 }
 
 void Wizard::move(float x, float y) {
-	//Az �let �s a mana elheyez�s�nek be�ll�t�sa + sz�nek
 
 	incr_pos(x, y);
 

@@ -11,7 +11,7 @@ class Firebolt :public Spell{
 
 
 public:
-	Firebolt(sf::RenderWindow *window, sf::Vector2f Pos) ;
+	Firebolt(sf::RenderWindow *window, sf::Vector2f Pos, sf::Texture &texture) ;
 	Firebolt(const Firebolt& f);
 	//TODO: Firebolt(sf::RenderWindow *windom, sf::Vector2f startpos , float deg , float force);
 	~Firebolt();

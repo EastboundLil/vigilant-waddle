@@ -47,31 +47,32 @@ void Player::draw() {
 	}
 }
 
-void Player::shoot(std::string spell_type,sf::Vector2i mousePos) {
+void Player::shoot(std::string spell_type,sf::Vector2i mousePos, sf::Texture &texture) {
 
 	
-	livingspells.push_back(new Firebolt(window, sf::Vector2f(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))));
+	livingspells.push_back(new Firebolt(window, sf::Vector2f(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)),texture));
 	wizard->incr_mana(-livingspells.back()->get_mana_cost());
+
 }
 
-void Player::shoot()
+/*void Player::shoot()
 {
 	Arrow* a = wizard->get_arrow();
 	if (a!=nullptr) {
 		float d = a->get_deg();
 		float f = a->get_force();
 		std::string type = a->get_type();
-		/*
+		
 		float rx = 20;
 		float ry = rx * tan(d) - (pow(rx, 2)*9.8) / (2 * pow(f * 100, 2)*pow(cos(d), 2));
 		//TODO: livingspells.push_back(new Firebolt(window, sf::Vector2f(a->get_x , a->get_y) , d , f));
 		std::cout << "robbanas: " << rx << " " << ry <<"f: "<<f*100<<"d:"<<d<< "\n";
 		livingspells.push_back(new Firebolt(window, sf::Vector2f(rx*10+ a->get_x(), -ry+ a->get_y())));
-		*/
+		
 		livingspells.push_back(new Firebolt(window, sf::Vector2f(200, 200)));
 		wizard->incr_mana(-livingspells.back()->get_mana_cost());
 	}
-}
+}*/
 
 void Player::shootUpdate(float deltaTime) {
 
