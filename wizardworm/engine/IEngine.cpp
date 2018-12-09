@@ -8,7 +8,7 @@
 #define JUMP_FORCE 10
 #define UP_STEP 10
 
-IEngine::IEngine()
+IEngine::IEngine() : thread(&IEngine::StartThread, this)
 {
 	keyboardInput = false;
 	fpsTime = (1 / FPS) * 1000;
@@ -27,10 +27,11 @@ IEngine::~IEngine()
 
 void IEngine::Update()
 {
-	if (timer.getElapsedTime().asMilliseconds() >= fpsTime && roundTimer.getElapsedTime().asSeconds() < 30)
+	if (timer.getElapsedTime().asMilliseconds() >= fpsTime)
 	{
 		if (keyboardInput)
 		{
+			mut2.lock();
 			Entity* current_entity = players[currentPlayer]->GetCurrentEntity();
 			players[currentPlayer]->AddKeyboardData(data.Up, data.Left, data.Right);
 			if (data.Up && current_entity->GetJumpSpeed() == 0)
@@ -39,12 +40,12 @@ void IEngine::Update()
 			}
 			if (data.Left && !data.Right)
 			{
-				current_entity->AdjustPosition(-1, 0);
+				current_entity->AdjustPosition(sf::Vector2f(-1, 0));
 				
 			}
 			else if (!data.Left && data.Right)
 			{
-				current_entity->AdjustPosition(1, 0);
+				current_entity->AdjustPosition(sf::Vector2f(1, 0));
 				//check in ground
 			}
 
@@ -59,6 +60,8 @@ void IEngine::Update()
 			data.Left = false;
 			data.Right = false;
 			keyboardInput = false;
+
+			mut2.unlock();
 		}
 
 		timer.restart();
@@ -78,12 +81,15 @@ void IEngine::Update()
 
 void IEngine::Move(bool up, bool left, bool right)
 {
+	mut1.lock();
 	if (up)
 		data.Up = true;
 	if (left)
 		data.Left = true;
 	if (right)
 		data.Right = true;
+	keyboardInput = up || left || right;
+	mut1.unlock();
 }
 
 void IEngine::AddPlayer(std::vector<Wizard*> entities)
@@ -101,6 +107,19 @@ void IEngine::SendData()
 
 void IEngine::ReceiveData()
 {
+}
+
+void IEngine::Start()
+{
+	thread.launch();
+}
+
+void IEngine::StartThread()
+{
+	while (true)
+	{
+		Update();
+	}
 }
 
 sf::Vector2f IEngine::Find(Drawable * item)

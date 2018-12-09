@@ -20,6 +20,11 @@ public:
 	ApplicationManager(ApplicationManager const&) = delete;
 	void operator=(ApplicationManager const&) = delete;
 
+	void init()
+	{
+		engineManager->Start();
+	}
+
 	void setGuiManager(std::shared_ptr<IWindow> gui)				{ guiManager = gui; }
 	void setNetworkManager(std::shared_ptr<INWManager> networking)	{ networkManager = networking; }
 	void setEngineManager(std::shared_ptr<IEngine> engine)			{ engineManager = engine; }
