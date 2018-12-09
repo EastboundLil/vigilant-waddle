@@ -54,6 +54,33 @@ void Wizard::draw() {
 
 }
 
+void Wizard::set_Pos(sf::Vector2f pos) {
+	if ((x + this->x) > this->x)
+	{
+		X_OFFSET = 0;
+		wormImage.setScale(0.50f, 0.50f);
+	}
+	else
+	{
+		X_OFFSET = 50;
+		wormImage.setScale(-0.50f, 0.50f);
+	}
+
+	set_pos(pos.x ,pos.y);
+
+	for (Arrow * a : arrow_v) {
+		a->set_pos(x, y);
+	}
+
+	lifebar->set_pos(x, y-25);
+	manabar->set_pos(x, y-20);
+
+
+
+
+
+}
+
 void Wizard::move(float x, float y) {
 
 	if ((x + this->x) > this->x)

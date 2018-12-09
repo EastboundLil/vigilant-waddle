@@ -31,6 +31,7 @@ public:
 	~Wizard();
 	void draw();
 	void move(float x, float y);
+	void set_Pos(sf::Vector2f pos);
 	void set_life(float l);
 	void set_mana(float m);
 	void incr_life(float l);

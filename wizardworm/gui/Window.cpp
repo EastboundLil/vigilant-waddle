@@ -326,7 +326,8 @@ void Window::eventhandler() {
 						player_v[0]->shoot(pos, fireBolt);
 					}
 					else {
-						player_v[0]->shoot(player_v[0]->get_arrow()->get_deg(), laserBeam);
+						float deg = player_v[0]->get_arrow()->get_deg();
+						player_v[0]->shoot(deg, laserBeam);
 					}
 
 					map->explosion_happened(pos);
