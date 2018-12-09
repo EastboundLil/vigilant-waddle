@@ -8,7 +8,7 @@ protected:
 	float mana_cost;
 	float damage;
 	Animation *animation;
-	sf::Texture texture;
+	//sf::Texture texture;
 	sf::RectangleShape spellImage;
 
 

@@ -2,13 +2,14 @@
 #include <iostream>
 
 
-Firebolt::Firebolt(sf::RenderWindow *window, sf::Vector2f mousePos)
+Firebolt::Firebolt(sf::RenderWindow *window, sf::Vector2f mousePos , sf::Texture &texture)
 {
 	mana_cost = 20;
 	damage = 30;
 	this->window = window;
-	texture.loadFromFile("Gexp.png");
+	//texture.loadFromFile("Gexp.png");
 	texture.setSmooth(true);
+	
 	spellImage.setTexture(&texture);
 	animation = new Animation(&texture, sf::Vector2u(4, 2), 0.15f);
 

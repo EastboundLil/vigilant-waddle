@@ -13,6 +13,8 @@ Window::Window()
 	player =std::make_shared<Player>( window , "elsojatekos");
 
 	spellBar = new SpellBar(350.0f,530.0f,window);
+	fireBolt.loadFromFile("Gexp.png");
+
 
 	networkManager = ApplicationManager::getInstance().getNetworkManager();
 
@@ -133,7 +135,7 @@ void Window::eventhandler() {
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
 					pos = sf::Mouse::getPosition(*window);
-					player->shoot("Firebolt", pos);
+					player->shoot("Firebolt", pos,fireBolt);
 
 
 					//ezt most valamiert nem rajzolja ki

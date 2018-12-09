@@ -21,8 +21,8 @@ public:
 	
 	void move(float x, float y, float deltaTime);
 	void draw() ;
-	void shoot(std::string spell_type,sf::Vector2i mousePos);
-	void shoot();
+	void shoot(std::string spell_type,sf::Vector2i mousePos,sf::Texture &texture);
+	//void shoot();
 	void shootUpdate(float deltaTime);
 	void possible_shoot(int i);
 	void switch_wizard();

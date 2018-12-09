@@ -17,6 +17,7 @@ class Window : public IWindow
 	std::unique_ptr<Map> map;
 
 	SpellBar* spellBar;
+	sf::Texture fireBolt;
 
 public:
 

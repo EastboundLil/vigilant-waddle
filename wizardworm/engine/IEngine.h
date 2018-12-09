@@ -33,6 +33,6 @@ public:
 
 protected:
 	std::vector<Entity> entities;
-	MovingEntity* selectedEntity;
+	Entity* selectedEntity;
 };
 
