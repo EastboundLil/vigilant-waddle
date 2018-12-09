@@ -2,6 +2,7 @@
 
 #include "gui/IWindow.h"
 #include "networking/INWManager.h"
+#include "engine/IEngine.h"
 
 class ApplicationManager
 {
@@ -15,15 +16,29 @@ public:
 	ApplicationManager(ApplicationManager const&) = delete;
 	void operator=(ApplicationManager const&) = delete;
 
+	void initialize()
+	{
+		if (guiManager != nullptr &&
+			networkManager != nullptr &&
+			engineManager != nullptr &&)
+		{
+			guiManager->setEngineManager(engineManager);
+			guiManager->setNetworkManager(networkManager);
+		}
+	}
+
 	void setGuiManager(std::shared_ptr<IWindow> gui)				{ guiManager = gui; }
 	void setNetworkManager(std::shared_ptr<INWManager> networking)	{ networkManager = networking; }
+	void setEngineManager(std::shared_ptr<IEngine> engine)			{ engineManager = engine; }
 	
 	std::shared_ptr<IWindow>	getGuiManager()		{ return guiManager; }
 	std::shared_ptr<INWManager> getNetworkManager() { return networkManager; }
+	std::shared_ptr<IEngine>	getEngineManager()	{ return engineManager;  }
 
 private:
-	ApplicationManager() : guiManager(nullptr), networkManager(nullptr) {};
+	ApplicationManager() : guiManager(nullptr), networkManager(nullptr), engineManager(nullptr) {};
 
 	std::shared_ptr<IWindow>	guiManager;
 	std::shared_ptr<INWManager> networkManager;
+	std::shared_ptr<IEngine>	engineManager;
 };
