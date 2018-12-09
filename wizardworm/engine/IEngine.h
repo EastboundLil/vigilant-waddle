@@ -2,7 +2,7 @@
 #include "Objects.hpp"
 #include <vector>
 #include <SFML/Graphics.hpp>
-
+#include "ApplicationManager.h"
 class IEngine
 {
 public:
@@ -20,19 +20,18 @@ public:
 
 	//ezt kell futtatni a fõ cikluson belül.
 	//csináljam meg ezt osztályon belül, vagy valahol kívül lesz futtatva?
-	virtual void Update() = 0;
+	virtual void Update();
 
-	//ide beadhatod, hogy merre mozog
-	//a jumping mindig legyen igaz, ha nyomja a felfele nyilat
-	virtual void Move(bool left, bool jumping);
+	virtual void Move(bool up, bool left, bool right);
 
-	Entity* GetEntity(int id);
-	int GetEntityCount();
-	void AddEntity(Entity& entity);
-	void AddEntity(Drawable* drawable, int Id = -1);
+	virtual void AddPlayer(std::vector<Drawable*> entities);
 
 protected:
-	std::vector<Entity> entities;
-	std::vector<PlayerData> players;
+	std::vector<PlayerData*> players;
+	int currentPlayer;
+	bool keyboardInput;
+	KeyboardData data;
+	float fpsTime;
+	sf::Clock timer;
 };
 

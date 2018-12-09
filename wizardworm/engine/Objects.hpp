@@ -47,6 +47,7 @@ public:
 	PlayerData(std::vector<Drawable*>& drawables) {
 		for (Drawable* dw : drawables)
 			entities.push_back(new Entity(dw));
+		currentEntity = 0;
 	}
 	~PlayerData() {}
 
@@ -73,6 +74,11 @@ public:
 	void SetCurrentEntity(int id) { currentEntity = id; }
 	int GetEntityCount() { return entities.size(); }
 	Entity* GetEntityWithNum(int id) { return entities[id]; }
+
+	void NextEntity() {
+		currentEntity++;
+		if (currentEntity == entities.size()) currentEntity = 0;
+	}
 private:
 	std::string username;
 
@@ -84,7 +90,7 @@ private:
 class Entity
 {
 public:
-	Entity(Drawable* item) { drawable = item; }
+	Entity(Drawable* item) { drawable = item; UpSpeed = 0; }
 	~Entity() {}
 
 	sf::Vector2f GetPosition() { return position; }
@@ -97,7 +103,13 @@ public:
 	void AdjustPosition(sf::Vector2f pos) { position += pos; }
 	void AdjustPosition(float x, float y) { position += sf::Vector2f(x, y); }
 
+	float GetJumpSpeed() { return UpSpeed; }
+	void SetJumpSpeed(float speed) { UpSpeed = speed; }
+	void AdjustJumpSpeed(float speed) { UpSpeed += speed; }
+
 private:
 	Drawable* drawable;
 	sf::Vector2f position;
+
+	float UpSpeed;
 };

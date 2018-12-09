@@ -2,12 +2,15 @@
 #include "IEngine.h"
 
 #define MOVING_SPEED 5
-#define JUMPING_SPEED 10
 #define GRAVITY 1
-
+#define FPS 60
+#define JUMP_FORCE 10
 
 IEngine::IEngine()
 {
+	keyboardInput = false;
+	fpsTime = (1 / FPS) * 1000;
+	timer.restart();
 }
 
 
@@ -15,60 +18,53 @@ IEngine::~IEngine()
 {
 }
 
-/*void IEngine::Update()
+void IEngine::Update()
 {
-	/*for (Entity& e : entities)
-		e.Update();*/
-
-//}
-
-void IEngine::Move(bool left, bool jumping)
-{
-	/*if (left)
-		selectedEntity->SetSpeed(sf::Vector2f(-MOVING_SPEED, 0));
-	else
-		selectedEntity->SetSpeed(sf::Vector2f(MOVING_SPEED, 0));
-
-	if (jumping && selectedEntity->GetSpeed().y == 0)
+	if (timer.getElapsedTime().asMilliseconds() >= fpsTime)
 	{
-		selectedEntity->AjdustSpeed(sf::Vector2f(0, JUMPING_SPEED));
-		selectedEntity->AdjustAcceleration(sf::Vector2f(0, -GRAVITY));
-	}*/
-}
+		if (keyboardInput)
+		{
+			Entity* current_entity = players[currentPlayer]->GetCurrentEntity();
+			players[currentPlayer]->AddKeyboardData(data.Up, data.Left, data.Right);
+			if (data.Up && current_entity->GetJumpSpeed() == 0)
+			{
+				current_entity->SetJumpSpeed(JUMP_FORCE);
+			}
 
-Entity * IEngine::GetEntity(int id)
-{
-	for (Entity e : entities)
-	{
-		if (e.GetId() == id)
-			return &e;
+			if (data.Left && !data.Right)
+			{
+				current_entity->AdjustPosition(-1, 0);
+			}
+			else if (!data.Left && data.Right)
+			{
+				current_entity->AdjustPosition(1, 0);
+			}
+
+			if (current_entity->GetJumpSpeed() != 0)
+			{
+				current_entity->AdjustPosition(0, current_entity->GetJumpSpeed());
+			}
+
+			keyboardInput = false;
+		}
+
+		timer.restart();
 	}
-
-	return nullptr;
 }
 
-int IEngine::GetEntityCount()
+void IEngine::Move(bool up, bool left, bool right)
 {
-	return entities.size();
-}
-
-void IEngine::AddEntity(Entity & entity)
-{
-	entities.push_back(entity);
-}
-
-void IEngine::AddEntity(Drawable * drawable, int Id)
-{
-	if (Id < 0)
+	if (!keyboardInput)
 	{
-		Entity ent;
-		ent.SetSprite(drawable);
-		entities.push_back(ent);
+		keyboardInput = true;
+		data.Up = up;
+		data.Left = left;
+		data.Right = right;
 	}
-	else
-	{
-		Entity ent(Id);
-		ent.SetSprite(drawable);
-		entities.push_back(ent);
-	}
+}
+
+void IEngine::AddPlayer(std::vector<Drawable*> entities)
+{
+	PlayerData* pd = new PlayerData(entities);
+	players.push_back(pd);
 }
