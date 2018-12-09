@@ -20,7 +20,7 @@ std::vector<Data> ServerEngine::GenerateMoveset()
 	{
 		Data d;
 		d.Id = entities[i].GetId();
-		d.Positions = entities[i].GetMovement();
+		//d.Positions = entities[i].GetMovement();
 		entities[i].EmptyMovent();
 		movesets.push_back(d);
 	}

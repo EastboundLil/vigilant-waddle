@@ -23,7 +23,7 @@ void IEngine::Update()
 
 void IEngine::Move(bool left, bool jumping)
 {
-	if (left)
+	/*if (left)
 		selectedEntity->SetSpeed(sf::Vector2f(-MOVING_SPEED, 0));
 	else
 		selectedEntity->SetSpeed(sf::Vector2f(MOVING_SPEED, 0));
@@ -32,7 +32,7 @@ void IEngine::Move(bool left, bool jumping)
 	{
 		selectedEntity->AjdustSpeed(sf::Vector2f(0, JUMPING_SPEED));
 		selectedEntity->AdjustAcceleration(sf::Vector2f(0, -GRAVITY));
-	}
+	}*/
 }
 
 Entity * IEngine::GetEntity(int id)

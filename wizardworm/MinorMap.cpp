@@ -294,28 +294,36 @@ void MinorMap::make_me_round()
 
 void MinorMap::make_solid(sf::Vector2i pos)
 {
+	
 	for (int i = 0; i < block_v.size(); i++) {
 		if (block_v[i]->check_bound(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)))) {
 			//std::cout << "benne a boundingboxban \n";
 			if (block_v[i]->contains(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)))) {
-				block_v[i]->set_destructible( false);
+				for (int j = 0; j < block_v.size(); j++) {
+					block_v[j]->set_destructible(false);
+				}
+				return;
 			}
 		}
 	}
+	
 
 }
 
 void MinorMap::make_destructible(sf::Vector2i pos)
 {
 	for (int i = 0; i < block_v.size(); i++) {
-
 		if (block_v[i]->check_bound(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)))) {
 			//std::cout << "benne a boundingboxban \n";
 			if (block_v[i]->contains(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)))) {
-
-				block_v[i]->set_destructible( true);
+				for (int j = 0; j < block_v.size(); j++) {
+					block_v[j]->set_destructible(true);
+				}
+				return;
 			}
 		}
-
 	}
+		
+
+	
 }
