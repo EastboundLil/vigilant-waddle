@@ -64,6 +64,8 @@ void Window::mapeditor() {
 
 	});
 
+
+
 	
 
 
@@ -282,6 +284,7 @@ void Window::eventhandler() {
 					spellBar->setSelected(2);
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
+					ApplicationManager::getInstance().getEngineManager()->Switch();
 					player_v[0]->switch_wizard();
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
@@ -323,7 +326,8 @@ void Window::eventhandler() {
 						player_v[0]->shoot(pos, fireBolt);
 					}
 					else {
-						player_v[0]->shoot(player_v[0]->get_arrow()->get_deg(), laserBeam);
+						float deg = player_v[0]->get_arrow()->get_deg();
+						player_v[0]->shoot(deg, laserBeam);
 					}
 
 					map->explosion_happened(pos);

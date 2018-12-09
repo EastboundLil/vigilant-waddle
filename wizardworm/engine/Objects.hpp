@@ -44,7 +44,13 @@ struct KeyboardData
 class Entity
 {
 public:
-	Entity(Drawable* item) { drawable = item; UpSpeed = 0; position = sf::Vector2f(item->get_x(), item->get_y()); startPosition = position; }
+	Entity(Drawable* item) {
+		drawable = item;
+		UpSpeed = 0;
+		position = sf::Vector2f(item->get_x(), item->get_y());
+		startPosition = position;
+		isJumping = false;
+	}
 	~Entity() {}
 
 	sf::Vector2f GetPosition() { return position; }
@@ -58,7 +64,7 @@ public:
 	void AdjustPosition(float x, float y) { position += sf::Vector2f(x, y); }
 
 	float GetJumpSpeed() { return UpSpeed; }
-	void SetJumpSpeed(float speed) { UpSpeed = speed; }
+	void SetJumpSpeed(float speed) { UpSpeed = speed; isJumping = true; }
 	void AdjustJumpSpeed(float speed) { UpSpeed += speed; }
 
 	void ResetToStart() { position = startPosition; }
@@ -66,10 +72,15 @@ public:
 
 	Drawable* GetDrawable() { return drawable; }
 
+	void SetJumping(bool val) { isJumping = val; }
+	bool GetJumping() { return isJumping; }
+
 private:
 	Drawable* drawable;
 	sf::Vector2f position;
 	sf::Vector2f startPosition;
+
+	bool isJumping;
 
 	float UpSpeed;
 };
