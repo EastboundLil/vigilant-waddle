@@ -34,6 +34,168 @@ Window::~Window()
 	
 }
 
+void Window::mapeditor() {
+
+
+
+	float deltaTime = 0.0f;
+	sf::Clock clock;
+	
+	sf::Vector2i startpoint(-1, -1);
+	sf::Vector2i endpoint;
+	bool isdrag = false;
+
+
+
+
+
+	while (window->isOpen())
+	{
+		sf::Event event;
+		sf::Vector2i pos;
+		deltaTime = clock.restart().asSeconds();
+		sf::RectangleShape rect;
+		rect.setFillColor(sf::Color::Transparent);
+		rect.setOutlineColor(sf::Color::Blue);
+		rect.setOutlineThickness(-2);
+
+
+		while (window->pollEvent(event))
+		{
+
+
+			if (event.type == sf::Event::Closed)
+				window->close();
+			if (event.type == sf::Event::KeyPressed) {
+
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+				{
+					
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+				{
+					
+
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+				{
+					
+
+				}
+				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+				{
+					
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
+
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) {
+
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
+
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+				{
+
+
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+				{
+
+					window->clear(sf::Color::Cyan);
+					return;
+
+				}
+
+			}
+			if (event.type == sf::Event::MouseButtonPressed)
+			{
+
+
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+
+
+					if (!isdrag) {
+						isdrag = true;
+						startpoint = sf::Mouse::getPosition(*window);
+						rect.setPosition(static_cast<float>(startpoint.x), static_cast<float>(startpoint.y));
+					}
+				}
+
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+					pos = sf::Mouse::getPosition(*window);
+					isdrag = false;
+
+					map->explosion_happened(pos);
+
+
+				}
+			}
+
+			if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
+				if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+
+					sf::Vector2f s;
+					sf::Vector2f e;
+					if (startpoint.x <= endpoint.x) {
+						s.x = static_cast<float>(startpoint.x);
+						e.x = static_cast<float>(endpoint.x);
+					}
+					else {
+						s.x = static_cast<float>(endpoint.x);
+						e.x = static_cast<float>(startpoint.x);
+					}
+
+					if (startpoint.y <= endpoint.y) {
+						s.y = static_cast<float>(startpoint.y);
+						e.y = static_cast<float>(endpoint.y);
+					}
+					else {
+						s.y = static_cast<float>(endpoint.y);
+						e.y = static_cast<float>(startpoint.y);
+					}
+					std::cout << "mapadded,  kezdete:  " << s.x << " " << s.y << "mérete: " << e.x - s.x << " " << e.y - s.y << "\n";
+					std::shared_ptr<MinorMap> newmap = std::make_shared<MinorMap>(s.x, s.y, sf::Color(92, 51, 23, 255), e.y - s.y, e.x - s.x, window, 30, 30);
+					newmap->make_me_round();
+					map->add_minormap(newmap);
+					
+					std::cout << "felengedtem a balt \n";
+					isdrag = false;
+				}
+			}
+		}
+
+
+
+		endpoint = sf::Mouse::getPosition(*window);
+
+		rect.setPosition(static_cast<float>(startpoint.x), static_cast<float>(startpoint.y));
+
+		window->clear(sf::Color::Cyan);
+
+		if (isdrag) {
+
+			rect.setSize(sf::Vector2f(static_cast<float>(endpoint.x - startpoint.x), static_cast<float>(endpoint.y - startpoint.y)));
+			window->draw(rect);
+		}
+
+
+
+
+
+
+		map->draw();
+
+
+		window->draw(rect);
+		window->display();
+	}
+
+}
+
+
+
 
 void Window::eventhandler() {
 
@@ -108,8 +270,8 @@ void Window::eventhandler() {
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 				{
-					//arrow degree up;
-					//map->write_data();
+					window->clear(sf::Color::Cyan);
+					mapeditor();
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
 				{
@@ -164,18 +326,15 @@ void Window::eventhandler() {
 		}
 
 
-		//TODO �ket is
-		/*animation.Update(deltaTime);
-		teszt.setTextureRect(animation.uvRect);*/
 		
 		player->shootUpdate(deltaTime);
 		window->clear(sf::Color::Cyan);
-		//window.draw(rectangle);
 		
 		
-		//window->draw(teszt);
+		
+		
 		map->draw();
-		//window->draw(ellipse);
+	
 
 		for (int i = 0; i < explosion_v.size(); i++) {
 			
