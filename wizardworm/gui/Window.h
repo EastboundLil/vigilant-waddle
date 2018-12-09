@@ -9,8 +9,6 @@
 
 class Window : public IWindow
 {
-	std::shared_ptr<INWManager> networkManager;
-
 	//std::unique_ptr<sf::RenderWindow> window;
 	sf::RenderWindow *window;
 	std::shared_ptr<Player> player;

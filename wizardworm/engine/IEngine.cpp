@@ -12,6 +12,10 @@ IEngine::IEngine()
 	keyboardInput = false;
 	fpsTime = (1 / FPS) * 1000;
 	timer.restart();
+	roundTimer.restart();
+
+	engineType = EngineType::Undefined;
+	currentEngineState = EngineState::Waiting;
 }
 
 
@@ -21,7 +25,7 @@ IEngine::~IEngine()
 
 void IEngine::Update()
 {
-	if (timer.getElapsedTime().asMilliseconds() >= fpsTime)
+	if (timer.getElapsedTime().asMilliseconds() >= fpsTime && roundTimer.getElapsedTime().asSeconds() < 30)
 	{
 		if (keyboardInput)
 		{
@@ -53,6 +57,17 @@ void IEngine::Update()
 		}
 
 		timer.restart();
+	}
+	else if (roundTimer.getElapsedTime().asSeconds() >= 30)
+	{
+		//if (engineType == EngineType::Client)
+			//SendData();
+		//else
+			//ReceiveData();
+		//send data to server
+		//server calculate response
+		//???
+		//profit
 	}
 }
 

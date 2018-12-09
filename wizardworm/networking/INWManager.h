@@ -3,14 +3,9 @@
 #include <string>
 #include <SFML/Network.hpp>
 
-#include "gui/IWindow.h"
-
-class IWindow;
-
 class INWManager
 {
 public:
-	virtual void setGUIInterface(std::shared_ptr<IWindow>) = 0;
 
 	virtual void startAsServer() = 0;
 	virtual void startAsClient() = 0;

@@ -17,8 +17,6 @@ Window::Window()
 
 	background.loadFromFile("background.jpg");
 
-	networkManager = ApplicationManager::getInstance().getNetworkManager();
-
 	std::shared_ptr<MinorMap> round = std::make_shared<MinorMap>(100, 100, sf::Color(92, 51, 23, 255), 200, 400, window, 40, 40);
 	round->make_me_round();
 
