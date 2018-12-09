@@ -13,8 +13,8 @@ class MinorMap :
 public:
 
 	MinorMap(sf::RenderWindow *w);
-	MinorMap(float _x, float _y, sf::Color c, float _h, float _w, sf::RenderWindow *w);
-	MinorMap(float _x, float _y, sf::Color c, float _h, float _w, sf::RenderWindow *w, float mbh, float mbw);
+	MinorMap(float _x, float _y, sf::Color c, float _h, float _w, sf::RenderWindow *w );
+	MinorMap(float _x, float _y, sf::Color c, float _h, float _w, sf::RenderWindow *w, float mbh, float mbw );
 
 	~MinorMap();
 
