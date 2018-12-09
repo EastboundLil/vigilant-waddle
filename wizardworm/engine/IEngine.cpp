@@ -5,6 +5,7 @@
 #define GRAVITY 1
 #define FPS 60
 #define JUMP_FORCE 10
+#define UP_STEP 10
 
 IEngine::IEngine()
 {
@@ -34,15 +35,19 @@ void IEngine::Update()
 			if (data.Left && !data.Right)
 			{
 				current_entity->AdjustPosition(-1, 0);
+				//check in ground
 			}
 			else if (!data.Left && data.Right)
 			{
 				current_entity->AdjustPosition(1, 0);
+				//check in ground
 			}
 
 			if (current_entity->GetJumpSpeed() != 0)
 			{
 				current_entity->AdjustPosition(0, current_entity->GetJumpSpeed());
+				current_entity->AdjustJumpSpeed(-GRAVITY);
+				//check in ground
 			}
 
 			keyboardInput = false;

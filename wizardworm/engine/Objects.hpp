@@ -41,6 +41,37 @@ struct KeyboardData
 	}
 };
 
+class Entity
+{
+public:
+	Entity(Drawable* item) { drawable = item; UpSpeed = 0; position = sf::Vector2f(item->get_x(), item->get_y()); startPosition = position; }
+	~Entity() {}
+
+	sf::Vector2f GetPosition() { return position; }
+	float GetXPosition() { return position.x; }
+	float GetYPosition() { return position.y; }
+
+	void SetPosition(sf::Vector2f pos) { position = pos; }
+	void SetPosition(float x, float y) { position = sf::Vector2f(x, y); }
+
+	void AdjustPosition(sf::Vector2f pos) { position += pos; }
+	void AdjustPosition(float x, float y) { position += sf::Vector2f(x, y); }
+
+	float GetJumpSpeed() { return UpSpeed; }
+	void SetJumpSpeed(float speed) { UpSpeed = speed; }
+	void AdjustJumpSpeed(float speed) { UpSpeed += speed; }
+
+	void ResetToStart() { position = startPosition; }
+	void SetToStart() { startPosition = position; }
+
+private:
+	Drawable* drawable;
+	sf::Vector2f position;
+	sf::Vector2f startPosition;
+
+	float UpSpeed;
+};
+
 class PlayerData
 {
 public:
@@ -74,6 +105,15 @@ public:
 	void SetCurrentEntity(int id) { currentEntity = id; }
 	int GetEntityCount() { return entities.size(); }
 	Entity* GetEntityWithNum(int id) { return entities[id]; }
+	void ResetAllToStart() {
+		for (Entity* ent : entities)
+			ent->ResetToStart();
+	}
+
+	void SetAllToStart() {
+		for (Entity* ent : entities)
+			ent->SetToStart();
+	}
 
 	void NextEntity() {
 		currentEntity++;
@@ -85,31 +125,4 @@ private:
 	std::vector<Entity*> entities;
 	int currentEntity;
 	std::vector<KeyboardData> keyspressed; //60 fps * 30 sec = 1800 frame
-};
-
-class Entity
-{
-public:
-	Entity(Drawable* item) { drawable = item; UpSpeed = 0; }
-	~Entity() {}
-
-	sf::Vector2f GetPosition() { return position; }
-	float GetXPosition() { return position.x; }
-	float GetYPosition() { return position.y; }
-
-	void SetPosition(sf::Vector2f pos) { position = pos; }
-	void SetPosition(float x, float y) { position = sf::Vector2f(x, y); }
-
-	void AdjustPosition(sf::Vector2f pos) { position += pos; }
-	void AdjustPosition(float x, float y) { position += sf::Vector2f(x, y); }
-
-	float GetJumpSpeed() { return UpSpeed; }
-	void SetJumpSpeed(float speed) { UpSpeed = speed; }
-	void AdjustJumpSpeed(float speed) { UpSpeed += speed; }
-
-private:
-	Drawable* drawable;
-	sf::Vector2f position;
-
-	float UpSpeed;
 };

@@ -15,9 +15,6 @@ public:
 	//itt bejön a moveset az adott playertõl
 	virtual void SetMoveset(int player, std::vector<Data>& dataset) = 0;
 
-	//ez csak a szervernél lesz meghívva, ez számolja ki a movesetek alapján a... mindent
-	virtual void CalculateMoveset() = 0;
-
 	//ezt kell futtatni a fõ cikluson belül.
 	//csináljam meg ezt osztályon belül, vagy valahol kívül lesz futtatva?
 	virtual void Update();
