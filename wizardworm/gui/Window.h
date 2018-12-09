@@ -18,6 +18,7 @@ class Window : public IWindow
 
 	SpellBar* spellBar;
 	sf::Texture fireBolt;
+	sf::Texture background;
 
 public:
 

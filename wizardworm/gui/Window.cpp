@@ -15,6 +15,7 @@ Window::Window()
 	spellBar = new SpellBar(350.0f,530.0f,window);
 	fireBolt.loadFromFile("Gexp.png");
 
+	background.loadFromFile("background.jpg");
 
 	networkManager = ApplicationManager::getInstance().getNetworkManager();
 
@@ -328,10 +329,9 @@ void Window::eventhandler() {
 		
 		player->shootUpdate(deltaTime);
 		window->clear(sf::Color::Cyan);
-		
-		
-		
-		
+
+		window->draw(sf::Sprite(background));
+
 		map->draw();
 	
 
