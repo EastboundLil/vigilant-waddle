@@ -8,5 +8,8 @@ public:
 	~ClientEngine();
 
 	std::vector<Data> GenerateMoveset();
+	void Update();
+private:
+	PlayerData* currentPlayer;
 };
 

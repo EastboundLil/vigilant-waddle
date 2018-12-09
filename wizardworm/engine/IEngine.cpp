@@ -15,11 +15,12 @@ IEngine::~IEngine()
 {
 }
 
-void IEngine::Update()
+/*void IEngine::Update()
 {
-	for (Entity& e : entities)
-		e.Update();
-}
+	/*for (Entity& e : entities)
+		e.Update();*/
+
+//}
 
 void IEngine::Move(bool left, bool jumping)
 {

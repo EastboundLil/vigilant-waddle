@@ -20,7 +20,7 @@ public:
 
 	//ezt kell futtatni a fõ cikluson belül.
 	//csináljam meg ezt osztályon belül, vagy valahol kívül lesz futtatva?
-	virtual void Update();
+	virtual void Update() = 0;
 
 	//ide beadhatod, hogy merre mozog
 	//a jumping mindig legyen igaz, ha nyomja a felfele nyilat
@@ -33,6 +33,6 @@ public:
 
 protected:
 	std::vector<Entity> entities;
-	Entity* selectedEntity;
+	std::vector<PlayerData> players;
 };
 
