@@ -3,7 +3,6 @@
 #include "NetworkManager.h"
 #include "ServerEngine.h"
 
-
 #include "ApplicationManager.h"
 
 int main()
@@ -14,7 +13,7 @@ int main()
 
 	ApplicationManager::getInstance().init();
 
-	ApplicationManager::getInstance().getGuiManager()->eventhandler();
+	ApplicationManager::getInstance().getGuiManager()->startMenu();
 	
 	return 0;
 }

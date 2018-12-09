@@ -5,7 +5,7 @@
 #include <iostream>
 
 #include "ApplicationManager.h"
-
+#include "Logger.h"
 
 Window::Window()
 {
@@ -243,7 +243,7 @@ void Window::eventhandler() {
 			if (event.type == sf::Event::Closed)
 				window->close();
 			if (event.type == sf::Event::KeyPressed) {
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) exit(0);
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) return;
 				/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 				{
 					// move left...
@@ -361,4 +361,22 @@ void Window::eventhandler() {
 void Window::onTimerEndMsg()
 {
 	player_v[0]->move(100, 0, 100);
+}
+
+void Window::startMenu()
+{
+	while (window->isOpen())
+	{
+		sf::Event event;
+		while (window->pollEvent(event))
+		{
+			if (event.type == sf::Event::KeyPressed) {
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) return;
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) eventhandler();
+			}
+
+			window->draw(sf::Sprite(background));
+			window->display();
+		}
+	}
 }

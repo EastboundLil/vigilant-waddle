@@ -25,6 +25,7 @@ public:
 	void eventhandler() override;
 	void mapeditor();
 	void onTimerEndMsg();
+	void startMenu() override;
 
 	Window();
 	~Window();

@@ -13,4 +13,5 @@ ServerEngine::ServerEngine(int playerNum) : IEngine()
 
 ServerEngine::~ServerEngine()
 {
+	thread.terminate();
 }
