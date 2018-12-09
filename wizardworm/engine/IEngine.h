@@ -21,9 +21,14 @@ public:
 	virtual void SendData();
 	virtual void ReceiveData();
 
+	void Start();
+
 	virtual sf::Vector2f Find(Drawable* item);
 
 protected:
+	sf::Mutex mut1;
+	sf::Mutex mut2;
+
 	std::vector<PlayerData*> players;
 	int currentPlayer;
 	bool keyboardInput;
@@ -33,8 +38,12 @@ protected:
 	sf::Clock timer;
 	sf::Clock roundTimer;
 
+	sf::Thread thread;
+
 	int currentEngineState;
 	int engineType;
+
+	void StartThread();
 
 	enum EngineState
 	{
