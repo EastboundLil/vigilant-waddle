@@ -311,10 +311,10 @@ void Window::eventhandler() {
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
 					pos = sf::Mouse::getPosition(*window);
-					else {
+					
 					if (1 == spellBar->getSelected()) {
 						player->shoot(pos, fireBolt);
-					}
+					}else
 						player->shoot(player->get_arrow()->get_deg(), laserBeam);
 					}
 					
@@ -356,7 +356,6 @@ void Window::eventhandler() {
 		
 	}
 
-}
 
 void Window::onTimerEndMsg()
 {
