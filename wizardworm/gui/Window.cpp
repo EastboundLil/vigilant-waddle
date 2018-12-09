@@ -10,7 +10,7 @@
 Window::Window()
 {
 	window = new sf::RenderWindow(sf::VideoMode(800, 600), "WizardWorm!");
-	player =std::make_shared<Player>( window , "elsojatekos");
+	player_v.push_back( std::make_shared<Player>( window , "elsojatekos"));
 
 	spellBar = new SpellBar(350.0f,530.0f,window);
 	fireBolt.loadFromFile("Gexp.png");
@@ -26,6 +26,8 @@ Window::Window()
 	map = std::make_unique<Map>(round , window);
 	map->add_minormap(std::make_shared<MinorMap>(500, 100, sf::Color(92, 51, 23, 255), 160, 160, window, 50, 30));
 	map->add_minormap(std::make_shared<MinorMap>(100, 300, sf::Color(92, 51, 23, 255), 160, 160, window, 10, 30));
+
+	ApplicationManager::getInstance().getEngineManager()->AddPlayer(player_v[0]->getWizard_v());
 }
 
 
@@ -340,12 +342,12 @@ void Window::eventhandler() {
 		for (int i = 0; i < explosion_v.size(); i++) {			
 			window->draw(*explosion_v[i]);
 		}
-		//text.setPosition(posx, posy);
+		
 
-		//for (int i = 0; i < player->getWizard_v().size(); i++) {
-			player->set_Pos(ApplicationManager::getInstance().getEngineManager()->Find(player->getWizard_v()[0]), asd);
-		//}
-			player->set_Pos(ApplicationManager::getInstance().getEngineManager()->Find(player->getWizard_v()[1]), asd);
+		for (int i = 0; i < player->getWizard_v().size(); i++) {
+			player->set_Pos(ApplicationManager::getInstance().getEngineManager()->Find(player->getWizard_v()[i]), asd);
+		}
+			//player->set_Pos(ApplicationManager::getInstance().getEngineManager()->Find(player->getWizard_v()[1]), asd);
 
 		player->draw();
 

@@ -11,7 +11,7 @@ class Window : public IWindow
 {
 	//std::unique_ptr<sf::RenderWindow> window;
 	sf::RenderWindow *window;
-	std::shared_ptr<Player> player;
+	std::vector<std::shared_ptr<Player>> player_v;
 	std::unique_ptr<Map> map;
 
 	SpellBar* spellBar;
