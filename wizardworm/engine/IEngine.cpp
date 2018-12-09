@@ -101,6 +101,11 @@ void IEngine::AddPlayer(std::vector<Wizard*> entities)
 	players.push_back(pd);
 }
 
+void IEngine::Switch()
+{
+	players[currentPlayer]->NextEntity();
+}
+
 void IEngine::SendData()
 {
 }

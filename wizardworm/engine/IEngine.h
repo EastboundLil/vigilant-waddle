@@ -17,6 +17,7 @@ public:
 	virtual void Move(bool up, bool left, bool right);
 
 	virtual void AddPlayer(std::vector<Wizard*> entities);
+	virtual void Switch();
 
 	virtual void SendData();
 	virtual void ReceiveData();

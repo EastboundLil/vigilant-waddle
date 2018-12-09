@@ -227,7 +227,7 @@ void Window::eventhandler() {
 	//TODO Innen folyt. k�v. holnap
 	//M�g �tt kell rakni hogy bizonyos pontban legyen a robban�s ---- spell hat�s�ra -- adott ideig
 
-	//ApplicationManager::getInstance().getEngineManager()->AddPlayer(player_v[0]->getWizard_v());
+	ApplicationManager::getInstance().getEngineManager()->AddPlayer(player_v[0]->getWizard_v());
 	float deltaTime = 0.0f;
 	sf::Clock clock;
 	float asd = 1;
