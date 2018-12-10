@@ -163,6 +163,7 @@
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="ChangeButton.h" />
     <ClInclude Include="engine\Objects.hpp" />
     <ClInclude Include="Firebolt.h" />
     <ClInclude Include="gui\Animation.h" />
@@ -205,6 +206,7 @@
     <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="ChangeButton.cpp" />
     <ClCompile Include="Firebolt.cpp" />
     <ClCompile Include="gui\Bar.cpp" />
     <ClCompile Include="engine\ClientEngine.cpp" />

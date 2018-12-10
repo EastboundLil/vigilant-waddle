@@ -4,8 +4,8 @@
 #include <iostream>
 
 
-Button::Button(float posx, float posy, float width , float height ,sf::Color color, std::string t, sf::RenderWindow *w ,std::function<bool()> action)
-	: Drawable(posx , posy, color)  , width(width) , height(height), action(action) , window(w)
+Button::Button(float posx, float posy, float width , float height ,sf::Color color, std::string t1 ,sf::RenderWindow *w ,std::function<bool()> action)
+	: Drawable(posx , posy, color)  , width(width) , height(height), action(action) , window(w) , t(t1)
 {
 	
 	rect.setFillColor(color);
@@ -18,22 +18,20 @@ Button::Button(float posx, float posy, float width , float height ,sf::Color col
 	circle.setScale(width / height, 1);
 
 	text.setString(t);
-	text.setPosition(posx, posy);
+	text.setPosition(posx, posy+height/2-2*width/t.size());
 	text.setFillColor(sf::Color::White);
 	text.setCharacterSize(2*width/t.size());
 
 	if (!font.loadFromFile("Roboto-Regular.ttf")) {
-		std::cout << "szar afajl  \n";
+		std::cout << "rossz afajl  \n";
 	}
 	else {
-		std::cout << "jó a fajl \n";
+		//std::cout << "jó a fajl \n";
 		text.setFont(font);
 	}
 }
 
-void Button::change_shape(bool t) {
-	shapechooser = t;
-}
+
 
 bool Button::inside(sf::Vector2i click)
 {
@@ -50,22 +48,17 @@ Button::~Button()
 }
 
 void Button::make_action() {
-	change_shape(action());
+	action();
 	
 }
 
 void Button::draw() {
 
-	if (shapechooser) {
-		window->draw(rect);
-	}
-	else {
-		window->draw(circle);
-	}
 	
-	
+	window->draw(rect);
+
 	text.setFont(font);
-	
+
 	window->draw(text);
 
 }

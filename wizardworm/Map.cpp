@@ -32,10 +32,10 @@ void Map::add_minormap(std::shared_ptr<MinorMap> new_mmap)
 	minormap_v.push_back(new_mmap);
 }
 
-void Map::explosion_happened(sf::Vector2i pos)
+void Map::explosion_happened(sf::Vector2i pos , float r)
 {
 	for (int i = 0; i < minormap_v.size(); i++) {
-		minormap_v[i]->explosion_happened(pos);
+		minormap_v[i]->explosion_happened(pos , r);
 	}
 
 }

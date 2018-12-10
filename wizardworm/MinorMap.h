@@ -22,7 +22,7 @@ public:
 
 	~MinorMap();
 
-	void explosion_happened(sf::Vector2i pos);
+	void explosion_happened(sf::Vector2i pos , float r);
 	void laserExp_happened(sf::Vector2i pos,float deg);
 	void expThread();
 	void draw();
@@ -33,6 +33,7 @@ public:
 	/*testre vár még:*/
 	void make_me_round();
 	void make_solid(sf::Vector2i pos);
+	void make_solid();
 	void make_destructible(sf::Vector2i pos);
 
 };

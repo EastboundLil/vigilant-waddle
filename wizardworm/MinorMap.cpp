@@ -149,11 +149,11 @@ MinorMap::~MinorMap()
 {
 }
 
-void MinorMap::explosion_happened(sf::Vector2i pos)
+void MinorMap::explosion_happened(sf::Vector2i pos , float r)
 {
 	m.lock();
 	for (int i = 0; i < block_v.size(); i++) {
-		if (block_v[i]->caught_by_expl(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)), 25)) {
+		if (block_v[i]->caught_by_expl(sf::Vector2f(static_cast<float>(pos.x), static_cast<float>(pos.y)), r)) {
 
 		}
 	}
@@ -184,7 +184,7 @@ void MinorMap::expThread()
 			//std::cout << deg << " degree" << std::endl;
 		y = (tan(deg)*i);
 		//std::cout << y << " y position" << y + pos.y << " y plus worm positon" << std::endl;
-		explosion_happened(sf::Vector2i(static_cast<float>(pos.x + i + 25), static_cast<float>(pos.y + y)));
+		explosion_happened(sf::Vector2i(static_cast<float>(pos.x + i + 25), static_cast<float>(pos.y + y)) , 30);
 	}
 }
 
@@ -328,6 +328,17 @@ void MinorMap::make_solid(sf::Vector2i pos)
 	
 
 }
+
+void MinorMap::make_solid()
+{
+		
+				for (int j = 0; j < block_v.size(); j++) {
+					block_v[j]->set_destructible(false);
+				}
+
+}
+
+
 
 void MinorMap::make_destructible(sf::Vector2i pos)
 {

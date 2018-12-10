@@ -15,7 +15,7 @@ public:
 
 	~Map();
 	void add_minormap(std::shared_ptr<MinorMap> new_mmap);
-	void explosion_happened(sf::Vector2i pos);
+	void explosion_happened(sf::Vector2i pos , float r);
 	void laserExp_happened(sf::Vector2i pos,float deg);
 
 	void draw();

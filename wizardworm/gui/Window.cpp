@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Window.h"
 #include "Animation.h"
-#include "Button.h"
+#include "ChangeButton.h"
 #include <iostream>
 
 #include "ApplicationManager.h"
@@ -50,8 +50,9 @@ void Window::mapeditor() {
 	sf::Vector2i startpoint(-1, -1);
 	sf::Vector2i endpoint;
 	bool isdrag = false;
+	std::vector<Button*> button_v;
 	
-	Button *rectorroundselector = new Button(10.0f, 10.0f, 120.0f, 25.0f, sf::Color::Black, "  rect or round", window, [this]() ->bool{
+	ChangeButton *rectorroundselector = new ChangeButton(10.0f, 10.0f, 100.0f, 25.0f, sf::Color::Black, sf::Color::Black,"   add  rectangle  " ," add ellipse ", window, [this]() ->bool{
 		if (rectorround) {
 			rectorround = false;
 			return false;
@@ -64,8 +65,24 @@ void Window::mapeditor() {
 
 	});
 
+	button_v.push_back(rectorroundselector);
+
+	ChangeButton *solidordestrselector = new ChangeButton(10.0f, 50.0f, 200.0f, 50.0f, sf::Color::Black, sf::Color(92, 51, 23, 255), " make solid  ", " make destructible ", window, [this]() ->bool {
+		if (solidordestr) {
+			solidordestr = false;
+			return false;
+		}
+		else {
+			solidordestr = true;
+			return true;
+		}
 
 
+	});
+	button_v.push_back(solidordestrselector);
+
+
+	//TODO: soliddestructiblebutton
 	
 
 
@@ -93,24 +110,7 @@ void Window::mapeditor() {
 				window->close();
 			if (event.type == sf::Event::KeyPressed) {
 
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-				{
-					
-				}
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-				{
-					
-
-				}
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-				{
-					
-
-				}
-				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-				{
-					
-				}
+				
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
 
 				}
@@ -120,11 +120,7 @@ void Window::mapeditor() {
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
 
 				}
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-				{
-
-
-				}
+				
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 				{
 
@@ -132,6 +128,28 @@ void Window::mapeditor() {
 					return;
 
 				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+				{
+					//arrow degree up;
+					map->write_data_to_file("map.txt");
+				}
+				
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
+				{
+
+					map->load_from_file("map.txt");
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+				{
+					if (solidordestr) {
+						map->make_solid(sf::Mouse::getPosition(*window));
+					}
+					else {
+					
+						map->make_destructible(sf::Mouse::getPosition(*window));
+					}
+				}
+				
 
 			}
 			if (event.type == sf::Event::MouseButtonPressed)
@@ -141,7 +159,7 @@ void Window::mapeditor() {
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
 					if (rectorroundselector->inside(sf::Mouse::getPosition(*window))) { rectorroundselector->make_action(); }
-					
+					if (solidordestrselector->inside(sf::Mouse::getPosition(*window))) { solidordestrselector->make_action(); }
 					if (!isdrag) {
 						isdrag = true;
 						startpoint = sf::Mouse::getPosition(*window);
@@ -153,7 +171,7 @@ void Window::mapeditor() {
 					pos = sf::Mouse::getPosition(*window);
 					isdrag = false;
 
-					map->explosion_happened(pos);
+					map->explosion_happened(pos , 50);
 
 
 				}
@@ -185,6 +203,8 @@ void Window::mapeditor() {
 					std::shared_ptr<MinorMap> newmap = std::make_shared<MinorMap>(s.x, s.y, sf::Color(92, 51, 23, 255), e.y - s.y, e.x - s.x, window, 30, 30);
 					if(!rectorround)
 						newmap->make_me_round();
+					if (solidordestr)
+						newmap->make_solid();
 					map->add_minormap(newmap);
 					
 					std::cout << "felengedtem a balt \n";
@@ -209,7 +229,11 @@ void Window::mapeditor() {
 
 
 
+		for (int i = 0; i < button_v.size(); i++) {
+		
+			button_v[i]->draw();
 
+		}
 
 
 		map->draw();
@@ -218,7 +242,7 @@ void Window::mapeditor() {
 		window->draw(rect);
 		window->display();
 	}
-
+	button_v.clear();
 }
 
 
@@ -274,7 +298,7 @@ void Window::eventhandler() {
 				{
 					player_v[0]->getWizard()->close_arrow();
 					ApplicationManager::getInstance().getEngineManager()->Move(sf::Keyboard::isKeyPressed(sf::Keyboard::Space), sf::Keyboard::isKeyPressed(sf::Keyboard::Left), sf::Keyboard::isKeyPressed(sf::Keyboard::Right));
-
+					
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
 					player_v[0]->possible_shoot(0);
@@ -298,21 +322,8 @@ void Window::eventhandler() {
 					window->clear(sf::Color::Cyan);
 					mapeditor();
 				}
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
-				{
-					//arrow degree up;
-					map->write_data_to_file("map.txt");
-				}
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-				{
-
-					map->make_solid(sf::Mouse::getPosition(*window));
-				}
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
-				{
-
-					map->load_from_file("map.txt");
-				}
+				
+				
 
 
 			}
@@ -325,6 +336,7 @@ void Window::eventhandler() {
 
 					if (1 == spellBar->getSelected()) {
 						player_v[0]->shoot(pos, fireBolt);
+						map->explosion_happened(pos, 50);
 					}
 					else {
 						float deg = player_v[0]->get_arrow()->get_deg();
