@@ -176,13 +176,16 @@ void MinorMap::laserExp_happened(sf::Vector2i pos_, float deg_) {
 	thread->launch();
 }
 
+#define PI 3.14159265
+
+
 void MinorMap::expThread()
 {
 	float y;
 	for (float i = 0; i < 500; i += 25) {
 		//int i = 0;
 			//std::cout << deg << " degree" << std::endl;
-		y = (tan(deg)*i);
+		y = (tan(PI*deg/180)*i);
 		//std::cout << y << " y position" << y + pos.y << " y plus worm positon" << std::endl;
 		explosion_happened(sf::Vector2i(static_cast<float>(pos.x + i + 25), static_cast<float>(pos.y + y)) , 30);
 	}
@@ -190,9 +193,11 @@ void MinorMap::expThread()
 
 void MinorMap::draw()
 {
+	m.lock();
 	for (int i = 0; i < block_v.size(); i++) {
 		block_v[i]->draw();
 	}
+	m.unlock();
 }
 
 std::stringstream MinorMap::write_data()
