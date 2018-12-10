@@ -23,8 +23,9 @@ Window::Window()
 	round->make_me_round();
 
 	map = std::make_unique<Map>(round , window);
-	map->add_minormap(std::make_shared<MinorMap>(500, 100, sf::Color(92, 51, 23, 255), 160, 160, window, 50, 30));
-	map->add_minormap(std::make_shared<MinorMap>(100, 300, sf::Color(92, 51, 23, 255), 160, 160, window, 10, 30));
+	map->load_from_file("map.txt");
+	//map->add_minormap(std::make_shared<MinorMap>(500, 100, sf::Color(92, 51, 23, 255), 160, 160, window, 50, 30));
+	//map->add_minormap(std::make_shared<MinorMap>(100, 300, sf::Color(92, 51, 23, 255), 160, 160, window, 10, 30));
 
 
 	
@@ -50,7 +51,8 @@ void Window::mapeditor() {
 	sf::Vector2i endpoint;
 	bool isdrag = false;
 	std::vector<Button*> button_v;
-	
+	rectorround = true;
+	solidordestr = true;
 	ChangeButton *rectorroundselector = new ChangeButton(10.0f, 10.0f, 100.0f, 25.0f, sf::Color::Black, sf::Color::Black,"   add  rectangle  " ," add ellipse ", window, [this]() ->bool{
 		if (rectorround) {
 			rectorround = false;
