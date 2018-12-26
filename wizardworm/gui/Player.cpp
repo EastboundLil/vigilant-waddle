@@ -23,16 +23,16 @@ Player::~Player()
 void Player::move(float x, float y,float deltaTime){
 	
 	
-	wizard->move(x,y);
-	wizard->wizAnimationUpdate(deltaTime);
+	wizard->move(x,y,deltaTime);
+	//wizard->wizAnimationUpdate(deltaTime);
 
 }
 
-void Player::set_Pos(sf::Vector2f pos , float deltaTime)
+void Player::set_Pos(sf::Vector2f pos )
 {
-	wizard->set_Pos(pos);
+	wizard->set_Pos(pos );
 	
-	wizard->wizAnimationUpdate(deltaTime);
+	//wizard->wizAnimationUpdate(deltaTime);
 }
 
 std::vector<Wizard*> Player::getWizard_v()
@@ -123,6 +123,7 @@ void Player::switch_wizard()
 	else {
 		wizard = wizardvector[wizard->get_id() + 1];
 	}
+	wizard->open_arrow();
 
 }
 

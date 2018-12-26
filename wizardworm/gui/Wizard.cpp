@@ -13,6 +13,7 @@ Wizard::Wizard(float x_ , float y_ , float _id , sf::RenderWindow *w)
 	//set_value(1); //�l e m�g a var�zsl� 
 	set_pos(x_ , y_ ); //Var�zsl� kezdeti poz�ci�ja
 	window = w;
+	
 	lifebar = new Bar(x_,y_-25 , sf::Color::Red ,50 , window); //A var�zsl� �lete
 	manabar = new Bar(x_, y_-20 , sf::Color::Blue , 50 , window); //A var�zsl� man�ja
 	arrow_v.push_back( new Arrow(x_ + 47, y_ + 21, window , "firebolt"));
@@ -29,7 +30,10 @@ Wizard::Wizard(float x_ , float y_ , float _id , sf::RenderWindow *w)
 	wormImage.setPosition(x_, y_);
 	wormImage.setScale(0.50f, 0.50f);
 	wormImage.setTextureRect(animation->uvRect);
-
+	deltaTime = 2.f;
+	wizAnimationUpdate();
+	wizAnimationUpdate();
+	wizAnimationUpdate();
 
 }
 
@@ -54,34 +58,40 @@ void Wizard::draw() {
 
 }
 
-void Wizard::set_Pos(sf::Vector2f pos) {
-	if ((x + this->x) > this->x)
+void Wizard::set_Pos(sf::Vector2f pos ) {
+	if ((pos.x ) > this->x)
 	{
 		X_OFFSET = 0;
 		wormImage.setScale(0.50f, 0.50f);
 	}
-	else
+	else if(pos.x<this->x)
 	{
 		X_OFFSET = 50;
 		wormImage.setScale(-0.50f, 0.50f);
 	}
 
-	set_pos(pos.x ,pos.y);
+	if (pos.x != this->x || pos.y != this->y) {
+		this->wizAnimationUpdate();
+	
+		
 
-	for (Arrow * a : arrow_v) {
-		a->set_pos(x+40, y+20);
+			set_pos(pos.x, pos.y);
+
+			for (Arrow * a : arrow_v) {
+				a->set_pos(x + 47, y + 21);
+			}
+
+			lifebar->set_pos(x, y - 25);
+			manabar->set_pos(x, y - 20);
+		
 	}
-
-	lifebar->set_pos(x, y-25);
-	manabar->set_pos(x, y-20);
-
 
 
 
 
 }
 
-void Wizard::move(float x, float y) {
+void Wizard::move(float x, float y , float deltatime) {
 
 	if ((x + this->x) > this->x)
 	{
@@ -94,15 +104,17 @@ void Wizard::move(float x, float y) {
 		wormImage.setScale(-0.50f, 0.50f);
 	}
 
-	incr_pos(x, y);
+	if (this->x != x) {
+		wizAnimationUpdate();
+		incr_pos(x, y);
 
-	for (Arrow * a : arrow_v) {
-		a->incr_pos(x, y);
+		for (Arrow * a : arrow_v) {
+			a->incr_pos(x, y);
+		}
+
+		lifebar->incr_pos(x, y);
+		manabar->incr_pos(x, y);
 	}
-	
-	lifebar->incr_pos(x, y);
-	manabar->incr_pos(x, y);
-
 }
 
 void Wizard::set_life(float l)
@@ -213,8 +225,9 @@ void Wizard::wizforce()
 	
 }
 
-void Wizard::wizAnimationUpdate(float deltaTime) {
-	animation->Update(deltaTime);
+void Wizard::wizAnimationUpdate() {
+
+	animation->Update(deltaTime++);
 	wormImage.setTextureRect(animation->uvRect);
 }
 
@@ -226,4 +239,39 @@ std::string Wizard::curr_spell()
 {
 
 	return std::string();
+}
+
+bool Wizard::point_in_wizard(sf::Vector2f p)
+{
+	return p.x>this->x && p.x<this->x+this->width && p.y>this->y && p.y < this->y + this->height;
+}
+
+bool Wizard::wizard_in_block(std::shared_ptr<Block> b)
+{
+	//alja
+	if (b->check_bound(sf::Vector2f(this->x+width/2, this->y + height))) {
+		if (b->contains(sf::Vector2f(this->x + width/2, this->y + height)))
+			return true;
+	}
+
+	//jobbja
+	if (b->check_bound(sf::Vector2f(this->x+width, this->y + height / 2))) {
+		if (b->contains(sf::Vector2f(this->x+width, this->y + height / 2)))
+			return true;
+	}
+
+	//balja
+	if (b->check_bound(sf::Vector2f(this->x, this->y + height / 2))) {
+		if(b->contains(sf::Vector2f(this->x, this->y + height / 2)))
+			return true;
+	}
+
+	//teteje
+	if (b->check_bound(sf::Vector2f(this->x+width/2, this->y))) {
+		if (b->contains(sf::Vector2f(this->x+width/2, this->y)))
+			return true;
+	}
+
+	
+	return false;
 }
