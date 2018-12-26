@@ -22,7 +22,7 @@ public:
 	~Player();
 	
 	void move(float x, float y, float deltaTime);
-	void set_Pos(sf::Vector2f pos , float deltaTime);
+	void set_Pos(sf::Vector2f pos );
 	std::vector<Wizard*> getWizard_v();
 	void draw() ;
 	//void shoot(std::string spell_type,sf::Vector2i mousePos,float deg,sf::Texture &texture);

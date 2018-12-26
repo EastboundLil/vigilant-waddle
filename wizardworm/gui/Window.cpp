@@ -348,12 +348,7 @@ void Window::eventhandler() {
 
 
 				}
-				if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
-
-
-					map->make_destructible(sf::Mouse::getPosition(*window));
-
-				}
+				
 			}
 		}
 
@@ -371,7 +366,8 @@ void Window::eventhandler() {
 		
 
 		for (int i = 0; i < player_v[0]->getWizard_v().size(); i++) {
-			player_v[0]->set_Pos(ApplicationManager::getInstance().getEngineManager()->Find(player_v[0]->getWizard()), asd);
+			//std::cout << "asd: " << asd << "\n";
+			player_v[0]->set_Pos(ApplicationManager::getInstance().getEngineManager()->Find(player_v[0]->getWizard()));
 		}
 			
 

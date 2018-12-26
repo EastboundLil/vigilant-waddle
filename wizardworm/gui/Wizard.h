@@ -4,7 +4,7 @@
 #include "Bar.h"
 #include "Animation.h"
 #include "Arrow.h"
-
+#include "Block.h"
 
 
 
@@ -15,6 +15,8 @@ protected:
 	std::string name;
 
 	int X_OFFSET = 0;
+	float width = 50;
+	float height = 50;
 	
 	Bar* lifebar;
 	Bar* manabar;
@@ -23,15 +25,15 @@ protected:
 	sf::RenderWindow* window;		
 	sf::Texture texture;
 	sf::RectangleShape wormImage;
-
+	float deltaTime;
 	Animation *animation;
 
 public:
 	Wizard(float x_ , float y_ , float id_ ,sf::RenderWindow* window);
 	~Wizard();
 	void draw();
-	void move(float x, float y);
-	void set_Pos(sf::Vector2f pos);
+	void move(float x, float y , float deltatime);
+	void set_Pos(sf::Vector2f pos );
 	void set_life(float l);
 	void set_mana(float m);
 	void incr_life(float l);
@@ -43,9 +45,11 @@ public:
 	void change_curr_arrow(int i);
 	void wizaim(bool up);
 	void wizforce();
-	void wizAnimationUpdate(float deltaTime);
+	void wizAnimationUpdate();
 	int get_id();
 	std::string curr_spell();
+	bool point_in_wizard(sf::Vector2f p);
+	bool wizard_in_block(std::shared_ptr<Block> b);
 
 };
 
