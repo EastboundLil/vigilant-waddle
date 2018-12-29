@@ -6,7 +6,7 @@ ChangeButton::ChangeButton(float posx, float posy, float width, float height, sf
 	:Button(posx, posy,width,height,color,t1,w,action) , t2(t2) , c2(c2)
 {
 	text.setPosition(posx+width/2 - 0.4*fmax(t.size(), t2.size())*width / fmax(t.size(), t2.size()), posy + height / 2 - 1.6 * width / fmax(t.size(), t2.size()));
-	text.setCharacterSize(2 * width / fmax(t.size(),t2.size()));
+	//text.setCharacterSize(2 * width / fmax(t.size(),t2.size()));
 	circle.setFillColor(c2);
 }
 
