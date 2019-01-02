@@ -55,7 +55,6 @@ void Player::draw() {
 			livingspells[i]->draw();
 		else {
 			//TODO erase helyett lehet nem ártana más
-			//TODO: linzi faszom te csináltad a memory leaket itt :D 
 			Spell* temp = livingspells[i];
 			livingspells.erase(livingspells.begin() + i);
 			delete temp;
@@ -146,4 +145,8 @@ void Player::changeforce()
 
 Arrow* Player::get_arrow() {
 	return wizard->get_arrow();
+}
+
+std::vector<Wizard*> Player::getWizardsVect() {
+	return wizardvector;
 }

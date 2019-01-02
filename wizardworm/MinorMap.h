@@ -23,7 +23,7 @@ public:
 	~MinorMap();
 
 	void explosion_happened(sf::Vector2i pos , float r);
-	void laserExp_happened(sf::Vector2i pos,float deg);
+	void laserExp_happened(sf::Vector2i pos,sf::Vector2i wiz_pos,float deg);
 	void expThread();
 	void draw();
 	std::stringstream write_data();

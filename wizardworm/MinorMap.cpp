@@ -168,15 +168,23 @@ void MinorMap::explosion_happened(sf::Vector2i pos , float r)
 	m.unlock();
 }
 
+#define PI 3.14159265
 
-void MinorMap::laserExp_happened(sf::Vector2i pos_, float deg_) {
-	pos = pos_;
+void MinorMap::laserExp_happened(sf::Vector2i pos_,sf::Vector2i wiz_pos, float deg_) {
+	
+	float y;
+	y = (tan(PI*deg / 180)*wiz_pos.x);
+
+	if (y+pos_.y == wiz_pos.y) {
+		std::cout << "Faszaság van bazdmeg" << std::endl;
+	}
+	
+	/*pos = pos_;
 	deg = deg_;
 	sf::Thread* thread = new sf::Thread(&MinorMap::expThread, this);
-	thread->launch();
+	thread->launch();*/
 }
 
-#define PI 3.14159265
 
 
 void MinorMap::expThread()

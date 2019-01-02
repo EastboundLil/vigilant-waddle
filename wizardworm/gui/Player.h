@@ -35,6 +35,9 @@ public:
 	void switch_wizard(int i);
 	void aim(bool up);
 	void changeforce();
+
+	std::vector<Wizard*> getWizardsVect();
+	
 	Wizard* getWizard();
 	sf::Vector2i getPosition() { return sf::Vector2i(wizard->get_x(), wizard->get_y()); };
 

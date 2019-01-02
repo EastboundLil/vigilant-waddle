@@ -1,5 +1,4 @@
 #include "Map.h"
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -41,11 +40,18 @@ void Map::explosion_happened(sf::Vector2i pos , float r)
 
 }
 
-void Map::laserExp_happened(sf::Vector2i pos, float deg) {
-	for (int i = 0; i < minormap_v.size(); i++) {
-		minormap_v[i]->laserExp_happened(pos,deg);
-	}
+void Map::laserExp_happened(sf::Vector2i pos, std::vector<std::shared_ptr<Player>> player_v, float deg) {
+
 }
+
+/*void Map::laserExp_happened(sf::Vector2i pos, std::vector<std::shared_ptr<Player>> player_v, float deg) {
+
+	for (int i = 0; i < player_v.size(); i++) {
+		for (int j = 0; j < player_v[i].getWizardsVec().size(); j++) {
+			minormap_v[i]->laserExp_happened(pos,sf::Vector2i( player_v[i]->getWizardsVec()[j].get_x(), player_v[i]->getWizardsVec()[j].get_y()),deg);
+		}
+	}
+}*/
 
 
 void Map::draw()
