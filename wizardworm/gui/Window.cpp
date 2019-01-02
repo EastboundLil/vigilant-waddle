@@ -19,11 +19,11 @@ Window::Window()
 	//background.loadFromFile("DonaldTrump.jpg");
 	
 	
-	std::shared_ptr<MinorMap> round = std::make_shared<MinorMap>(100, 100, sf::Color(92, 51, 23, 255), 200, 400, window, 40, 40);
-	round->make_me_round();
+	//std::shared_ptr<MinorMap> round = std::make_shared<MinorMap>(100, 100, sf::Color(92, 51, 23, 255), 200, 400, window, 40, 40);
+	//round->make_me_round();
 
-	map = std::make_unique<Map>(round , window);
-	map->load_from_file("map.txt");
+	//map = std::make_unique<Map>(round , window);
+	//map->load_from_file("map.txt");
 	//map->add_minormap(std::make_shared<MinorMap>(500, 100, sf::Color(92, 51, 23, 255), 160, 160, window, 50, 30));
 	//map->add_minormap(std::make_shared<MinorMap>(100, 300, sf::Color(92, 51, 23, 255), 160, 160, window, 10, 30));
 
@@ -46,7 +46,7 @@ void Window::mapeditor() {
 
 	float deltaTime = 0.0f;
 	sf::Clock clock;
-	
+	map = std::make_unique<Map>(window);
 	sf::Vector2i startpoint(-1, -1);
 	sf::Vector2i endpoint;
 	bool isdrag = false;
@@ -82,7 +82,13 @@ void Window::mapeditor() {
 	});
 	button_v.push_back(solidordestrselector);
 
+	Button *addnewmapbutton = new Button(200 , 10 , 200 ,50 , sf::Color::Black , "save this map" , window , [this]() ->bool {
+		
+		map->write_data_to_file("map.txt");
+		return true;
+	});
 
+	button_v.push_back(addnewmapbutton);
 	//TODO: soliddestructiblebutton
 	
 
@@ -129,11 +135,7 @@ void Window::mapeditor() {
 					return;
 
 				}
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
-				{
-					//arrow degree up;
-					map->write_data_to_file("map.txt");
-				}
+				
 				
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
 				{
@@ -155,7 +157,7 @@ void Window::mapeditor() {
 			}
 			if (event.type == sf::Event::MouseButtonPressed)
 			{
-
+				
 
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
@@ -165,6 +167,11 @@ void Window::mapeditor() {
 						isdrag = true;
 						startpoint = sf::Mouse::getPosition(*window);
 						rect.setPosition(static_cast<float>(startpoint.x), static_cast<float>(startpoint.y));
+					}
+					if (addnewmapbutton->inside(sf::Mouse::getPosition(*window)))
+					{
+						addnewmapbutton->make_action();
+						std::cout << "\n megnyomtak a savemapot \n";
 					}
 				}
 
@@ -178,7 +185,7 @@ void Window::mapeditor() {
 				}
 			}
 
-			if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
+			if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left && isdrag) {
 				if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
 					sf::Vector2f s;
@@ -200,14 +207,15 @@ void Window::mapeditor() {
 						s.y = static_cast<float>(endpoint.y);
 						e.y = static_cast<float>(startpoint.y);
 					}
-					std::cout << "mapadded,  kezdete:  " << s.x << " " << s.y << "mérete: " << e.x - s.x << " " << e.y - s.y << "\n";
-					std::shared_ptr<MinorMap> newmap = std::make_shared<MinorMap>(s.x, s.y, sf::Color(92, 51, 23, 255), e.y - s.y, e.x - s.x, window, 30, 30);
-					if(!rectorround)
-						newmap->make_me_round();
-					if (solidordestr)
-						newmap->make_solid();
-					map->add_minormap(newmap);
-					
+					if (e.x != s.x && e.y != s.y) {
+						std::cout << "mapadded,  kezdete:  " << s.x << " " << s.y << "mérete: " << e.x - s.x << " " << e.y - s.y << "\n";
+						std::shared_ptr<MinorMap> newminormap = std::make_shared<MinorMap>(s.x, s.y, sf::Color(92, 51, 23, 255), e.y - s.y, e.x - s.x, window, 30, 30);
+						if (!rectorround)
+							newminormap->make_me_round();
+						if (solidordestr)
+							newminormap->make_solid();
+						map->add_minormap(newminormap);
+					}
 					std::cout << "felengedtem a balt \n";
 					isdrag = false;
 				}
@@ -260,7 +268,7 @@ void Window::eventhandler() {
 	ellipse.setScale(1, 1);
 	ellipse.setPosition(100, 100);
 	ellipse.setFillColor(sf::Color::Green);
-
+	map->load_from_file("map.txt");
 
 	std::vector<std::unique_ptr<sf::CircleShape>> explosion_v;
 	while (window->isOpen())
@@ -427,6 +435,29 @@ void Window::mapSelector()
 
 
 	//TODO: itt kell egy kivalaszto widget, meg egy lista ami tartalmazza a létező mapokat, vagy egy lehetőség hogy új mapot csinálj, plusz, minden map mellé hogy map kiprobalasa
+	while (window->isOpen())
+	{
 
+
+		sf::Event event;
+		while (window->pollEvent(event))
+		{
+			if (event.type == sf::Event::KeyPressed) {
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) return;
+			}
+
+			if (event.type == sf::Event::MouseButtonPressed) {
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+					
+				}
+			}
+
+			window->draw(sf::Sprite(background));
+
+			
+
+			window->display();
+		}
+	}
 
 }

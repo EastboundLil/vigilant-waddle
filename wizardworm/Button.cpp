@@ -20,7 +20,7 @@ Button::Button(float posx, float posy, float width , float height ,sf::Color col
 	text.setString(t);
 	text.setPosition(posx, posy);
 	text.setFillColor(sf::Color::White);
-	//text.setCharacterSize(2*width/t.size());
+	text.setCharacterSize(2*width/t.size());
 
 	if (!font.loadFromFile("Roboto-Regular.ttf")) {
 		std::cout << "rossz afajl  \n";

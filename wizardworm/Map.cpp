@@ -7,6 +7,7 @@
 Map::Map(sf::RenderWindow *w)
 {
 	window = w;
+	minormap_v.clear();
 	
 }
 
