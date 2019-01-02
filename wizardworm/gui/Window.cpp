@@ -420,3 +420,13 @@ void Window::startMenu()
 		}
 	}
 }
+
+void Window::mapSelector()
+{
+
+
+
+	//TODO: itt kell egy kivalaszto widget, meg egy lista ami tartalmazza a létező mapokat, vagy egy lehetőség hogy új mapot csinálj, plusz, minden map mellé hogy map kiprobalasa
+
+
+}

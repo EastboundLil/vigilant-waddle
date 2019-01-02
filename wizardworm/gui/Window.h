@@ -28,6 +28,7 @@ public:
 	void mapeditor();
 	void onTimerEndMsg();
 	void startMenu() override;
+	void mapSelector() override;
 
 	Window();
 	~Window();
