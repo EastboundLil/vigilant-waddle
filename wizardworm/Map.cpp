@@ -40,18 +40,18 @@ void Map::explosion_happened(sf::Vector2i pos , float r)
 
 }
 
-void Map::laserExp_happened(sf::Vector2i pos, std::vector<std::shared_ptr<Player>> player_v, float deg) {
-
-}
-
 /*void Map::laserExp_happened(sf::Vector2i pos, std::vector<std::shared_ptr<Player>> player_v, float deg) {
 
+}*/
+
+void Map::laserExp_happened(sf::Vector2i pos, std::vector<std::shared_ptr<Player>> player_v, float deg) {
+
 	for (int i = 0; i < player_v.size(); i++) {
-		for (int j = 0; j < player_v[i].getWizardsVec().size(); j++) {
-			minormap_v[i]->laserExp_happened(pos,sf::Vector2i( player_v[i]->getWizardsVec()[j].get_x(), player_v[i]->getWizardsVec()[j].get_y()),deg);
+		for (int j = 0; j < player_v[i]->getWizardsVectSize(); j++) {
+			minormap_v[i]->laserExp_happened(pos,sf::Vector2i(player_v[i]->getWizard(j)->get_x(), player_v[i]->getWizard(j)->get_y()),deg);
 		}
 	}
-}*/
+}
 
 
 void Map::draw()

@@ -170,12 +170,18 @@ void MinorMap::explosion_happened(sf::Vector2i pos , float r)
 
 #define PI 3.14159265
 
-void MinorMap::laserExp_happened(sf::Vector2i pos_,sf::Vector2i wiz_pos, float deg_) {
+void MinorMap::laserExp_happened(sf::Vector2i pos_,sf::Vector2i wiz_pos, float deg) {
 	
 	float y;
-	y = (tan(PI*deg / 180)*wiz_pos.x);
+	y = -(tan(PI*deg / 180)*wiz_pos.x);
 
-	if (y+pos_.y == wiz_pos.y) {
+	std::cout <<deg <<" deg"<< std::endl;
+	std::cout <<y <<" y erteke"<< std::endl;
+	std::cout <<pos.y <<" pos_y erteke"<< std::endl;
+	std::cout <<wiz_pos.y <<" wiz_pos_y erteke"<< std::endl;
+
+
+	if ((y+pos_.y) == wiz_pos.y ) {
 		std::cout << "Faszaság van bazdmeg" << std::endl;
 	}
 	

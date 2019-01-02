@@ -147,6 +147,10 @@ Arrow* Player::get_arrow() {
 	return wizard->get_arrow();
 }
 
-std::vector<Wizard*> Player::getWizardsVect() {
-	return wizardvector;
+int Player::getWizardsVectSize() {
+	return wizardvector.size();
+}
+
+Wizard* Player::getWizard(int i) {
+	return wizardvector[i];
 }
