@@ -83,6 +83,7 @@ void Window::mapeditor() {
 	button_v.push_back(solidordestrselector);
 
 
+	//TODO: soliddestructiblebutton
 	
 
 
@@ -199,16 +200,14 @@ void Window::mapeditor() {
 						s.y = static_cast<float>(endpoint.y);
 						e.y = static_cast<float>(startpoint.y);
 					}
+					std::cout << "mapadded,  kezdete:  " << s.x << " " << s.y << "mérete: " << e.x - s.x << " " << e.y - s.y << "\n";
+					std::shared_ptr<MinorMap> newmap = std::make_shared<MinorMap>(s.x, s.y, sf::Color(92, 51, 23, 255), e.y - s.y, e.x - s.x, window, 30, 30);
+					if(!rectorround)
+						newmap->make_me_round();
+					if (solidordestr)
+						newmap->make_solid();
+					map->add_minormap(newmap);
 					
-					if (e.y - s.y != 0 && e.x - s.x != 0) {
-						std::cout << "mapadded,  kezdete:  " << s.x << " " << s.y << "mérete: " << e.x - s.x << " " << e.y - s.y << "\n";
-						std::shared_ptr<MinorMap> newmap = std::make_shared<MinorMap>(s.x, s.y, sf::Color(92, 51, 23, 255), e.y - s.y, e.x - s.x, window, 30, 30);
-						if (!rectorround)
-							newmap->make_me_round();
-						if (solidordestr)
-							newmap->make_solid();
-						map->add_minormap(newmap);
-					}
 					std::cout << "felengedtem a balt \n";
 					isdrag = false;
 				}
@@ -252,8 +251,6 @@ void Window::mapeditor() {
 
 void Window::eventhandler() {
 
-	//TODO Innen folyt. k�v. holnap
-	//M�g �tt kell rakni hogy bizonyos pontban legyen a robban�s ---- spell hat�s�ra -- adott ideig
 
 	ApplicationManager::getInstance().getEngineManager()->AddPlayer(player_v[0]->getWizard_v());
 	float deltaTime = 0.0f;
@@ -263,7 +260,6 @@ void Window::eventhandler() {
 	ellipse.setScale(1, 1);
 	ellipse.setPosition(100, 100);
 	ellipse.setFillColor(sf::Color::Green);
-
 
 
 	std::vector<std::unique_ptr<sf::CircleShape>> explosion_v;
@@ -280,7 +276,12 @@ void Window::eventhandler() {
 				window->close();
 			if (event.type == sf::Event::KeyPressed) {
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) return;
-				
+				/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+				{
+					// move left...
+					asd--;
+					player->move(-1, 0, asd);
+				}*/
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 				{
 					//arrow degree up;
@@ -338,7 +339,7 @@ void Window::eventhandler() {
 					else {
 						float deg = player_v[0]->get_arrow()->get_deg();
 						player_v[0]->shoot(deg, laserBeam);
-						map->laserExp_happened(sf::Vector2i(player_v[0]->getWizard()->get_x(), player_v[0]->getWizard()->get_y()), player_v[0]->get_arrow()->get_deg());
+						//map->laserExp_happened(sf::Vector2i(player_v[0]->getWizard()->get_x(), player_v[0]->getWizard()->get_y()), player_v[0]->get_arrow()->get_deg());
 					}
 
 
@@ -371,6 +372,8 @@ void Window::eventhandler() {
 
 		spellBar->draw();
 
+
+
 		window->display();
 
 	}
@@ -381,8 +384,13 @@ void Window::onTimerEndMsg()
 	player_v[0]->move(100, 0, 100);
 }
 
+
 void Window::startMenu()
 {
+	Button *joinGame = new Button(50.0f, 50.0f, 200.0f, 50.0f, sf::Color::Green, "Join Game", window, [this]()->bool { return true; });
+	Button *createGame = new Button(50.0f, 115.0f, 200.0f, 50.0f, sf::Color::Green, "Create Game", window, [this]()->bool {eventhandler(); return true; });
+	Button *createMap = new Button(50.0f, 175.0f, 200.0f, 50.0f, sf::Color::Green, "Create Map", window, [this]()->bool {mapeditor(); return true; });
+	Button *exitGame = new Button(50.0f, 235.0f, 200.0f, 50.0f, sf::Color::Green, "Exit Game", window, [this]()->bool {window->close(); return true; });
 	while (window->isOpen())
 	{
 		sf::Event event;
@@ -390,10 +398,24 @@ void Window::startMenu()
 		{
 			if (event.type == sf::Event::KeyPressed) {
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) return;
-				//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) eventhandler();
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) eventhandler();
+			}
+
+			if (event.type == sf::Event::MouseButtonPressed) {
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+					if (createGame->inside(sf::Mouse::getPosition(*window))) { createGame->make_action(); }
+					if (createMap->inside(sf::Mouse::getPosition(*window))) { createMap->make_action(); }
+					if (exitGame->inside(sf::Mouse::getPosition(*window))) { exitGame->make_action(); }
+				}
 			}
 
 			window->draw(sf::Sprite(background));
+
+			joinGame->draw();
+			createGame->draw();
+			createMap->draw();
+			exitGame->draw();
+			
 			window->display();
 		}
 	}
