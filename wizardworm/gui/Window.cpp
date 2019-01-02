@@ -83,7 +83,6 @@ void Window::mapeditor() {
 	button_v.push_back(solidordestrselector);
 
 
-	//TODO: soliddestructiblebutton
 	
 
 
@@ -200,14 +199,16 @@ void Window::mapeditor() {
 						s.y = static_cast<float>(endpoint.y);
 						e.y = static_cast<float>(startpoint.y);
 					}
-					std::cout << "mapadded,  kezdete:  " << s.x << " " << s.y << "mérete: " << e.x - s.x << " " << e.y - s.y << "\n";
-					std::shared_ptr<MinorMap> newmap = std::make_shared<MinorMap>(s.x, s.y, sf::Color(92, 51, 23, 255), e.y - s.y, e.x - s.x, window, 30, 30);
-					if(!rectorround)
-						newmap->make_me_round();
-					if (solidordestr)
-						newmap->make_solid();
-					map->add_minormap(newmap);
 					
+					if (e.y - s.y != 0 && e.x - s.x != 0) {
+						std::cout << "mapadded,  kezdete:  " << s.x << " " << s.y << "mérete: " << e.x - s.x << " " << e.y - s.y << "\n";
+						std::shared_ptr<MinorMap> newmap = std::make_shared<MinorMap>(s.x, s.y, sf::Color(92, 51, 23, 255), e.y - s.y, e.x - s.x, window, 30, 30);
+						if (!rectorround)
+							newmap->make_me_round();
+						if (solidordestr)
+							newmap->make_solid();
+						map->add_minormap(newmap);
+					}
 					std::cout << "felengedtem a balt \n";
 					isdrag = false;
 				}
@@ -279,12 +280,7 @@ void Window::eventhandler() {
 				window->close();
 			if (event.type == sf::Event::KeyPressed) {
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) return;
-				/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-				{
-					// move left...
-					asd--;
-					player->move(-1, 0, asd);
-				}*/
+				
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 				{
 					//arrow degree up;
@@ -394,7 +390,7 @@ void Window::startMenu()
 		{
 			if (event.type == sf::Event::KeyPressed) {
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) return;
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) eventhandler();
+				//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) eventhandler();
 			}
 
 			window->draw(sf::Sprite(background));

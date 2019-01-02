@@ -72,7 +72,9 @@
     <ClCompile Include="LaserBeam.cpp">
       <Filter>gui\sources</Filter>
     </ClCompile>
-    <ClCompile Include="ChangeButton.cpp" />
+    <ClCompile Include="ChangeButton.cpp">
+      <Filter>gui\sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include=".\stdafx.h" />
@@ -171,7 +173,9 @@
     <ClInclude Include="SpellBar.h">
       <Filter>gui\headers</Filter>
     </ClInclude>
-    <ClInclude Include="ChangeButton.h" />
+    <ClInclude Include="ChangeButton.h">
+      <Filter>gui\headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".\ReadMe.txt" />
