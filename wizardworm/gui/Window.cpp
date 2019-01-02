@@ -22,7 +22,7 @@ Window::Window()
 	//std::shared_ptr<MinorMap> round = std::make_shared<MinorMap>(100, 100, sf::Color(92, 51, 23, 255), 200, 400, window, 40, 40);
 	//round->make_me_round();
 
-	//map = std::make_unique<Map>(round , window);
+	map = std::make_unique<Map>( window);
 	//map->load_from_file("map.txt");
 	//map->add_minormap(std::make_shared<MinorMap>(500, 100, sf::Color(92, 51, 23, 255), 160, 160, window, 50, 30));
 	//map->add_minormap(std::make_shared<MinorMap>(100, 300, sf::Color(92, 51, 23, 255), 160, 160, window, 10, 30));
@@ -46,7 +46,7 @@ void Window::mapeditor() {
 
 	float deltaTime = 0.0f;
 	sf::Clock clock;
-	map = std::make_unique<Map>(window);
+	map->make_empty();
 	sf::Vector2i startpoint(-1, -1);
 	sf::Vector2i endpoint;
 	bool isdrag = false;
@@ -340,16 +340,17 @@ void Window::eventhandler() {
 
 					pos = sf::Mouse::getPosition(*window);
 
-					if (1 == spellBar->getSelected()) {
-						player_v[0]->shoot(pos, fireBolt);
-						map->explosion_happened(pos, 50);
+					if (player_v[0]->get_arrow() != nullptr) {
+						if (1 == spellBar->getSelected()) {
+							player_v[0]->shoot(pos, fireBolt);
+							map->explosion_happened(pos, 50);
+						}
+						else {
+							float deg = player_v[0]->get_arrow()->get_deg();
+							player_v[0]->shoot(deg, laserBeam);
+							//map->laserExp_happened(sf::Vector2i(player_v[0]->getWizard()->get_x(), player_v[0]->getWizard()->get_y()), player_v[0]->get_arrow()->get_deg());
+						}
 					}
-					else {
-						float deg = player_v[0]->get_arrow()->get_deg();
-						player_v[0]->shoot(deg, laserBeam);
-						//map->laserExp_happened(sf::Vector2i(player_v[0]->getWizard()->get_x(), player_v[0]->getWizard()->get_y()), player_v[0]->get_arrow()->get_deg());
-					}
-
 
 
 				}

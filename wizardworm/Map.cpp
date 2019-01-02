@@ -7,7 +7,7 @@
 Map::Map(sf::RenderWindow *w)
 {
 	window = w;
-	minormap_v.clear();
+	
 	
 }
 
@@ -91,14 +91,17 @@ void Map::load_from_file(std::string filename)
 	std::stringstream ss;
 	std::string line;
 
-		//std::cout << "benivagyok es buzi";
+	
 
 	if (f.fail()) {
 		std::cout << "rossz a fajl \n";
 		return;
 	}
 	
-	minormap_v.clear();
+
+	if (minormap_v.empty()) {
+		std::cout << "uresa map";
+	}
 
 	while (getline(f, line)) {
 		
@@ -217,6 +220,11 @@ void Map::load_from_file(std::string filename)
 
 	
 
+}
+
+void Map::make_empty()
+{
+	minormap_v.clear();
 }
 
 void Map::make_solid(sf::Vector2i pos)
