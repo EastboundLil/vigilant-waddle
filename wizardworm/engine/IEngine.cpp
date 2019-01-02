@@ -26,7 +26,9 @@ IEngine::~IEngine()
 }
 
 void IEngine::Update()
-{
+{	
+	if (players.empty()) return;
+
 	if (timer.getElapsedTime().asMilliseconds() >= fpsTime)
 	{
 		if (keyboardInput)
