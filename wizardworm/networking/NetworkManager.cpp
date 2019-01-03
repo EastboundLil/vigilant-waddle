@@ -16,6 +16,7 @@ NetworkManager::~NetworkManager()
 
 void NetworkManager::startAsServer()
 {
+	runningAsHost = true;
 	if (connectionHandler == nullptr)
 	{
 		connectionHandler = std::make_shared<LanServerHandler>();
@@ -28,6 +29,7 @@ void NetworkManager::startAsServer()
 
 void NetworkManager::startAsClient()
 {
+	runningAsHost = false;
 	if (connectionHandler == nullptr)
 	{
 		connectionHandler = std::make_shared<LanClientHandler>();
@@ -80,6 +82,11 @@ void NetworkManager::setRemoteAddress(std::string ipAddress)
 	{
 		LOG("Handler is nullptr!");
 	}
+}
+
+bool NetworkManager::isRunningAsHost()
+{
+	return runningAsHost;
 }
 
 void NetworkManager::onMessageReceived(sf::Packet packet)

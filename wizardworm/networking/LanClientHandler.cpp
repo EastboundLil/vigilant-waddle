@@ -10,7 +10,7 @@ LanClientHandler::LanClientHandler()
 
 LanClientHandler::~LanClientHandler()
 {
-
+	socket.disconnect();
 }
 
 void LanClientHandler::start()

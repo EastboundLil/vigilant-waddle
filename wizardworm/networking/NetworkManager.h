@@ -24,6 +24,7 @@ public:
 
 	std::string getOwnAddress() override;
 	void setRemoteAddress(std::string ipAddress) override;
+	bool isRunningAsHost() override;
 
 	void onMessageReceived(sf::Packet packet) override;
 
@@ -37,5 +38,7 @@ private:
 	std::shared_ptr<LanHandler> connectionHandler;
 	sf::Thread connectionThread;
 	MessageHandler messageHandler;
+
+	bool runningAsHost = false;
 };
 
