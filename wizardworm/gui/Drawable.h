@@ -22,6 +22,7 @@ public:
 	float get_y();
 	void incr_x(float x_);
 	void incr_y(float y_);
+	sf::Vector2f get_pos();
 
 	void set_color(sf::Color c);
 	sf::Color  get_color();

@@ -304,3 +304,160 @@ bool Wizard::wizard_in_block(std::shared_ptr<Block> b)
 	
 	return false;
 }
+
+
+
+float distance2(sf::Vector2f p1, sf::Vector2f p2) {
+	return pow(pow(p1.x - p2.x, 2.0f) + pow(p1.y - p2.y, 2.0f), 0.5);
+}
+
+struct Line {
+	sf::Vector2f p1;
+	sf::Vector2f p2;
+
+	bool contains(sf::Vector2f point) const {
+		float margin = 0.5;
+		return std::abs((distance2(p1, point) + distance2(point, p2)) - distance2(p1, p2)) < margin;
+	}
+};
+
+sf::Vector2f intersection2(Line lineA, Line lineB) {
+	int x1 = lineA.p1.x;
+	int y1 = lineA.p1.y;
+	int x2 = lineA.p2.x;
+	int y2 = lineA.p2.y;
+
+	int x3 = lineB.p1.x;
+	int y3 = lineB.p1.y;
+	int x4 = lineB.p2.x;
+	int y4 = lineB.p2.y;
+
+	try {
+		if (((x1 - x2)*(y3 - y4) - (y1 - y2)*(x3 - x4)) != 0) {
+			double retX = ((x1*y2 - y1 * x2)*(x3 - x4) - (x1 - x2)*(x3*y4 - y3 * x4)) / ((x1 - x2)*(y3 - y4) - (y1 - y2)*(x3 - x4));
+			double retY = ((x1*y2 - y1 * x2)*(y3 - y4) - (y1 - y2)*(x3*y4 - y3 * x4)) / ((x1 - x2)*(y3 - y4) - (y1 - y2)*(x3 - x4));
+			return sf::Vector2f(retX, retY);
+		}
+
+
+		return sf::Vector2f(0, 0);
+
+	}
+	catch (std::exception) {
+
+		throw new std::exception("");
+	}
+}
+
+std::vector<sf::Vector2f> getIntersectionPoints2(sf::ConvexShape shape, sf::Vector2f point) {
+	std::vector<sf::Vector2f> intersectPoints;
+	sf::Vector2f p;
+	bool crossingLine;  // This will be used to avoid duplicated points on special cases
+
+	if (shape.getPointCount() < 3) {
+		return intersectPoints;
+	}
+
+	sf::FloatRect bounds = shape.getLocalBounds();
+
+	// To determine horizontal line, we use two points, one at leftmost side of the shape (in fact, its bound) and the other at rightmost side
+	Line pointLine;
+	Line shapeLine;
+	pointLine.p1 = sf::Vector2f(bounds.left, point.y);
+	pointLine.p2 = sf::Vector2f(bounds.left + bounds.width, point.y);
+
+	unsigned int nPoints = shape.getPointCount();
+
+	for (int i = 0; i < nPoints; ++i) {
+		try {
+			shapeLine.p1 = shape.getPoint(i % nPoints);         // Last one will be nPoints-1
+			shapeLine.p2 = shape.getPoint((i + 1) % nPoints);   // So this one must be 0 in order to check last side (returning to origin)
+			crossingLine = (shapeLine.p1.y >= point.y && shapeLine.p2.y <= point.y) || (shapeLine.p2.y >= point.y && shapeLine.p1.y <= point.y);
+			p = intersection2(shapeLine, pointLine);
+			if (crossingLine && shapeLine.contains(p))
+				intersectPoints.push_back(p);
+		}
+		catch (std::runtime_error e) {
+			std::cout << "error \n";
+		}
+	}
+
+	return intersectPoints;
+}
+
+bool inside_the_laser(sf::ConvexShape s,sf::Vector2f point) {
+
+	std::vector<sf::Vector2f> intersectPoints = getIntersectionPoints2(s, point);
+	int nodesAtLeft = 0;
+	int nodesAtRight = 0;
+	for (sf::Vector2f po : intersectPoints) {
+		if (po.x < point.x) {
+			nodesAtLeft++;
+		}
+		else if (po.x > point.x) {
+			nodesAtRight++;
+		}
+	}
+	return ((nodesAtLeft % 2) == 1) && ((nodesAtRight % 2) == 1);
+}
+
+
+
+bool Wizard::wizard_in_shape(sf::ConvexShape s)
+{
+
+	//alja
+	if (inside_the_laser(s , sf::Vector2f(this->x + width / 2, this->y + height))) {
+		
+			return true;
+	}
+
+	//jobbalso
+	if (inside_the_laser(s, sf::Vector2f(this->x + width, this->y + height))) {
+		
+			return true;
+	}
+
+	//jobbfelso
+	if (inside_the_laser(s, sf::Vector2f(this->x + width, this->y))) {
+		
+			return true;
+	}
+
+	//balalso
+	if (inside_the_laser(s, sf::Vector2f(this->x, this->y + height))) {
+		
+			return true;
+	}
+
+	//balfelso
+	if (inside_the_laser(s, sf::Vector2f(this->x, this->y))) {
+		
+			return true;
+	}
+
+	//jobbja
+	if (inside_the_laser(s, sf::Vector2f(this->x + width, this->y + height / 2))) {
+		
+			return true;
+	}
+
+
+
+	//balja
+	if (inside_the_laser(s, sf::Vector2f(this->x, this->y + height / 2))) {
+		
+			return true;
+	}
+
+	//teteje
+	if (inside_the_laser(s, sf::Vector2f(this->x + width / 2, this->y))) {
+		
+			return true;
+	}
+
+
+
+
+	return false;
+}

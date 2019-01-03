@@ -170,25 +170,37 @@ void MinorMap::explosion_happened(sf::Vector2i pos , float r)
 
 #define PI 3.14159265
 
-void MinorMap::laserExp_happened(sf::Vector2i pos_,sf::Vector2i wiz_pos, float deg) {
+
+
+
+void makenormal(sf::Vector2f& p,float deg) {
+
+	sf::Vector2f t = p;
+
+	p.x = cos(PI*deg / 180)*t.x - sin(PI*deg / 180)*t.y;
+	p.y = sin(PI*deg / 180)*t.x + cos(PI*deg / 180)*t.y;
+
+}
+
+void MinorMap::laserExp_happened(Wizard* shooterwiz,Wizard* slavewiz, float deg) {
 	
-	float y;
-	y = -(tan(PI*deg / 180)*wiz_pos.x);
+	std::vector<sf::Vector2f> points;
+	points.push_back(sf::Vector2f(0, -25));
+	points.push_back(sf::Vector2f(0, 25));
+	points.push_back(sf::Vector2f(1000, 25));
+	points.push_back(sf::Vector2f(1000, -25));
 
-	std::cout <<deg <<" deg"<< std::endl;
-	std::cout <<y <<" y erteke"<< std::endl;
-	std::cout <<pos.y <<" pos_y erteke"<< std::endl;
-	std::cout <<wiz_pos.y <<" wiz_pos_y erteke"<< std::endl;
-
-
-	if ((y+pos_.y) == wiz_pos.y ) {
-		std::cout << "Faszaság van bazdmeg" << std::endl;
+	s.setPointCount(4);
+	for (int i = 0; i < points.size(); i++) {
+		makenormal(points[i], deg);
+		points[i]= points[i]+ shooterwiz->get_pos()+sf::Vector2f(50 , 25);
+		s.setPoint(i, points[i]);
 	}
-	
-	/*pos = pos_;
-	deg = deg_;
-	sf::Thread* thread = new sf::Thread(&MinorMap::expThread, this);
-	thread->launch();*/
+
+
+	if (slavewiz->wizard_in_shape(s))
+		std::cout<<"lel \n";
+
 }
 
 
@@ -211,6 +223,11 @@ void MinorMap::draw()
 	for (int i = 0; i < block_v.size(); i++) {
 		block_v[i]->draw();
 	}
+	s.setFillColor(sf::Color::Transparent);
+	s.setOutlineColor(sf::Color::Blue);
+	s.setOutlineThickness(-5);
+
+	window->draw(s);
 	m.unlock();
 }
 
