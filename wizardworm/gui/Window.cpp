@@ -393,12 +393,14 @@ void Window::onTimerEndMsg()
 }
 
 
+
 void Window::startMenu()
 {
 	Button *joinGame = new Button(50.0f, 50.0f, 200.0f, 50.0f, sf::Color::Green, "Join Game", window, [this]()->bool {joinScreen();  return true; });
 	Button *createGame = new Button(50.0f, 115.0f, 200.0f, 50.0f, sf::Color::Green, "Create Game", window, [this]()->bool {eventhandler(); return true; });
 	Button *createMap = new Button(50.0f, 175.0f, 200.0f, 50.0f, sf::Color::Green, "Create Map", window, [this]()->bool {mapeditor(); return true; });
-	Button *exitGame = new Button(50.0f, 235.0f, 200.0f, 50.0f, sf::Color::Green, "Exit Game", window, [this]()->bool {window->close(); return true; });
+	Button *hostGame = new Button(50.0f, 235.0f, 200.0f, 50.0f, sf::Color::Green, "Host Game", window, [this]()->bool {hostScreen(); return true; });
+	Button *exitGame = new Button(50.0f, 300.0f, 200.0f, 50.0f, sf::Color::Green, "Exit Game", window, [this]()->bool {window->close(); return true; });
 	while (window->isOpen())
 	{
 		sf::Event event;
@@ -414,6 +416,7 @@ void Window::startMenu()
 					if (joinGame->inside(sf::Mouse::getPosition(*window))) { joinGame->make_action(); }
 					if (createGame->inside(sf::Mouse::getPosition(*window))) { createGame->make_action(); }
 					if (createMap->inside(sf::Mouse::getPosition(*window))) { createMap->make_action(); }
+					if (hostGame->inside(sf::Mouse::getPosition(*window))) { hostGame->make_action(); }
 					if (exitGame->inside(sf::Mouse::getPosition(*window))) { exitGame->make_action(); }
 				}
 			}
@@ -423,6 +426,7 @@ void Window::startMenu()
 			joinGame->draw();
 			createGame->draw();
 			createMap->draw();
+			hostGame->draw();
 			exitGame->draw();
 			
 			window->display();
@@ -463,14 +467,33 @@ void Window::mapSelector()
 
 }
 
+void Window::textEdit(sf::Event event,std::string &s) {
+	if (event.type == sf::Event::KeyPressed && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+		s += event.key.code;
+	}
+}
+
+
 void Window::joinScreen()
 {
 	ApplicationManager::getInstance().getNetworkManager()->stopNetworking();
 	ApplicationManager::getInstance().getNetworkManager()->startAsClient();
 
+	sf::Font font;
+	if (!font.loadFromFile("font.ttf")) {
+		//TODO error
+	}
+
 	sf::Text text;
 	text.setString(sf::String("Ip address:"));
-	text.setPosition(50, 50);
+	text.setFont(font);
+	text.setPosition(50, 100);
+	
+	std::string str = "Ip address:";
+
+	//Button *textEditor = new Button(50.0f, 50.0f, 200.0f, 50.0f, sf::Color::Green, str, window, [this]()->bool { return true; });
+
+
 
 	while (window->isOpen() || ApplicationManager::getInstance().getNetworkManager()->getNetworkStatus() != sf::Socket::Status::Done)
 	{
@@ -479,20 +502,29 @@ void Window::joinScreen()
 		{
 			if (event.type == sf::Event::KeyPressed) {
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) return;
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+					ApplicationManager::getInstance().getNetworkManager()->setRemoteAddress(str);
+					ApplicationManager::getInstance().getNetworkManager()->startConnection();
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace)) {
+					str= str.substr(0, str.size() - 1);
+					text.setString(str);
+
+				}
+
 			}
 
-			if (event.type == sf::Event::MouseButtonPressed) {
-				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-
+			if (event.type == sf::Event::TextEntered && !sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+				if (event.text.unicode < 128){
+					str += static_cast<char>(event.text.unicode);
+					text.setString(str);
 				}
 			}
 
-			ApplicationManager::getInstance().getNetworkManager()->setRemoteAddress("127.0.0.1");
-			ApplicationManager::getInstance().getNetworkManager()->startConnection();
-
+		
 			window->draw(sf::Sprite(background));
 			window->draw(text);
-
+			//textEditor->draw();
 			window->display();
 		}
 	}
@@ -502,12 +534,22 @@ void Window::hostScreen()
 {
 	ApplicationManager::getInstance().getNetworkManager()->stopNetworking();
 	ApplicationManager::getInstance().getNetworkManager()->startAsServer();
+	sf::Font font;
+	if (!font.loadFromFile("font.ttf")) {
+		//TODO error
+	}
 
+	sf::Text text;
+	text.setFont(font);
+	//text.setColor(sf::Color::Red);
+	text.setCharacterSize(100);
 	while (window->isOpen() || ApplicationManager::getInstance().getNetworkManager()->getNetworkStatus() != sf::Socket::Status::Done)
 	{
 		sf::Event event;
 		while (window->pollEvent(event))
 		{
+			text.setString(ApplicationManager::getInstance().getNetworkManager()->getOwnAddress());
+
 			if (event.type == sf::Event::KeyPressed) {
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) return;
 			}
@@ -519,7 +561,7 @@ void Window::hostScreen()
 			}
 
 			window->draw(sf::Sprite(background));
-
+			window->draw(text);
 			window->display();
 		}
 	}
