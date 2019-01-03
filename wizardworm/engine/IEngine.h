@@ -70,5 +70,6 @@ protected:
 	};
 
 	bool reloaded;
+	unsigned int cycleCounter;
 };
 

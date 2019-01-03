@@ -22,6 +22,7 @@ IEngine::IEngine() : thread(&IEngine::StartThread, this)
 	currentPlayer = 0;
 
 	reloaded = false;
+	cycleCounter = 0;
 }
 
 
@@ -33,16 +34,18 @@ void IEngine::Update()
 {	
 	if (players.empty()) return;
 
-	if (timer.getElapsedTime().asMilliseconds() >= fpsTime)
+	if (timer.getElapsedTime().asMilliseconds() >= fpsTime && reloaded)
 	{
+		mut2.lock();
+		cycleCounter++;
 		if (keyboardInput)
 		{
-			mut2.lock();
 			Entity* current_entity = players[currentPlayer]->GetCurrentEntity();
 			players[currentPlayer]->AddKeyboardData(data.Up, data.Left, data.Right);
 			if (data.Up && current_entity->GetJumpSpeed() == 0)
 			{
 				current_entity->SetJumpSpeed(JUMP_FORCE);
+				current_entity->AdjustPosition(0, -2);
 			}
 			if (data.Left && !data.Right)
 			{
@@ -62,22 +65,22 @@ void IEngine::Update()
 			data.Right = false;
 			keyboardInput = false;
 
-			mut2.unlock();
 		}
+		else
+			players[currentPlayer]->AddKeyboardData(false, false, false);
 
-		if (players[currentPlayer]->GetCurrentEntity()->GetJumping())
+		if (players[currentPlayer]->GetCurrentEntity()->GetJumpSpeed() != 0)
 		{
+			//TODO: Fix lag
+			players[currentPlayer]->GetCurrentEntity()->AdjustPosition(0, -players[currentPlayer]->GetCurrentEntity()->GetJumpSpeed());
+			players[currentPlayer]->GetCurrentEntity()->AdjustJumpSpeed(-(GRAVITY / 2));
 			ColCheck(sf::Vector2f(0, -1));
-			if (players[currentPlayer]->GetCurrentEntity()->GetJumping())
-			{
-				players[currentPlayer]->GetCurrentEntity()->AdjustPosition(0, -players[currentPlayer]->GetCurrentEntity()->GetJumpSpeed());
-				players[currentPlayer]->GetCurrentEntity()->AdjustJumpSpeed(-(GRAVITY / 2));
 
-				if (players[currentPlayer]->GetCurrentEntity()->GetYPosition() > 650)
-					players[currentPlayer]->GetCurrentEntity()->SetJumping(false);
-			}
+			if (players[currentPlayer]->GetCurrentEntity()->GetYPosition() > 650)
+				players[currentPlayer]->GetCurrentEntity()->SetJumpSpeed(0);
+
 		}
-
+		mut2.unlock();
 		timer.restart();
 	}
 	else if (roundTimer.getElapsedTime().asSeconds() >= 30)
@@ -107,7 +110,6 @@ void IEngine::Move(bool up, bool left, bool right)
 	if (!reloaded)
 	{
 		ReloadCollision();
-		reloaded = true;
 	}
 }
 
@@ -127,6 +129,30 @@ void IEngine::Switch()
 
 void IEngine::SendData()
 {
+	std::vector<std::string> movesetData;
+	for (int i = 0; i < cycleCounter; i++)
+	{
+		std::string data = "";
+		if (players[currentPlayer]->GetKeyboardData(i, true, false))
+			data += "A";
+		else
+			data += "_";
+
+		if (players[currentPlayer]->GetKeyboardData(i, false, true))
+			data += "A";
+		else
+			data += "_";
+		
+		if (players[currentPlayer]->GetKeyboardData(i, false, false))
+			data += "A";
+		else
+			data += "_";
+
+		movesetData.push_back(data);
+	}
+
+	ApplicationManager::getInstance().getNetworkManager()->sendMoveSetMsg(movesetData);
+	cycleCounter = 0;
 }
 
 void IEngine::ReceiveData()
@@ -164,7 +190,8 @@ void IEngine::ColCheck(sf::Vector2f direction, bool gravCheck)
 			{
 				currentEnt->AdjustPosition(direction);
 				currentEnt->AdjustPosition(-direction.x / 2, -direction.y / 2);
-				currentEnt->SetJumping(false);
+				currentEnt->SetJumpSpeed(0);
+				break;
 			}
 		}
 	}
@@ -172,17 +199,19 @@ void IEngine::ColCheck(sf::Vector2f direction, bool gravCheck)
 
 void IEngine::GravCheck()
 {
-	players[currentPlayer]->GetCurrentEntity()->SetJumping(true);
+	//players[currentPlayer]->GetCurrentEntity()->SetJumping(true);
 }
 
 void IEngine::ReloadCollision()
 {
 	Window* win = (Window*)(ApplicationManager::getInstance().getGuiManager().get());
+	blockRect.empty();
 	for (std::shared_ptr<Block> b : win->get_map()->get_all_blocks())
 	{
 		sf::IntRect rec(b->get_x(), b->get_y(), 50, 50);
 		blockRect.push_back(rec);
 	}
+	reloaded = true;
 }
 
 sf::Vector2f IEngine::Find(Drawable * item)
