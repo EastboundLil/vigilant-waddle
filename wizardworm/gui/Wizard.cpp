@@ -59,6 +59,8 @@ void Wizard::draw() {
 }
 
 void Wizard::set_Pos(sf::Vector2f pos ) {
+	
+	
 	if ((pos.x ) > this->x)
 	{
 		X_OFFSET = 0;
@@ -71,8 +73,9 @@ void Wizard::set_Pos(sf::Vector2f pos ) {
 	}
 
 	if (pos.x != this->x || pos.y != this->y) {
-		this->wizAnimationUpdate();
-	
+		if (pos.y == this->y) {
+			this->wizAnimationUpdate();
+		}
 		
 
 			set_pos(pos.x, pos.y);
