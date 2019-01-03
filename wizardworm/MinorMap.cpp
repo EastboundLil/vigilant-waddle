@@ -227,7 +227,7 @@ void MinorMap::draw()
 	s.setOutlineColor(sf::Color::Blue);
 	s.setOutlineThickness(-5);*/
 
-	window->draw(s);
+	//window->draw(s);
 	m.unlock();
 }
 

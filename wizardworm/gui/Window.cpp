@@ -209,7 +209,7 @@ void Window::mapeditor() {
 					}
 					if (e.x != s.x && e.y != s.y) {
 						std::cout << "mapadded,  kezdete:  " << s.x << " " << s.y << "mérete: " << e.x - s.x << " " << e.y - s.y << "\n";
-						std::shared_ptr<MinorMap> newminormap = std::make_shared<MinorMap>(s.x, s.y, sf::Color(92, 51, 23, 255), e.y - s.y, e.x - s.x, window, 30, 30);
+						std::shared_ptr<MinorMap> newminormap = std::make_shared<MinorMap>(s.x, s.y, sf::Color(92, 51, 23, 255), e.y - s.y, e.x - s.x, window, 50, 50);
 						if (!rectorround)
 							newminormap->make_me_round();
 						if (solidordestr)
