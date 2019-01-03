@@ -5,7 +5,7 @@
 #include "IWindow.h"
 
 #define MOVING_SPEED 5
-#define GRAVITY 0.00000007//0.00000007
+#define GRAVITY 0.0000007//0.00000007
 #define FPS 60
 #define JUMP_FORCE 0.003
 #define UP_STEP 10
@@ -47,12 +47,14 @@ void IEngine::Update()
 			if (data.Left && !data.Right)
 			{
 				current_entity->AdjustPosition(sf::Vector2f(-1, 0));
-				ColCheck(sf::Vector2f(1, 0));
+				ColCheck(sf::Vector2f(2, 0));
+				GravCheck();
 			}
 			else if (!data.Left && data.Right)
 			{
 				current_entity->AdjustPosition(sf::Vector2f(1, 0));
-				ColCheck(sf::Vector2f(-1, 0));
+				ColCheck(sf::Vector2f(-2, 0));
+				GravCheck();
 			}
 
 			data.Up = false;
@@ -65,13 +67,15 @@ void IEngine::Update()
 
 		if (players[currentPlayer]->GetCurrentEntity()->GetJumping())
 		{
-			players[currentPlayer]->GetCurrentEntity()->AdjustPosition(0, -players[currentPlayer]->GetCurrentEntity()->GetJumpSpeed());
-			players[currentPlayer]->GetCurrentEntity()->AdjustJumpSpeed(-(GRAVITY / 2));
-			//check in ground
 			ColCheck(sf::Vector2f(0, -1));
+			if (players[currentPlayer]->GetCurrentEntity()->GetJumping())
+			{
+				players[currentPlayer]->GetCurrentEntity()->AdjustPosition(0, -players[currentPlayer]->GetCurrentEntity()->GetJumpSpeed());
+				players[currentPlayer]->GetCurrentEntity()->AdjustJumpSpeed(-(GRAVITY / 2));
 
-			if (players[currentPlayer]->GetCurrentEntity()->GetYPosition() > 650)
-				players[currentPlayer]->GetCurrentEntity()->SetJumping(false);
+				if (players[currentPlayer]->GetCurrentEntity()->GetYPosition() > 650)
+					players[currentPlayer]->GetCurrentEntity()->SetJumping(false);
+			}
 		}
 
 		timer.restart();
@@ -142,7 +146,7 @@ void IEngine::StartThread()
 	}
 }
 
-void IEngine::ColCheck(sf::Vector2f direction)
+void IEngine::ColCheck(sf::Vector2f direction, bool gravCheck)
 {
 	if (Wizard* w = dynamic_cast<Wizard*>(players[currentPlayer]->GetCurrentEntity()->GetDrawable()))
 	{
@@ -159,10 +163,16 @@ void IEngine::ColCheck(sf::Vector2f direction)
 			if (w->wizard_in_block(win->get_map()->get_all_blocks()[i]))
 			{
 				currentEnt->AdjustPosition(direction);
+				currentEnt->AdjustPosition(-direction.x / 2, -direction.y / 2);
 				currentEnt->SetJumping(false);
 			}
 		}
 	}
+}
+
+void IEngine::GravCheck()
+{
+	players[currentPlayer]->GetCurrentEntity()->SetJumping(true);
 }
 
 void IEngine::ReloadCollision()
