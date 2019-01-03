@@ -478,6 +478,7 @@ void Window::joinScreen()
 {
 	ApplicationManager::getInstance().getNetworkManager()->stopNetworking();
 	ApplicationManager::getInstance().getNetworkManager()->startAsClient();
+	sf::Socket::Status connectionStatus = ApplicationManager::getInstance().getNetworkManager()->getNetworkStatus();
 
 	sf::Font font;
 	if (!font.loadFromFile("font.ttf")) {
@@ -489,13 +490,16 @@ void Window::joinScreen()
 	text.setFont(font);
 	text.setPosition(50, 100);
 	
-	std::string str = "Ip address:";
+	std::string str = "";
 
 	//Button *textEditor = new Button(50.0f, 50.0f, 200.0f, 50.0f, sf::Color::Green, str, window, [this]()->bool { return true; });
 
+	sf::Text message;
+	message.setString("Connecting...");
+	message.setFont(font);
+	message.setPosition(50, 150);
 
-
-	while (window->isOpen() || ApplicationManager::getInstance().getNetworkManager()->getNetworkStatus() != sf::Socket::Status::Done)
+	while (window->isOpen())
 	{
 		sf::Event event;
 		while (window->pollEvent(event))
@@ -521,9 +525,16 @@ void Window::joinScreen()
 				}
 			}
 
-		
+			connectionStatus = ApplicationManager::getInstance().getNetworkManager()->getNetworkStatus();
+			if (connectionStatus == sf::Socket::Status::Done)
+			{
+				message.setString("Connected!");
+			}
+
+			
 			window->draw(sf::Sprite(background));
 			window->draw(text);
+			window->draw(message);
 			//textEditor->draw();
 			window->display();
 		}
@@ -534,21 +545,32 @@ void Window::hostScreen()
 {
 	ApplicationManager::getInstance().getNetworkManager()->stopNetworking();
 	ApplicationManager::getInstance().getNetworkManager()->startAsServer();
+	ApplicationManager::getInstance().getNetworkManager()->startConnection();
+	sf::Socket::Status connectionStatus = ApplicationManager::getInstance().getNetworkManager()->getNetworkStatus();
+
 	sf::Font font;
 	if (!font.loadFromFile("font.ttf")) {
 		//TODO error
 	}
 
-	sf::Text text;
-	text.setFont(font);
+	sf::Text addressText;
+	addressText.setFont(font);
 	//text.setColor(sf::Color::Red);
-	text.setCharacterSize(100);
-	while (window->isOpen() || ApplicationManager::getInstance().getNetworkManager()->getNetworkStatus() != sf::Socket::Status::Done)
+	addressText.setCharacterSize(100);
+
+	sf::Text message;
+	message.setFont(font);
+	//text.setColor(sf::Color::Red);
+	message.setCharacterSize(50);
+	message.setPosition(20,100);
+	message.setString("Waiting for other player...");
+
+	while (window->isOpen())
 	{
 		sf::Event event;
 		while (window->pollEvent(event))
 		{
-			text.setString(ApplicationManager::getInstance().getNetworkManager()->getOwnAddress());
+			addressText.setString(ApplicationManager::getInstance().getNetworkManager()->getOwnAddress());
 
 			if (event.type == sf::Event::KeyPressed) {
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) return;
@@ -560,8 +582,15 @@ void Window::hostScreen()
 				}
 			}
 
+			connectionStatus = ApplicationManager::getInstance().getNetworkManager()->getNetworkStatus();
+			if (connectionStatus == sf::Socket::Status::Done)
+			{
+				message.setString("Connected!");
+			}
+
 			window->draw(sf::Sprite(background));
-			window->draw(text);
+			window->draw(addressText);
+			window->draw(message);
 			window->display();
 		}
 	}

@@ -18,12 +18,7 @@ void LanServerHandler::start()
 	{
 		LOG("Starting listening...");
 
-		connectionStatus = listener.listen(PORT);
-
-		if (connectionStatus != sf::Socket::Done)
-		{
-			LOG("Error starting listener socket!");
-		}
+		listener.listen(PORT);
 
 		connectionStatus = listener.accept(socket);
 

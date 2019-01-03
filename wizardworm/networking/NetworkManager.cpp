@@ -11,7 +11,7 @@ NetworkManager::NetworkManager() :
 
 NetworkManager::~NetworkManager()
 {
-
+	connectionThread.terminate();
 }
 
 void NetworkManager::startAsServer()
