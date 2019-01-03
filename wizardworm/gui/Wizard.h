@@ -16,7 +16,7 @@ protected:
 
 	int X_OFFSET = 0;
 	float width = 50;
-	float height = 50;
+	float height = 40;
 	
 	Bar* lifebar;
 	Bar* manabar;

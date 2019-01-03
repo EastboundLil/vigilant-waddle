@@ -257,11 +257,37 @@ bool Wizard::wizard_in_block(std::shared_ptr<Block> b)
 			return true;
 	}
 
+	//jobbalso
+	if (b->check_bound(sf::Vector2f(this->x + width , this->y + height))) {
+		if (b->contains(sf::Vector2f(this->x + width , this->y + height)))
+			return true;
+	}
+
+	//jobbfelso
+	if (b->check_bound(sf::Vector2f(this->x + width, this->y))) {
+		if (b->contains(sf::Vector2f(this->x + width, this->y)))
+			return true;
+	}
+
+	//balalso
+	if (b->check_bound(sf::Vector2f(this->x , this->y + height))) {
+		if (b->contains(sf::Vector2f(this->x , this->y + height)))
+			return true;
+	}
+
+	//balfelso
+	if (b->check_bound(sf::Vector2f(this->x , this->y ))) {
+		if (b->contains(sf::Vector2f(this->x , this->y )))
+			return true;
+	}
+
 	//jobbja
 	if (b->check_bound(sf::Vector2f(this->x+width, this->y + height / 2))) {
 		if (b->contains(sf::Vector2f(this->x+width, this->y + height / 2)))
 			return true;
 	}
+
+
 
 	//balja
 	if (b->check_bound(sf::Vector2f(this->x, this->y + height / 2))) {
