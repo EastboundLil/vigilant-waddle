@@ -16,6 +16,7 @@ public:
 
 	virtual std::string getOwnAddress() = 0;
 	virtual void setRemoteAddress(std::string ipAddress) = 0;
+	virtual bool isRunningAsHost() = 0;
 
 	virtual void onMessageReceived(sf::Packet packet) = 0;
 

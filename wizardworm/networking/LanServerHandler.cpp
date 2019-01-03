@@ -10,6 +10,7 @@ LanServerHandler::LanServerHandler()
 
 LanServerHandler::~LanServerHandler()
 {
+	socket.disconnect();
 }
 
 void LanServerHandler::start()

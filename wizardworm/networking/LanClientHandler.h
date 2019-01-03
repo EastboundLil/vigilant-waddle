@@ -12,4 +12,3 @@ public:
 	void receiveData() override;
 	void onDataReceived(sf::Packet packet) override;
 };
-
