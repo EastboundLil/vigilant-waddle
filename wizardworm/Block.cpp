@@ -219,6 +219,17 @@ bool Block::inside_an_ellipse(sf::Vector2f c, sf::Vector2f r)
 	return true;
 }
 
+std::vector<sf::Vector2f> Block::get_points()
+{
+	std::vector<sf::Vector2f> t;
+
+	for (int i = 0; i<convex_v->getPointCount(); i++) {
+		t.push_back(convex_v->getPoint(i));
+	}
+
+	return t;
+}
+
 
 
 struct Line {

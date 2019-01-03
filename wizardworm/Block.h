@@ -23,6 +23,7 @@ public:
 	bool contains(sf::Vector2f point);
 	bool check_bound(sf::Vector2f pos); //most nem használom
 	bool inside_an_ellipse(sf::Vector2f c, sf::Vector2f r);
+	std::vector<sf::Vector2f> get_points();
 protected:
 	sf::RenderWindow *window;
 	std::shared_ptr<sf::ConvexShape> convex_v;  //

@@ -251,6 +251,15 @@ bool Wizard::point_in_wizard(sf::Vector2f p)
 
 bool Wizard::wizard_in_block(std::shared_ptr<Block> b)
 {
+	std::vector<sf::Vector2f> t=b->get_points();
+
+	for (int i = 0; i < t.size(); i++) {
+		if (point_in_wizard(t[i])) {
+			return true;
+		}
+	}
+	return false;
+/*
 	//alja
 	if (b->check_bound(sf::Vector2f(this->x+width/2, this->y + height))) {
 		if (b->contains(sf::Vector2f(this->x + width/2, this->y + height)))
@@ -302,7 +311,7 @@ bool Wizard::wizard_in_block(std::shared_ptr<Block> b)
 	}
 
 	
-	return false;
+	return false;*/
 }
 
 
