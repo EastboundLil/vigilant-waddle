@@ -50,6 +50,7 @@ public:
 	std::string curr_spell();
 	bool point_in_wizard(sf::Vector2f p);
 	bool wizard_in_block(std::shared_ptr<Block> b);
+	bool wizard_in_shape(sf::ConvexShape s);
 
 };
 

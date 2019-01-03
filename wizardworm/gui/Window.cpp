@@ -349,7 +349,7 @@ void Window::eventhandler() {
 							float deg = player_v[0]->get_arrow()->get_deg();
 							player_v[0]->shoot(deg, laserBeam);
 							//std::cout << deg << "deg" << std::endl;
-							map->laserExp_happened(sf::Vector2i(player_v[0]->getWizard()->get_x(), player_v[0]->getWizard()->get_y()),player_v, deg);
+							map->laserExp_happened(player_v[0]->getWizard(),player_v, deg);
 						}
 					}
 

@@ -7,7 +7,7 @@ Player::Player(sf::RenderWindow *w , std::string name)
 {
 	window = w;
 	
-	wizardvector.push_back(new Wizard(50,50,0, window));
+	wizardvector.push_back(new Wizard(50,200,0, window));
 	wizardvector.push_back(new Wizard(100, 50, 1, window));
 	wizard = wizardvector[0];
 	player_name = name;
