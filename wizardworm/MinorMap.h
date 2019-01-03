@@ -1,6 +1,7 @@
 #pragma once
 #include "Drawable.h"
 #include "Block.h"
+#include "Wizard.h"
 
 class MinorMap :
 	public Drawable
@@ -12,7 +13,7 @@ class MinorMap :
 	sf::RenderWindow* window;
 	sf::Vector2i pos;
 	float deg;
-
+	sf::ConvexShape s;
 	sf::Mutex m;
 public:
 
@@ -23,7 +24,7 @@ public:
 	~MinorMap();
 
 	void explosion_happened(sf::Vector2i pos , float r);
-	void laserExp_happened(sf::Vector2i pos,sf::Vector2i wiz_pos,float deg);
+	void laserExp_happened(Wizard* shooterwiz,Wizard* slavewiz,float deg);
 	void expThread();
 	void draw();
 	std::stringstream write_data();

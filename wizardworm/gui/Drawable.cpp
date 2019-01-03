@@ -39,6 +39,11 @@ void Drawable::incr_x(float x_){	x += x_;}
 
 void Drawable::incr_y(float y_){	y += y_;}
 
+sf::Vector2f Drawable::get_pos()
+{
+	return sf::Vector2f(this->x , this->y);
+}
+
 void Drawable::set_color(sf::Color c){	color = c; }
 
 sf::Color Drawable::get_color(){	return  color;}

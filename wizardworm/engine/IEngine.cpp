@@ -154,6 +154,8 @@ void IEngine::ColCheck(sf::Vector2f direction)
 		{
 			if (!blockRect[i].intersects(wizRec))
 				continue;
+			if (!win->get_map()->get_all_blocks()[i]->is_alive())
+				continue;
 			if (w->wizard_in_block(win->get_map()->get_all_blocks()[i]))
 			{
 				currentEnt->AdjustPosition(direction);
