@@ -6,7 +6,7 @@ class LanServerHandler :
 	public LanHandler
 {
 public:
-	LanServerHandler(INWManager* NWManager = nullptr);
+	LanServerHandler();
 	~LanServerHandler();
 
 	void start() override;

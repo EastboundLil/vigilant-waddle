@@ -2,8 +2,7 @@
 #include "LanHandler.h"
 
 
-LanHandler::LanHandler(INWManager* NWManager) :
-	networkManager(NWManager),
+LanHandler::LanHandler() :
 	ipAddress("127.0.0.1")
 {
 }

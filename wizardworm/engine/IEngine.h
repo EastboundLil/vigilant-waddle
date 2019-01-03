@@ -19,8 +19,10 @@ public:
 	virtual void AddPlayer(std::vector<Wizard*> entities);
 	virtual void Switch();
 
+	//network foka moka
 	virtual void SendData();
 	virtual void ReceiveData();
+	
 
 	void Start();
 

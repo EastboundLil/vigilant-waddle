@@ -4,7 +4,7 @@ class LanClientHandler :
 	public LanHandler
 {
 public:
-	LanClientHandler(INWManager* NWManager = nullptr);
+	LanClientHandler();
 	~LanClientHandler();
 
 	void start() override;

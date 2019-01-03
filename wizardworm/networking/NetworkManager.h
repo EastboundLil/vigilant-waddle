@@ -15,12 +15,14 @@ public:
 	NetworkManager();
 	~NetworkManager();
 
-	void setGUIInterface(std::shared_ptr<IWindow> guiManager);
-
 	void startAsServer() override;
 	void startAsClient() override;
 	void startConnection() override;
+	void stopNetworking() override;
 
+	sf::Socket::Status getNetworkStatus() override;
+
+	std::string getOwnAddress() override;
 	void setRemoteAddress(std::string ipAddress) override;
 
 	void onMessageReceived(sf::Packet packet) override;
@@ -31,8 +33,6 @@ public:
 
 private:
 	void startThread();
-
-	std::shared_ptr<IWindow> guiManager;
 
 	std::shared_ptr<LanHandler> connectionHandler;
 	sf::Thread connectionThread;

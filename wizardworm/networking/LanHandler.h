@@ -8,9 +8,10 @@
 class LanHandler
 {
 public:
-	LanHandler(INWManager* NWManager = nullptr);
+	LanHandler();
 	virtual ~LanHandler() = 0;
 	virtual void start() = 0;
+	sf::Socket::Status getStatus() { return connectionStatus; };
 	void setAddress(std::string ipAddress);
 	std::string getAddress();
 	virtual void sendData(sf::Packet) = 0;
@@ -20,11 +21,9 @@ public:
 protected:
 	sf::TcpSocket socket;
 	sf::IpAddress ipAddress;
-	sf::Socket::Status connectionStatus;
+	sf::Socket::Status connectionStatus = sf::Socket::Status::Error;
 
 	const short PORT = 9000;
-
-	INWManager* networkManager = nullptr;
 
 private:
 

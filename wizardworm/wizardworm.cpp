@@ -14,7 +14,6 @@ int main()
 	ApplicationManager::getInstance().init();
 
 	ApplicationManager::getInstance().getGuiManager()->startMenu();
-	//ApplicationManager::getInstance().getGuiManager()->eventhandler();
 	
 	return 0;
 }
