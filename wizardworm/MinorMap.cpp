@@ -223,9 +223,9 @@ void MinorMap::draw()
 	for (int i = 0; i < block_v.size(); i++) {
 		block_v[i]->draw();
 	}
-	s.setFillColor(sf::Color::Transparent);
+	/*s.setFillColor(sf::Color::Transparent);
 	s.setOutlineColor(sf::Color::Blue);
-	s.setOutlineThickness(-5);
+	s.setOutlineThickness(-5);*/
 
 	window->draw(s);
 	m.unlock();

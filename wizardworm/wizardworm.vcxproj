@@ -22,7 +22,7 @@
     <ProjectGuid>{217E4CA2-072C-4118-B744-15472EAC7276}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>wizardworm</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
