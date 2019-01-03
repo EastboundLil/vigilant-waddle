@@ -269,14 +269,12 @@ void Window::eventhandler() {
 	ApplicationManager::getInstance().getEngineManager()->AddPlayer(player_v[0]->getWizard_v());
 	float deltaTime = 0.0f;
 	sf::Clock clock;
-	float asd = 1;
-	sf::CircleShape ellipse(200);
-	ellipse.setScale(1, 1);
-	ellipse.setPosition(100, 100);
-	ellipse.setFillColor(sf::Color::Green);
+		
 	map->load_from_file("map.txt");
 
-	std::vector<std::unique_ptr<sf::CircleShape>> explosion_v;
+	myplayer = player_v[0];
+
+	
 	while (window->isOpen())
 	{
 		sf::Event event;
@@ -290,60 +288,42 @@ void Window::eventhandler() {
 				window->close();
 			if (event.type == sf::Event::KeyPressed) {
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) return;
-				/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-				{
-					// move left...
-					asd--;
-					player->move(-1, 0, asd);
-				}*/
+				
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 				{
 					//arrow degree up;
-					player_v[0]->aim(true);
+					myplayer->aim(true);
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 				{
 					//arrow degree up;
-					player_v[0]->aim(false);
+					myplayer->aim(false);
 				}
 				if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 				{
-					player_v[0]->getWizard()->close_arrow();
+					myplayer->getWizard()->close_arrow();
 					ApplicationManager::getInstance().getEngineManager()->Move(sf::Keyboard::isKeyPressed(sf::Keyboard::Space), sf::Keyboard::isKeyPressed(sf::Keyboard::Left), sf::Keyboard::isKeyPressed(sf::Keyboard::Right));
 					
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
-					player_v[0]->possible_shoot(0);
+					myplayer->possible_shoot(0);
 					spellBar->setSelected(1);
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) {
-					player_v[0]->possible_shoot(1);
+					myplayer->possible_shoot(1);
 					spellBar->setSelected(2);
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
 					ApplicationManager::getInstance().getEngineManager()->Switch();
-					player_v[0]->switch_wizard();
+					myplayer->switch_wizard();
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 				{
 					//arrow degree up;
-					player_v[0]->changeforce();
+					myplayer->changeforce();
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 				{
-					window->clear(sf::Color::Cyan);
-					mapeditor();
-				}
-				
-				
-
-
-			}
-			if (event.type == sf::Event::MouseButtonPressed)
-			{
-
-				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-
 					pos = sf::Mouse::getPosition(*window);
 
 					if (player_v[0]->get_arrow() != nullptr) {
@@ -355,9 +335,21 @@ void Window::eventhandler() {
 							float deg = player_v[0]->get_arrow()->get_deg();
 							player_v[0]->shoot(deg, laserBeam);
 							//std::cout << deg << "deg" << std::endl;
-							map->laserExp_happened(player_v[0]->getWizard(),player_v, deg);
+							map->laserExp_happened(player_v[0]->getWizard(), player_v, deg);
 						}
 					}
+				}
+				
+				
+
+
+			}
+			if (event.type == sf::Event::MouseButtonPressed)
+			{
+
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+
+					
 
 
 				}
@@ -367,28 +359,24 @@ void Window::eventhandler() {
 
 
 
-		player_v[0]->shootUpdate(deltaTime);
+		myplayer->shootUpdate(deltaTime);
 		window->clear(sf::Color::Cyan);
 		window->draw(sf::Sprite(background));
 
 		map->draw();
 
-		for (int i = 0; i < explosion_v.size(); i++) {			
-			window->draw(*explosion_v[i]);
-		}
+		
 		
 
-		for (int i = 0; i < player_v[0]->getWizard_v().size(); i++) {
-			//std::cout << "asd: " << asd << "\n";
-			player_v[0]->set_Pos(ApplicationManager::getInstance().getEngineManager()->Find(player_v[0]->getWizard()));
-		}
-			
+		
 		for (int i = 0; i < player_v.size(); i++) {
+			for (int j = 0; j < player_v[i]->getWizard_v().size(); j++) {
+				player_v[i]->set_Pos(ApplicationManager::getInstance().getEngineManager()->Find(player_v[i]->getWizard()));
+			}
 			player_v[i]->draw();
 		}
+
 		spellBar->draw();
-
-
 
 		window->display();
 
