@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "LanServerHandler.h"
 
+#include "ApplicationManager.h"
 
-LanServerHandler::LanServerHandler(INWManager* NWManager) :
-	LanHandler(NWManager)
+LanServerHandler::LanServerHandler()
 {
 }
 
@@ -79,5 +79,5 @@ void LanServerHandler::receiveData()
 
 void LanServerHandler::onDataReceived(sf::Packet packet)
 {
-	networkManager->onMessageReceived(packet);
+	ApplicationManager::getInstance().getNetworkManager()->onMessageReceived(packet);
 }

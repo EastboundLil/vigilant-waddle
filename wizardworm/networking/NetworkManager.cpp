@@ -14,16 +14,11 @@ NetworkManager::~NetworkManager()
 
 }
 
-void NetworkManager::setGUIInterface(std::shared_ptr<IWindow> IGuiManager)
-{
-	guiManager = IGuiManager;
-}
-
 void NetworkManager::startAsServer()
 {
 	if (connectionHandler == nullptr)
 	{
-		connectionHandler = std::make_shared<LanServerHandler>(this);
+		connectionHandler = std::make_shared<LanServerHandler>();
 	}
 	else
 	{
@@ -35,7 +30,7 @@ void NetworkManager::startAsClient()
 {
 	if (connectionHandler == nullptr)
 	{
-		connectionHandler = std::make_shared<LanClientHandler>(this);
+		connectionHandler = std::make_shared<LanClientHandler>();
 	}
 	else
 	{
@@ -53,6 +48,21 @@ void NetworkManager::startConnection()
 	{
 		LOG("Handler is nullptr!");
 	}
+}
+
+void NetworkManager::stopNetworking()
+{
+	connectionHandler = nullptr;
+}
+
+sf::Socket::Status NetworkManager::getNetworkStatus()
+{
+	return connectionHandler->getStatus();
+}
+
+std::string NetworkManager::getOwnAddress()
+{
+	return sf::IpAddress::getLocalAddress().toString();
 }
 
 void NetworkManager::startThread()

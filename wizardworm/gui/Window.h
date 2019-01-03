@@ -21,6 +21,8 @@ class Window : public IWindow
 	sf::Texture laserBeam;
 	sf::Texture background;
 
+	void joinScreen();
+	void hostScreen();
 
 public:
 
@@ -29,6 +31,7 @@ public:
 	void onTimerEndMsg();
 	void startMenu() override;
 	void mapSelector() override;
+
 	std::shared_ptr<Map> get_map();
 
 	Window();

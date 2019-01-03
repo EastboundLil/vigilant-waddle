@@ -258,8 +258,6 @@ void Window::mapeditor() {
 
 
 void Window::eventhandler() {
-
-
 	ApplicationManager::getInstance().getEngineManager()->AddPlayer(player_v[0]->getWizard_v());
 	float deltaTime = 0.0f;
 	sf::Clock clock;
@@ -397,7 +395,7 @@ void Window::onTimerEndMsg()
 
 void Window::startMenu()
 {
-	Button *joinGame = new Button(50.0f, 50.0f, 200.0f, 50.0f, sf::Color::Green, "Join Game", window, [this]()->bool { return true; });
+	Button *joinGame = new Button(50.0f, 50.0f, 200.0f, 50.0f, sf::Color::Green, "Join Game", window, [this]()->bool {joinScreen();  return true; });
 	Button *createGame = new Button(50.0f, 115.0f, 200.0f, 50.0f, sf::Color::Green, "Create Game", window, [this]()->bool {eventhandler(); return true; });
 	Button *createMap = new Button(50.0f, 175.0f, 200.0f, 50.0f, sf::Color::Green, "Create Map", window, [this]()->bool {mapeditor(); return true; });
 	Button *exitGame = new Button(50.0f, 235.0f, 200.0f, 50.0f, sf::Color::Green, "Exit Game", window, [this]()->bool {window->close(); return true; });
@@ -413,6 +411,7 @@ void Window::startMenu()
 
 			if (event.type == sf::Event::MouseButtonPressed) {
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+					if (joinGame->inside(sf::Mouse::getPosition(*window))) { joinGame->make_action(); }
 					if (createGame->inside(sf::Mouse::getPosition(*window))) { createGame->make_action(); }
 					if (createMap->inside(sf::Mouse::getPosition(*window))) { createMap->make_action(); }
 					if (exitGame->inside(sf::Mouse::getPosition(*window))) { exitGame->make_action(); }
@@ -462,6 +461,68 @@ void Window::mapSelector()
 		}
 	}
 
+}
+
+void Window::joinScreen()
+{
+	ApplicationManager::getInstance().getNetworkManager()->stopNetworking();
+	ApplicationManager::getInstance().getNetworkManager()->startAsClient();
+
+	sf::Text text;
+	text.setString(sf::String("Ip address:"));
+	text.setPosition(50, 50);
+
+	while (window->isOpen() || ApplicationManager::getInstance().getNetworkManager()->getNetworkStatus() != sf::Socket::Status::Done)
+	{
+		sf::Event event;
+		while (window->pollEvent(event))
+		{
+			if (event.type == sf::Event::KeyPressed) {
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) return;
+			}
+
+			if (event.type == sf::Event::MouseButtonPressed) {
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+
+				}
+			}
+
+			ApplicationManager::getInstance().getNetworkManager()->setRemoteAddress("127.0.0.1");
+			ApplicationManager::getInstance().getNetworkManager()->startConnection();
+
+			window->draw(sf::Sprite(background));
+			window->draw(text);
+
+			window->display();
+		}
+	}
+}
+
+void Window::hostScreen()
+{
+	ApplicationManager::getInstance().getNetworkManager()->stopNetworking();
+	ApplicationManager::getInstance().getNetworkManager()->startAsServer();
+
+	while (window->isOpen() || ApplicationManager::getInstance().getNetworkManager()->getNetworkStatus() != sf::Socket::Status::Done)
+	{
+		sf::Event event;
+		while (window->pollEvent(event))
+		{
+			if (event.type == sf::Event::KeyPressed) {
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) return;
+			}
+
+			if (event.type == sf::Event::MouseButtonPressed) {
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+
+				}
+			}
+
+			window->draw(sf::Sprite(background));
+
+			window->display();
+		}
+	}
 }
 
 std::shared_ptr<Map> Window::get_map()
