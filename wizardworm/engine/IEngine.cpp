@@ -3,9 +3,9 @@
 #include "ApplicationManager.h"
 
 #define MOVING_SPEED 5
-#define GRAVITY 0.0000007
+#define GRAVITY 0.00000007
 #define FPS 60
-#define JUMP_FORCE 0.01
+#define JUMP_FORCE 0.003
 #define UP_STEP 10
 
 IEngine::IEngine() : thread(&IEngine::StartThread, this)
@@ -43,12 +43,20 @@ void IEngine::Update()
 			if (data.Left && !data.Right)
 			{
 				current_entity->AdjustPosition(sf::Vector2f(-1, 0));
-				
+				//collision check
+				if (Wizard* w = dynamic_cast<Wizard*>(players[currentPlayer]->GetCurrentEntity()->GetDrawable()))
+				{
+
+				}
 			}
 			else if (!data.Left && data.Right)
 			{
 				current_entity->AdjustPosition(sf::Vector2f(1, 0));
-				//check in ground
+				//collision check
+				if (Wizard* w = dynamic_cast<Wizard*>(players[currentPlayer]->GetCurrentEntity()->GetDrawable()))
+				{
+
+				}
 			}
 
 			data.Up = false;
@@ -64,6 +72,10 @@ void IEngine::Update()
 			players[currentPlayer]->GetCurrentEntity()->AdjustPosition(0, -players[currentPlayer]->GetCurrentEntity()->GetJumpSpeed());
 			players[currentPlayer]->GetCurrentEntity()->AdjustJumpSpeed(-(GRAVITY / 2));
 			//check in ground
+			if (Wizard* w = dynamic_cast<Wizard*>(players[currentPlayer]->GetCurrentEntity()->GetDrawable()))
+			{
+				
+			}
 
 			if (players[currentPlayer]->GetCurrentEntity()->GetYPosition() > 650)
 				players[currentPlayer]->GetCurrentEntity()->SetJumping(false);
