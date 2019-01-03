@@ -32,6 +32,8 @@ public:
 	void startMenu() override;
 	void mapSelector() override;
 
+	void textEdit(sf::Event event,std::string &s);
+
 	std::shared_ptr<Map> get_map();
 
 	Window();
