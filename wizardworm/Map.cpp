@@ -265,3 +265,15 @@ void Map::make_destructible(sf::Vector2i pos)
 	
 	}
 }
+
+std::vector<std::shared_ptr<Block>> Map::get_all_blocks()
+{
+	std::vector<std::shared_ptr<Block>> returningvector;
+	for (int i = 0; i < minormap_v.size(); i++) {
+		for (int j = 0; j < minormap_v[i]->get_block_v().size(); j++) {
+			returningvector.push_back(minormap_v[i]->get_block_v()[j]);
+		}
+	}
+
+	return returningvector;
+}

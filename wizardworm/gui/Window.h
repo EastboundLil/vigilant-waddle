@@ -12,7 +12,7 @@ class Window : public IWindow
 	//std::unique_ptr<sf::RenderWindow> window;
 	sf::RenderWindow *window;
 	std::vector<std::shared_ptr<Player>> player_v;
-	std::unique_ptr<Map> map;
+	std::shared_ptr<Map> map;
 
 	SpellBar* spellBar;
 	sf::Texture fireBolt;
@@ -29,6 +29,7 @@ public:
 	void onTimerEndMsg();
 	void startMenu() override;
 	void mapSelector() override;
+	std::shared_ptr<Map> get_map();
 
 	Window();
 	~Window();

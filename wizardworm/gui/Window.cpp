@@ -22,7 +22,7 @@ Window::Window()
 	//std::shared_ptr<MinorMap> round = std::make_shared<MinorMap>(100, 100, sf::Color(92, 51, 23, 255), 200, 400, window, 40, 40);
 	//round->make_me_round();
 
-	map = std::make_unique<Map>( window);
+	map = std::make_shared<Map>( window);
 	//map->load_from_file("map.txt");
 	//map->add_minormap(std::make_shared<MinorMap>(500, 100, sf::Color(92, 51, 23, 255), 160, 160, window, 50, 30));
 	//map->add_minormap(std::make_shared<MinorMap>(100, 300, sf::Color(92, 51, 23, 255), 160, 160, window, 10, 30));
@@ -462,4 +462,9 @@ void Window::mapSelector()
 		}
 	}
 
+}
+
+std::shared_ptr<Map> Window::get_map()
+{
+	return map;
 }

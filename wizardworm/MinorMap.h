@@ -35,6 +35,6 @@ public:
 	void make_solid(sf::Vector2i pos);
 	void make_solid();
 	void make_destructible(sf::Vector2i pos);
-
+	std::vector<std::shared_ptr<Block>> get_block_v();
 };
 

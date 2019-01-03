@@ -376,3 +376,8 @@ void MinorMap::make_destructible(sf::Vector2i pos)
 
 	
 }
+
+std::vector<std::shared_ptr<Block>> MinorMap::get_block_v()
+{
+	return block_v;
+}

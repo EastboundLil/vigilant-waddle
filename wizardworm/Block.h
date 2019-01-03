@@ -42,7 +42,7 @@ private:
 	
 	void refresh_bounds();
 	void set_res(int res);
-	void set_block_point(size_t i, size_t j, float _x, float _y);
+	//void set_block_point(int i, int j, float _x, float _y);
 	
 
 };
