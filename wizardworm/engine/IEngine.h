@@ -31,6 +31,7 @@ protected:
 	sf::Mutex mut2;
 
 	std::vector<PlayerData*> players;
+	std::vector<sf::IntRect> blockRect;
 	int currentPlayer;
 	bool keyboardInput;
 	KeyboardData data;
@@ -45,6 +46,8 @@ protected:
 	int engineType;
 
 	void StartThread();
+	void ColCheck(sf::Vector2f direction);
+	void ReloadCollision();
 
 	enum EngineState
 	{
@@ -62,5 +65,7 @@ protected:
 		Client = 1,
 		Undefined = 2
 	};
+
+	bool reloaded;
 };
 
