@@ -46,7 +46,8 @@ protected:
 	int engineType;
 
 	void StartThread();
-	void ColCheck(sf::Vector2f direction);
+	void ColCheck(sf::Vector2f direction, bool gravCheck = true);
+	void GravCheck();
 	void ReloadCollision();
 
 	enum EngineState
