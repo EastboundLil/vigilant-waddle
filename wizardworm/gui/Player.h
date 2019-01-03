@@ -19,6 +19,7 @@ class Player
 public:
 
 	Player(sf::RenderWindow* w, std::string name);
+	Player(sf::RenderWindow* w, std::string name,std::string image_name);
 	~Player();
 	
 	void move(float x, float y, float deltaTime);

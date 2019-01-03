@@ -7,7 +7,7 @@
 #include<vector>
 
 
-Wizard::Wizard(float x_ , float y_ , float _id , sf::RenderWindow *w)
+Wizard::Wizard(float x_ , float y_ , float _id , sf::RenderWindow *w,std::string image_name)
 	:Drawable(x_, y_)
 {
 	//set_value(1); //�l e m�g a var�zsl� 
@@ -20,7 +20,7 @@ Wizard::Wizard(float x_ , float y_ , float _id , sf::RenderWindow *w)
 	arrow_v.push_back( new Arrow(x_ + 47, y_ + 21, window, "laserbeam"));
 	arrow = arrow_v[0];
 	id = _id;
-	texture.loadFromFile("WormsAnimation.png");
+	texture.loadFromFile(image_name);
 	texture.setSmooth(true);
 
 	wormImage.setSize(sf::Vector2f(100.0f, 100.0f));

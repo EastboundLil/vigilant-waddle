@@ -3,12 +3,12 @@
 #include<vector>
 #include <iostream>
 
-Player::Player(sf::RenderWindow *w , std::string name)
+Player::Player(sf::RenderWindow *w , std::string name,std::string image_name)
 {
 	window = w;
 	
-	wizardvector.push_back(new Wizard(50,200,0, window));
-	wizardvector.push_back(new Wizard(100, 50, 1, window));
+	wizardvector.push_back(new Wizard(50,200,0, window,image_name));
+	wizardvector.push_back(new Wizard(100, 50, 1, window,image_name));
 	wizard = wizardvector[0];
 	player_name = name;
 

@@ -29,7 +29,7 @@ protected:
 	Animation *animation;
 
 public:
-	Wizard(float x_ , float y_ , float id_ ,sf::RenderWindow* window);
+	Wizard(float x_ , float y_ , float id_ ,sf::RenderWindow* window,std::string image_name);
 	~Wizard();
 	void draw();
 	void move(float x, float y , float deltatime);
