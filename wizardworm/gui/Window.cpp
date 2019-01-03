@@ -10,6 +10,14 @@ Window::Window()
 {
 	window = new sf::RenderWindow(sf::VideoMode(800, 600), "WizardWorm!");
 	player_v.push_back( std::make_shared<Player>( window , "elsojatekos"));
+	player_v.push_back(std::make_shared<Player>(window, "masodikjatekos"));
+
+	for (int i = 0; i < player_v.size(); i++) {
+		for (int j = 0; j < player_v[i]->getWizard_v().size(); j++) {
+			player_v[i]->getWizard_v()[j]->set_Pos(sf::Vector2f(100 + rand() % 600, 1));
+		}
+	}
+
 
 	spellBar = new SpellBar(350.0f,530.0f,window);
 	fireBolt.loadFromFile("Gexp.png");
@@ -375,9 +383,9 @@ void Window::eventhandler() {
 			player_v[0]->set_Pos(ApplicationManager::getInstance().getEngineManager()->Find(player_v[0]->getWizard()));
 		}
 			
-
-		player_v[0]->draw();
-
+		for (int i = 0; i < player_v.size(); i++) {
+			player_v[i]->draw();
+		}
 		spellBar->draw();
 
 
