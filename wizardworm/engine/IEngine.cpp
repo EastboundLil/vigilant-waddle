@@ -5,7 +5,7 @@
 #include "IWindow.h"
 
 #define MOVING_SPEED 5
-#define GRAVITY 0.00000007//0.00000007
+#define GRAVITY 0.0000007//0.00000007
 #define FPS 60
 #define JUMP_FORCE 0.003
 #define UP_STEP 10
