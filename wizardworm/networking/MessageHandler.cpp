@@ -67,7 +67,7 @@ sf::Packet MessageHandler::createTimerEndMsg()
 	return message;
 }
 
-sf::Packet MessageHandler::createNewMapMsg(std::stringstream map)
+sf::Packet MessageHandler::createNewMapMsg(std::stringstream& map)
 {
 	sf::Packet message;
 

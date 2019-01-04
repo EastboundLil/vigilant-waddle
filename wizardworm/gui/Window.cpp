@@ -273,7 +273,7 @@ void Window::thegame() {
 	float deltaTime = 0.0f;
 	sf::Clock clock;
 		
-	map->load_from_file("map.txt");
+	//map->load_from_file("map.txt");
 
 	if (ApplicationManager::getInstance().getNetworkManager()->isRunningAsHost())
 	{
@@ -447,6 +447,9 @@ void Window::startMenu()
 
 void Window::mapSelector()
 {
+
+	std::vector<Button*> maps;
+	std::vector<std::string> map_names;
 	sf::Text message;
 	bool empty=false;
 	
@@ -477,12 +480,17 @@ void Window::mapSelector()
 
 		message.setString("vannak fajlok");
 		//std::stringstream ss;
-		std::string line;
-		
+		int i = 0;
 		while (getline(systemfile, line)) {
 
 			files_v.push_back(line);
-			
+			//Button *joinGame = new Button(50.0f, 50.0f, 200.0f, 50.0f, sf::Color::Green, "Join Game", window, [this]()->bool {joinScreen();  return true; });
+			maps.push_back(new Button(50.0f, 50.0f + i*50.0f, 200.0f, 50.0f, sf::Color::Green, line, window, [this]()->bool { 
+				map->load_from_file(line);
+				hostScreen();
+				return true; }));
+			map_names.push_back(line);
+			i++;
 		}
 		systemfile.close();
 	
@@ -501,14 +509,20 @@ void Window::mapSelector()
 
 			if (event.type == sf::Event::MouseButtonPressed) {
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-					
+					for (int i = 0; i < maps.size(); i++) {
+						if (maps[i]->inside(sf::Mouse::getPosition(*window))) { maps[i]->make_action(); }
+					}
 				}
 			}
 
 			window->draw(sf::Sprite(background));
 
 			
-			if (/*empty*/true)window->draw(message);
+			if (empty)window->draw(message);
+
+			for (int i = 0; i < maps.size(); i++) {
+				maps[i]->draw();
+			}
 			window->display();
 		}
 	}
@@ -654,4 +668,9 @@ void Window::hostScreen()
 std::shared_ptr<Map> Window::get_map()
 {
 	return map;
+}
+
+void Window::receiveMap(std::stringstream& map)
+{
+
 }

@@ -113,3 +113,9 @@ void NetworkManager::sendTimerEndMsg()
 	sf::Packet message = messageHandler.createTimerEndMsg();
 	connectionHandler->sendData(message);
 }
+
+void NetworkManager::sendNewMapMsg(std::stringstream& map)
+{
+	sf::Packet message = messageHandler.createNewMapMsg(map);
+	connectionHandler->sendData(message);
+}

@@ -14,7 +14,7 @@ public:
 
 	void execute() override
 	{
-
+		ApplicationManager::getInstance().getGuiManager()->receiveMap(streamOfMapElements);
 	}
 
 private:

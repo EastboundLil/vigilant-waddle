@@ -26,12 +26,16 @@ class Window : public IWindow
 	void hostScreen();
 
 public:
+	std::string line;
+
 
 	void thegame() override;
 	void mapeditor();
 	void onTimerEndMsg();
 	void startMenu() override;
 	void mapSelector() override;
+
+	void receiveMap(std::stringstream& map);
 
 	void textEdit(sf::Event event,std::string &s);
 

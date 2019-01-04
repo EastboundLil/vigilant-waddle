@@ -22,4 +22,5 @@ public:
 
 	virtual void sendMoveSetMsg(std::vector<std::string> moveSet) = 0;
 	virtual void sendTimerEndMsg() = 0;
+	virtual void sendNewMapMsg(std::stringstream& map) = 0;
 };
