@@ -39,7 +39,7 @@ void IEngine::Update()
 	{
 		mut2.lock();
 		cycleCounter++;
-		if (currentPlayer == 0)
+		if (currentPlayer == defaultPlayer)
 		{
 			if (keyboardInput)
 			{
