@@ -49,6 +49,7 @@ protected:
 
 	int currentEngineState;
 	int engineType;
+	int defaultPlayer;
 
 	void StartThread();
 	void ColCheck(sf::Vector2f direction, bool gravCheck = true);
@@ -74,5 +75,8 @@ protected:
 
 	bool reloaded;
 	unsigned int cycleCounter;
+	unsigned int BlockCount;
+	std::vector<std::shared_ptr<Block>> Blocks;
+	std::vector<KeyboardData> OtherKeys;
 };
 
