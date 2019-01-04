@@ -263,11 +263,6 @@ void IEngine::ColCheck(sf::Vector2f direction, bool gravCheck)
 	}
 }
 
-void IEngine::GravCheck()
-{
-	//players[currentPlayer]->GetCurrentEntity()->SetJumping(true);
-}
-
 void IEngine::ReloadCollision()
 {
 	Window* win = (Window*)(ApplicationManager::getInstance().getGuiManager().get());
@@ -292,11 +287,4 @@ sf::Vector2f IEngine::Find(Drawable * item)
 	}
 
 	return sf::Vector2f(-1, -1);
-}
-
-void IEngine::SetDefaultPlayer(int player, bool setCurrent)
-{
-	defaultPlayer = player;
-	if (setCurrent)
-		currentPlayer = player;
 }
