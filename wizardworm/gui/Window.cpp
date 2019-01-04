@@ -615,3 +615,8 @@ std::shared_ptr<Map> Window::get_map()
 {
 	return map;
 }
+
+void Window::receiveMap(std::stringstream& map)
+{
+
+}

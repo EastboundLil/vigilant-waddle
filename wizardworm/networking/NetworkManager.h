@@ -30,6 +30,7 @@ public:
 
 	void sendMoveSetMsg(std::vector<std::string> moveSet) override;
 	void sendTimerEndMsg() override;
+	void sendNewMapMsg(std::stringstream& map) override;
 
 
 private:
