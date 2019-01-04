@@ -267,6 +267,7 @@ void Window::mapeditor() {
 
 void Window::thegame() {
 	ApplicationManager::getInstance().getEngineManager()->AddPlayer(player_v[0]->getWizard_v());
+	ApplicationManager::getInstance().getEngineManager()->AddPlayer(player_v[1]->getWizard_v());
 	float deltaTime = 0.0f;
 	sf::Clock clock;
 		
