@@ -219,7 +219,7 @@ void Window::mapeditor() {
 					if (e.x != s.x && e.y != s.y) {
 						//std::cout << "mapadded,  kezdete:  " << s.x << " " << s.y << "mérete: " << e.x - s.x << " " << e.y - s.y << "\n";
 						std::shared_ptr<MinorMap> newminormap = std::make_shared<MinorMap>(s.x, s.y, sf::Color(92, 51, 23, 255), e.y - s.y, e.x - s.x, window, 50, 50);
-						map->set_matrix(s.x, s.y, e.x , e.y , rectorround, solidordestr);
+						//map->set_matrix(s.x, s.y, e.x , e.y , rectorround, solidordestr);
 						if (!rectorround)
 							newminormap->make_me_round();
 						if (solidordestr)
@@ -486,7 +486,7 @@ void Window::mapSelector()
 			files_v.push_back(line);
 			//Button *joinGame = new Button(50.0f, 50.0f, 200.0f, 50.0f, sf::Color::Green, "Join Game", window, [this]()->bool {joinScreen();  return true; });
 			maps.push_back(new Button(50.0f, 50.0f + i*50.0f, 200.0f, 50.0f, sf::Color::Green, line, window, [this]()->bool { 
-				map->load_from_file(line);
+				map->load_from_file("map_no_1.txt");
 				hostScreen();
 				return true; }));
 		

@@ -277,14 +277,16 @@ void MinorMap::load(std::string to_load)
 	std::vector<sf::Vector2f> points;
 	ssfull << to_load;
 	//std::cout << "ebbol epitkezek: " << ssfull.str() << "\n";
-	while (std::getline(ssfull, line)) {
+	//std::getline(ssfull, line);
+	std::cout << "loadablemap: \n" << to_load << " \n";
+	while (std::getline(ssfull, line) ) {
 		
 		//block_v.push_back(make_new_block(line));
-
+		//if (line=="end ")break;
 
 		ss << line;
 		
-
+		
 		ss >> temp;
 		posx = std::stof(temp);
 		ss >> temp;

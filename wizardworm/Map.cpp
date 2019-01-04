@@ -83,11 +83,12 @@ std::stringstream Map::write_data()
 {
 	std::stringstream ss;
 	
+	
 	for (int i = 0; i < minormap_v.size(); i++) {
 		ss<<(minormap_v[i]->write_data()).str();
 		ss << "\n";
 	}
-
+	
 	
 
 	return ss;
@@ -118,7 +119,7 @@ void Map::write_data_to_file(std::string filename)
 	//std::cout << "kiirtam ide: "<<filename << "\n";
 
 	of.close();
-	write_data_to_file_from_matrix(filename.substr(0, filename.size() - 4) + "_matrix.txt");
+	//write_data_to_file_from_matrix(filename.substr(0, filename.size() - 4) + "_matrix.txt");
 
 }
 
@@ -146,21 +147,61 @@ void Map::write_data_to_file_from_matrix(std::string filename)
 
 void Map::load_from_ss(std::stringstream &ss) {
 
+	
+	std::string line;
 
 
-	if (minormap_v.empty()) {
-		std::cout << "uresa map";
+
+	
+	std::stringstream ss2;
+	
+	while (getline(ss, line)) {
+
+		ss2.clear();
+		ss2.str("");
+		ss2 << line;
+		std::string w;
+		ss2 >> w;
+		if (w == "begin") {
+
+			continue;
+
+		}
+		else {
+			//std::cout << "minormap: \n";
+			//ss.clear();
+			//ss.str("");
+
+
+			while (getline(ss, line)) {
+
+
+
+
+				if (line.substr(0, line.find(" ")) == "end") {
+
+
+					break;
+				}
+				else {
+					ss2 << line << "\n";
+				}
+
+
+
+			}
+
+			minormap_v.push_back(std::make_shared<MinorMap>(window));
+			std::cout << ss2.str() << "minorvege \n";
+
+			minormap_v[minormap_v.size() - 1]->load(ss2.str());
+			//std::cout <<"minormap: "<< ss.str()<<"\n";
+			ss2.clear();
+			ss2 << "";
+
+		}
+
 	}
-
-
-	minormap_v.push_back(std::make_shared<MinorMap>(window));
-	//std::cout << ss.str()<<"minorvege \n";
-
-	minormap_v[minormap_v.size() - 1]->load(ss.str());
-	ss.clear();
-	ss << "";
-
-		
 
 	
 }
@@ -221,7 +262,7 @@ void Map::load_from_file(std::string filename)
 			}
 			
 			minormap_v.push_back(std::make_shared<MinorMap>(window));
-			//std::cout << ss.str()<<"minorvege \n";
+			std::cout << ss.str()<<"minorvege \n";
 
 			minormap_v[minormap_v.size() - 1]->load(ss.str());
 			//std::cout <<"minormap: "<< ss.str()<<"\n";
@@ -232,7 +273,7 @@ void Map::load_from_file(std::string filename)
 
 	}
 	//std::cout << "loadfile: " << filename.substr(0, filename.size() - 4) + "_matrix.txt";
-	load_from_file_from_matrix(filename.substr(0, filename.size() - 4) + "_matrix.txt");
+	//load_from_file_from_matrix(filename.substr(0, filename.size() - 4) + "_matrix.txt");
 
 }
 
