@@ -21,10 +21,12 @@ void LanClientHandler::start()
 	if (connectionStatus != sf::Socket::Done)
 	{
 		LOG("Connection error: " << connectionStatus);
+		return;
 	}
 	else
 	{
 		LOG("Connected!");
+		receiveData();
 	}
 }
 

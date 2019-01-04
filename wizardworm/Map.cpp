@@ -144,7 +144,26 @@ void Map::write_data_to_file_from_matrix(std::string filename)
 
 
 
+void Map::load_from_ss(std::stringstream &ss) {
 
+
+
+	if (minormap_v.empty()) {
+		std::cout << "uresa map";
+	}
+
+
+	minormap_v.push_back(std::make_shared<MinorMap>(window));
+	//std::cout << ss.str()<<"minorvege \n";
+
+	minormap_v[minormap_v.size() - 1]->load(ss.str());
+	ss.clear();
+	ss << "";
+
+		
+
+	
+}
 
 void Map::load_from_file(std::string filename)
 {
@@ -173,14 +192,14 @@ void Map::load_from_file(std::string filename)
 		ss << line;
 		std::string w;
 		ss >> w;
-		if (w != "begin") {
+		if (w == "begin") {
 			
 			continue;
 
 		}else {
 			//std::cout << "minormap: \n";
-			ss.clear();
-			ss.str("");
+			//ss.clear();
+			//ss.str("");
 			
 
 			while(getline(f, line)){
@@ -221,7 +240,7 @@ void Map::load_from_file_from_matrix(std::string filename)
 {
 	std::ifstream file(filename);
 	if (file.fail()) {
-		std::cout << "rossz fájlnév a loadfromfilfrommatrixban \n";
+		std::cout << "rossz fájlnév a loadfromfilfrommatrixban,  \n";
 		return;
 	}
 
