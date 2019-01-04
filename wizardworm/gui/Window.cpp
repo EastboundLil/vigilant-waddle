@@ -9,8 +9,8 @@
 Window::Window()
 {
 	window = new sf::RenderWindow(sf::VideoMode(800, 600), "WizardWorm!");
-	player_v.push_back( std::make_shared<Player>( window , "elsojatekos"));
-	player_v.push_back(std::make_shared<Player>(window, "masodikjatekos"));
+	player_v.push_back( std::make_shared<Player>( window , "elsojatekos","WormsAnimation.png"));
+	player_v.push_back(std::make_shared<Player>(window, "masodikjatekos", "WormsAnimation2.png"));
 
 	for (int i = 0; i < player_v.size(); i++) {
 		for (int j = 0; j < player_v[i]->getWizard_v().size(); j++) {
