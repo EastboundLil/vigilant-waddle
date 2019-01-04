@@ -159,6 +159,16 @@ void IEngine::ReceiveData()
 {
 }
 
+void IEngine::switchplayerBence()
+{
+	if (currentPlayer == 0) {
+		currentPlayer = 1;
+	}
+	else {
+		currentPlayer == 0;
+	}
+}
+
 void IEngine::Start()
 {
 	thread.launch();

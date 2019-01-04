@@ -23,7 +23,7 @@ public:
 	virtual void SendData();
 	virtual void ReceiveData();
 	
-
+	void switchplayerBence();
 	void Start();
 
 	virtual sf::Vector2f Find(Drawable* item);

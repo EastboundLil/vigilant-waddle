@@ -275,9 +275,13 @@ void Window::thegame() {
 	if (ApplicationManager::getInstance().getNetworkManager()->isRunningAsHost())
 	{
 		myplayer = player_v[0];
+		
+		std::cout << " \n én most host vagyok \n";
 	}
 	else {
 		myplayer = player_v[1];
+		ApplicationManager::getInstance().getEngineManager()->switchplayerBence();
+		std::cout << " \n én most joiner vagyok \n";
 	}
 
 	
