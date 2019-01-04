@@ -6,8 +6,17 @@
 Map::Map(sf::RenderWindow *w)
 {
 	window = w;
+	sf::Vector2u windowsize = window->getSize();
 	
 	
+		for (int i = 0; i < windowsize.x; i++) {
+			screen_matrix.push_back(std::vector<int>());
+			for (int j = 0; j < windowsize.y; j++) {
+				screen_matrix[i].push_back(0);
+			}			
+		}
+
+
 }
 
 Map::Map(std::shared_ptr<MinorMap> minormap , sf::RenderWindow *w)
@@ -16,6 +25,16 @@ Map::Map(std::shared_ptr<MinorMap> minormap , sf::RenderWindow *w)
 	
 	window = w;
 	minormap_v.push_back(minormap);
+
+	sf::Vector2u windowsize = window->getSize();
+	for (int i = 0; i < windowsize.x; i++) {
+		screen_matrix.push_back(std::vector<int>());
+		for (int j = 0; j < windowsize.y; j++) {
+			screen_matrix[i].push_back(0);
+		}
+	}
+
+	
 	
 }
 
@@ -74,6 +93,22 @@ std::stringstream Map::write_data()
 	return ss;
 }
 
+std::stringstream Map::write_data_from_matrix() {
+
+	std::stringstream ss;
+
+
+	for (int i = 0; i < screen_matrix.size(); i++) {
+		for (int j = 0; j < screen_matrix[i].size(); j++) {
+			ss << screen_matrix[i][j] << " ";
+		}
+	}
+
+	return ss;
+	
+
+}
+
 void Map::write_data_to_file(std::string filename)
 {
 	std::ofstream of(filename);
@@ -81,8 +116,29 @@ void Map::write_data_to_file(std::string filename)
 	
 	of << write_data().str();
 	//std::cout << "kiirtam ide: "<<filename << "\n";
-	of.close();
 
+	of.close();
+	write_data_to_file_from_matrix(filename.substr(0, filename.size() - 4) + "_matrix.txt");
+
+}
+
+void Map::write_data_to_file_from_matrix(std::string filename)
+{
+	std::ofstream of(filename);
+
+	std::stringstream ss;
+
+
+	for (int i = 0; i < screen_matrix.size(); i++) {
+		for (int j = 0; j < screen_matrix[i].size(); j++) {
+			of << screen_matrix[i][j] << " ";
+			
+		}
+		of << "\n";
+
+	}
+
+	of.close();
 }
 
 
@@ -155,75 +211,34 @@ void Map::load_from_file(std::string filename)
 
 	}
 	
-	
-	 //std::cout << "a mapnak " << minormap_v.size() << " eleme van";
+	load_from_file_from_matrix(filename.substr(0, filename.size() - 4) + "_matrix.txt");
 
+}
 
-	//TODO: egy fájl van az egész mapra, ezért valszeg a fájlszerkezetet meg kell változtatni. itt dolgozom fel a fajlt, és a loadot a minormapoknak adom
+void Map::load_from_file_from_matrix(std::string filename)
+{
+	std::ifstream file("filename");
+	if (file.fail()) {
+		std::cout << "rossz fájlnév a loadfromfilfrommatrixban \n";
+		return;
+	}
 
-	/*minormap_v.clear();
-
-	std::string line;	
 	std::stringstream ss;
-	std::string temp;
-
-	float posx, posy, h, w;
-	int r, g, b , n;
-	bool d;
-	std::vector<sf::Vector2f> points;
-
-	while (getline(f ,line)) {
-		//std::cout << line << "\n";
-		//block_v.push_back(make_new_block(line));
-		
-
-		
+	std::string line;
+	screen_matrix.clear();
+	std::string stringtoint;
+	while (getline(file, line)) {
+		screen_matrix.push_back(std::vector<int>());
 		ss << line;
-		
-		ss>>temp;
-		posx = std::stof(temp);
-		ss >> temp;
-		posy = std::stof(temp);
-		ss >> temp;
-		n = std::stoi(temp);
-		ss >> temp;
-		w = std::stof(temp);
-		ss >> temp;
-		h = std::stof(temp);
-		ss >> temp;
-		r = std::stoi(temp);
-		ss >> temp;
-		g = std::stoi(temp);
-		ss >> temp;
-		b = std::stoi(temp);
-		ss >> temp;
-		d = (bool)std::stoi(temp);
-
-		
-		for (int i = 0; i < n; i++) {
-			points.push_back(sf::Vector2f(0, 0));
-			ss >> temp;
-			points[i].x=std::stof(temp);
-			ss >> temp;
-			points[i].y = std::stof(temp);
-			
+		for (int i = 0; i < window->getSize().y; i++) {
+			 ss>>stringtoint;
+			 screen_matrix[screen_matrix.size() - 1].push_back(std::stoi(stringtoint));
 		}
-		std::cout << posx <<" "<<posy << " " <<n <<" "<< w << " " <<h << " " <<r << " " <<g << " " <<b<<" ";
-		for (int i = 0; i < points.size(); i++) {
-			std::cout << points[i].x << " " << points[i].y << " ";
-		}
-		std::cout << "\n \n";
-
-		
 		ss.clear();
 		ss.str("");
 
-		block_v.push_back(std::make_unique<Block>(posx, posy, sf::Color(r, g, b), h, w,  window , n, points , d ));
-		points.clear();
-		
-
 	}
-	*/
+
 
 }
 
@@ -264,6 +279,50 @@ void Map::make_empty()
 {
 	minormap_v.clear();
 }
+
+bool is_point_inside_an_ellipse(sf::Vector2f p, sf::Vector2f c, sf::Vector2f r) {
+
+	return (powf(p.x - c.x, 2) / powf(r.x, 2)) + (powf(p.y - c.y, 2) / powf(r.y, 2)) <= 1;
+
+}
+
+
+void Map::set_matrix(int x, int y, int ex, int ey, bool isrect, bool issolid)
+{
+	sf::Vector2f c = sf::Vector2f(static_cast<float>(x + ((ex-x) / 2)), static_cast<float>(y + ((ey-y) / 2)));
+	sf::Vector2f r = sf::Vector2f(static_cast<float>(((ex - x) / 2)), static_cast<float>(((ey - y) / 2)));
+	std::cout << "set_matrix: " << x << " " << y << " " << ex << " " << ey << "\n";
+
+
+	for (int i = x; i <= ex; i++) {
+		for (int j = y; j <= ey; j++) {
+			if (!isrect && is_point_inside_an_ellipse(sf::Vector2f(static_cast<float>(i), static_cast<float>(j)), c, r)) {
+				if (issolid) {
+					screen_matrix[i][j] = 2;
+					//std::cout << "2 = " << screen_matrix[i][j] << "\n";
+				}
+				else {
+					screen_matrix[i][j] = 1;
+					//std::cout << "1 = " << screen_matrix[i][j] << "\n";
+				}
+
+
+			}
+			else {
+				if (issolid) {
+					screen_matrix[i][j] = 2;
+					//std::cout << "2 = "<< screen_matrix[i][j]<<"\n";
+				}
+				else {
+					screen_matrix[i][j] = 1;
+					//std::cout << "1 = " << screen_matrix[i][j] << "\n";
+				}
+			}
+		}
+	}
+}
+
+
 
 void Map::make_solid(sf::Vector2i pos)
 {

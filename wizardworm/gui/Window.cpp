@@ -149,7 +149,7 @@ void Window::mapeditor() {
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
 				{
 
-					map->load_from_file("map.txt");
+					
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 				{
@@ -219,6 +219,7 @@ void Window::mapeditor() {
 					if (e.x != s.x && e.y != s.y) {
 						//std::cout << "mapadded,  kezdete:  " << s.x << " " << s.y << "mérete: " << e.x - s.x << " " << e.y - s.y << "\n";
 						std::shared_ptr<MinorMap> newminormap = std::make_shared<MinorMap>(s.x, s.y, sf::Color(92, 51, 23, 255), e.y - s.y, e.x - s.x, window, 50, 50);
+						map->set_matrix(s.x, s.y, e.x , e.y , rectorround, solidordestr);
 						if (!rectorround)
 							newminormap->make_me_round();
 						if (solidordestr)

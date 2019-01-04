@@ -9,6 +9,9 @@
 class Map {
 	std::vector<std::shared_ptr<MinorMap>> minormap_v;
 	sf::RenderWindow *window;
+
+	std::vector<std::vector<int>> screen_matrix;
+
 public:
 
 	Map(sf::RenderWindow *w);
@@ -23,11 +26,13 @@ public:
 	void draw();
 	std::stringstream write_data();
 	void write_data_to_file(std::string filename);
+	void write_data_to_file_from_matrix(std::string filename);
 	void load_from_file(std::string filename);
+	void load_from_file_from_matrix(std::string filename);
 	void write_data_to_file_system();
 	void make_empty();
-	
-
+	void set_matrix(int x, int y, int ex, int ey, bool isrect, bool issolid);
+	std::stringstream write_data_from_matrix();
 	void make_solid(sf::Vector2i pos);
 	void make_destructible(sf::Vector2i pos);
 	std::vector<std::shared_ptr<Block>> get_all_blocks();
