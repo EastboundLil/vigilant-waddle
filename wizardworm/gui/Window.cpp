@@ -380,11 +380,12 @@ void Window::thegame() {
 
 		
 		for (int i = 0; i < player_v.size(); i++) {
-			for (int j = 0; j < player_v[i]->getWizard_v().size(); j++) {
-				player_v[i]->set_Pos(ApplicationManager::getInstance().getEngineManager()->Find(player_v[i]->getWizard_v()[j]));
-			}
+			//for (int j = 0; j < player_v[i]->getWizard_v().size(); j++) {
+				
+			//}
 			player_v[i]->draw();
 		}
+		myplayer->set_Pos(ApplicationManager::getInstance().getEngineManager()->Find(myplayer->getWizard()));
 
 		spellBar->draw();
 
