@@ -49,6 +49,7 @@ public:
 	int get_id();
 	std::string curr_spell();
 	bool point_in_wizard(sf::Vector2f p);
+	//TODO Bence vagyok elbasztam csinaltam egy egyszerubb megoldast mert most azt nezem hogy a blokk pontjai benne vannak e wizardban de ha tul nagy a blokk akkor a ket pontja koze a wizard beesik plusz  annyira egy fasz vagyok hogy nem a sarkan fog menni hanem a lejton szoval leszopok mindenkit egy sorert (komment vissza)
 	bool wizard_in_block(std::shared_ptr<Block> b);
 	bool wizard_in_shape(sf::ConvexShape s);
 
