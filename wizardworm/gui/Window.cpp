@@ -449,7 +449,7 @@ void Window::mapSelector()
 {
 
 	std::vector<Button*> maps;
-	std::vector<std::string> map_names;
+	//std::vector<std::string> map_names;
 	sf::Text message;
 	bool empty=false;
 	
@@ -485,15 +485,23 @@ void Window::mapSelector()
 
 			files_v.push_back(line);
 			//Button *joinGame = new Button(50.0f, 50.0f, 200.0f, 50.0f, sf::Color::Green, "Join Game", window, [this]()->bool {joinScreen();  return true; });
-			maps.push_back(new Button(50.0f, 50.0f + i*50.0f, 200.0f, 50.0f, sf::Color::Green, line, window, [this]()->bool { 
-				map->load_from_file(line);
-				hostScreen();
-				return true; }));
-			map_names.push_back(line);
+			
+			//map_names.push_back(line);
 			i++;
 		}
 		systemfile.close();
-	
+		
+		for (int i = 0; i < files_v.size(); i++) {
+			std::cout << files_v[i] << "\n";
+			maps.push_back(new Button(50.0f, 50.0f + i * 50.0f, 200.0f, 50.0f, sf::Color::Green, files_v[i], window, [this]()->bool {
+				map->load_from_file("map_no_1.txt");
+				hostScreen();
+				return true; }));
+		
+		}
+
+
+
 	}
 	//TODO: itt kell egy kivalaszto widget, meg egy lista ami tartalmazza a létező mapokat, vagy egy lehetőség hogy új mapot csinálj, plusz, minden map mellé hogy map kiprobalasa
 	while (window->isOpen())

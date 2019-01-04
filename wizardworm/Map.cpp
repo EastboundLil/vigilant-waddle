@@ -192,14 +192,14 @@ void Map::load_from_file(std::string filename)
 		ss << line;
 		std::string w;
 		ss >> w;
-		if (w != "begin") {
+		if (w == "begin") {
 			
 			continue;
 
 		}else {
 			//std::cout << "minormap: \n";
-			ss.clear();
-			ss.str("");
+			//ss.clear();
+			//ss.str("");
 			
 			while(getline(f, line)){
 
@@ -238,7 +238,7 @@ void Map::load_from_file_from_matrix(std::string filename)
 {
 	std::ifstream file("filename");
 	if (file.fail()) {
-		std::cout << "rossz fájlnév a loadfromfilfrommatrixban \n";
+		std::cout << "rossz fájlnév a loadfromfilfrommatrixban,  \n";
 		return;
 	}
 
