@@ -223,7 +223,7 @@ void Window::mapeditor() {
 						if (!rectorround)
 							newminormap->make_me_round();
 						if (solidordestr)
-							newminormap->make_solid();
+							newminormap->make_solid(); 
 						map->add_minormap(newminormap);
 					}
 					//std::cout << "felengedtem a balt \n";
@@ -486,7 +486,7 @@ void Window::mapSelector()
 			files_v.push_back(line);
 			//Button *joinGame = new Button(50.0f, 50.0f, 200.0f, 50.0f, sf::Color::Green, "Join Game", window, [this]()->bool {joinScreen();  return true; });
 			maps.push_back(new Button(50.0f, 50.0f + i*50.0f, 200.0f, 50.0f, sf::Color::Green, line, window, [this]()->bool { 
-				map->load_from_file(line);
+				map->load_from_file("map_no_1.txt");
 				hostScreen();
 				return true; }));
 			map_names.push_back(line);

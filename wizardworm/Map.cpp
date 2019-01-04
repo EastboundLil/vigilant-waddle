@@ -182,6 +182,7 @@ void Map::load_from_file(std::string filename)
 			ss.clear();
 			ss.str("");
 			
+
 			while(getline(f, line)){
 
 				
@@ -204,20 +205,21 @@ void Map::load_from_file(std::string filename)
 			//std::cout << ss.str()<<"minorvege \n";
 
 			minormap_v[minormap_v.size() - 1]->load(ss.str());
+			//std::cout <<"minormap: "<< ss.str()<<"\n";
 			ss.clear();
 			ss << "";
 		
 		}
 
 	}
-	
+	//std::cout << "loadfile: " << filename.substr(0, filename.size() - 4) + "_matrix.txt";
 	load_from_file_from_matrix(filename.substr(0, filename.size() - 4) + "_matrix.txt");
 
 }
 
 void Map::load_from_file_from_matrix(std::string filename)
 {
-	std::ifstream file("filename");
+	std::ifstream file(filename);
 	if (file.fail()) {
 		std::cout << "rossz fájlnév a loadfromfilfrommatrixban \n";
 		return;
