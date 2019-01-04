@@ -26,6 +26,7 @@ void LanServerHandler::start()
 		if (connectionStatus != sf::Socket::Done)
 		{
 			LOG("Error accepting connection!");
+			return;
 		}
 		else
 		{
