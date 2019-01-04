@@ -21,7 +21,7 @@ public:
 
 	//network foka moka
 	virtual void SendData();
-	virtual void ReceiveData();
+	virtual void ReceiveData(std::vector<std::string> movesetData);
 	
 	void switchplayerBence();
 	void Start();

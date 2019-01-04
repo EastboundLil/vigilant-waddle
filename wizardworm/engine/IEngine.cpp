@@ -4,6 +4,8 @@
 #include "Window.h"
 #include "IWindow.h"
 
+#include "Logger.h"
+
 #define MOVING_SPEED 5
 #define GRAVITY 0.0000007//0.00000007
 #define FPS 60
@@ -82,12 +84,10 @@ void IEngine::Update()
 		mut2.unlock();
 		timer.restart();
 	}
-	else if (roundTimer.getElapsedTime().asSeconds() >= 30)
+	else if (roundTimer.getElapsedTime().asSeconds() >= 10)
 	{
 		if (engineType == EngineType::Client)
 			SendData();
-		else
-			ReceiveData();
 
 		roundTimer.restart();
 		//send data to server
@@ -135,17 +135,17 @@ void IEngine::SendData()
 	{
 		std::string data = "";
 		if (players[currentPlayer]->GetKeyboardData(i, true, false))
-			data += "A";
+			data += "U";
 		else
 			data += "_";
 
 		if (players[currentPlayer]->GetKeyboardData(i, false, true))
-			data += "A";
+			data += "L";
 		else
 			data += "_";
 		
 		if (players[currentPlayer]->GetKeyboardData(i, false, false))
-			data += "A";
+			data += "R";
 		else
 			data += "_";
 
@@ -156,8 +156,28 @@ void IEngine::SendData()
 	cycleCounter = 0;
 }
 
-void IEngine::ReceiveData()
+void IEngine::ReceiveData(std::vector<std::string> movesetData)
 {
+	switchplayerBence();
+
+	for (int i = 0; movesetData.size(); i++)
+	{
+		bool up, left, right = false;
+
+		up = movesetData[i][0] == 'U' || movesetData[i][1] == 'U' || movesetData[i][2] == 'U';
+		left = movesetData[i][0] == 'L' || movesetData[i][1] == 'L' || movesetData[i][2] == 'L';
+		right = movesetData[i][0] == 'R' || movesetData[i][1] == 'R' || movesetData[i][2] == 'R';
+
+		players[currentPlayer]->AddKeyboardData(up, left, right);
+	}
+
+	std::vector<KeyboardData> keys = players[currentPlayer]->getKeyboardDataAsVector();
+	for (int i = 0; i < keys.size(); i++)
+	{
+		LOG((keys[i].Left ? "L" : "_"));
+		LOG((keys[i].Up ? "U" : "_"));
+		LOG((keys[i].Right ? "R" : "_"));
+	}
 }
 
 void IEngine::switchplayerBence()
@@ -166,7 +186,7 @@ void IEngine::switchplayerBence()
 		currentPlayer = 1;
 	}
 	else {
-		currentPlayer == 0;
+		currentPlayer = 0;
 	}
 }
 

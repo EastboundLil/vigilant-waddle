@@ -93,6 +93,10 @@ public:
 			entities.push_back(new Entity(dw));
 		currentEntity = 0;
 	}
+	PlayerData()
+	{
+
+	}
 	~PlayerData() {}
 
 	void SetUsername(std::string name) { username = name; }
@@ -113,6 +117,8 @@ public:
 				return keyspressed[step].Right;
 		}
 	}
+
+	std::vector<KeyboardData> getKeyboardDataAsVector() { return keyspressed; }
 
 	Entity* GetCurrentEntity() { return entities[currentEntity]; }
 	void SetCurrentEntity(int id) { currentEntity = id; }

@@ -9,7 +9,7 @@ public:
 
 	void execute() override
 	{
-
+		ApplicationManager::getInstance().getEngineManager()->ReceiveData(moves);
 	}
 
 private:
