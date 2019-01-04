@@ -74,5 +74,8 @@ protected:
 
 	bool reloaded;
 	unsigned int cycleCounter;
+	unsigned int BlockCount;
+	std::vector<std::shared_ptr<Block>> Blocks;
+	std::vector<KeyboardData> OtherKeys;
 };
 
