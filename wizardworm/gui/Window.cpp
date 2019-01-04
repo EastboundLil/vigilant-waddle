@@ -346,7 +346,7 @@ void Window::thegame() {
 							float deg = myplayer->get_arrow()->get_deg();
 							myplayer->shoot(deg, laserBeam);
 							//std::cout << deg << "deg" << std::endl;
-							map->laserExp_happened(myplayer->getWizard(), player_v, deg);
+							//map->laserExp_happened(myplayer->getWizard(), player_v, deg);
 						}
 					}
 				}
