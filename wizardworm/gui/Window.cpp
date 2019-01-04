@@ -179,7 +179,7 @@ void Window::mapeditor() {
 					if (addnewmapbutton->inside(sf::Mouse::getPosition(*window)))
 					{
 						addnewmapbutton->make_action();
-						std::cout << "\n megnyomtak a savemapot \n";
+						//std::cout << "\n megnyomtak a savemapot \n";
 					}
 				}
 
@@ -216,7 +216,7 @@ void Window::mapeditor() {
 						e.y = static_cast<float>(startpoint.y);
 					}
 					if (e.x != s.x && e.y != s.y) {
-						std::cout << "mapadded,  kezdete:  " << s.x << " " << s.y << "mérete: " << e.x - s.x << " " << e.y - s.y << "\n";
+						//std::cout << "mapadded,  kezdete:  " << s.x << " " << s.y << "mérete: " << e.x - s.x << " " << e.y - s.y << "\n";
 						std::shared_ptr<MinorMap> newminormap = std::make_shared<MinorMap>(s.x, s.y, sf::Color(92, 51, 23, 255), e.y - s.y, e.x - s.x, window, 50, 50);
 						if (!rectorround)
 							newminormap->make_me_round();
@@ -224,7 +224,7 @@ void Window::mapeditor() {
 							newminormap->make_solid();
 						map->add_minormap(newminormap);
 					}
-					std::cout << "felengedtem a balt \n";
+					//std::cout << "felengedtem a balt \n";
 					isdrag = false;
 				}
 			}
@@ -277,12 +277,12 @@ void Window::thegame() {
 	{
 		myplayer = player_v[0];
 		
-		std::cout << " \n én most host vagyok \n";
+		//std::cout << " \n én most host vagyok \n";
 	}
 	else {
 		myplayer = player_v[1];
 		ApplicationManager::getInstance().getEngineManager()->switchplayerBence();
-		std::cout << " \n én most joiner vagyok \n";
+		//std::cout << " \n én most joiner vagyok \n";
 	}
 
 	

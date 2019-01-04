@@ -50,7 +50,7 @@ void Player::draw() {
 		w->draw();
 	}
 	
-	for (size_t i = 0; i < livingspells.size();i++) {
+	for (int i = 0; i < livingspells.size();i++) {
 		if(livingspells[i]->getIsLive())
 			livingspells[i]->draw();
 		else {
@@ -106,7 +106,7 @@ void Player::possible_shoot(int i)
 
 	wizard->change_curr_arrow(i);
 	
-	std::cout << "arrow nyilik \n";
+	//std::cout << "arrow nyilik \n";
 	//TODO: manabaron mutassa a costot
 	
 }

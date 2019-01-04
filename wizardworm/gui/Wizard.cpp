@@ -159,13 +159,13 @@ Arrow* Wizard::get_arrow() {
 
 void Wizard::open_arrow()
 {
-	std::cout << arrow->get_type() << "kinyit \n";
+	//std::cout << arrow->get_type() << "kinyit \n";
 	arrow->set_opened(true);
 }
 
 void Wizard::close_arrow()
 {
-	std::cout << arrow->get_type() << "bezár \n";
+	//std::cout << arrow->get_type() << "bezár \n";
 	arrow->set_opened(false);
 }
 
