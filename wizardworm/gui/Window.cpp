@@ -486,6 +486,7 @@ void Window::joinScreen()
 {
 	ApplicationManager::getInstance().getNetworkManager()->stopNetworking();
 	ApplicationManager::getInstance().getNetworkManager()->startAsClient();
+	ApplicationManager::getInstance().getEngineManager()->setEngineTypeClient();
 	sf::Socket::Status connectionStatus = ApplicationManager::getInstance().getNetworkManager()->getNetworkStatus();
 
 	sf::Font font;
@@ -555,6 +556,7 @@ void Window::hostScreen()
 	ApplicationManager::getInstance().getNetworkManager()->stopNetworking();
 	ApplicationManager::getInstance().getNetworkManager()->startAsServer();
 	ApplicationManager::getInstance().getNetworkManager()->startConnection();
+	ApplicationManager::getInstance().getEngineManager()->setEngineTypeServer();
 	sf::Socket::Status connectionStatus = ApplicationManager::getInstance().getNetworkManager()->getNetworkStatus();
 
 	sf::Font font;

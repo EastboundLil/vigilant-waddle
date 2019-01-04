@@ -26,6 +26,9 @@ public:
 	void switchplayerBence();
 	void Start();
 
+	void setEngineTypeServer() { engineType = EngineType::Server; }
+	void setEngineTypeClient() { engineType = EngineType::Client; }
+
 	virtual sf::Vector2f Find(Drawable* item);
 
 protected:

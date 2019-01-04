@@ -33,7 +33,6 @@ IEngine::~IEngine()
 void IEngine::Update()
 {	
 	if (players.empty()) return;
-
 	if (timer.getElapsedTime().asMilliseconds() >= fpsTime && reloaded)
 	{
 		mut2.lock();
@@ -89,6 +88,8 @@ void IEngine::Update()
 			SendData();
 		else
 			ReceiveData();
+
+		roundTimer.restart();
 		//send data to server
 		//server calculate response
 		//???

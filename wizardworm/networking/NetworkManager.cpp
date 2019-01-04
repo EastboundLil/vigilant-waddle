@@ -92,7 +92,7 @@ bool NetworkManager::isRunningAsHost()
 void NetworkManager::onMessageReceived(sf::Packet packet)
 {
 	Message* message = messageHandler.parsePacket(packet);
-
+	LOG("message received");
 	if (message != nullptr)
 	{
 		message->execute();
