@@ -3,7 +3,7 @@
 class IWindow
 {
 public:
-	virtual void eventhandler() = 0;
+	virtual void thegame() = 0;
 	virtual void startMenu() = 0;
 	virtual void mapSelector() = 0;
 	

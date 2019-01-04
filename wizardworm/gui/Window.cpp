@@ -265,14 +265,20 @@ void Window::mapeditor() {
 
 
 
-void Window::eventhandler() {
+void Window::thegame() {
 	ApplicationManager::getInstance().getEngineManager()->AddPlayer(player_v[0]->getWizard_v());
 	float deltaTime = 0.0f;
 	sf::Clock clock;
 		
 	map->load_from_file("map.txt");
 
-	myplayer = player_v[0];
+	if (ApplicationManager::getInstance().getNetworkManager()->isRunningAsHost())
+	{
+		myplayer = player_v[0];
+	}
+	else {
+		myplayer = player_v[1];
+	}
 
 	
 	while (window->isOpen())
@@ -393,7 +399,7 @@ void Window::onTimerEndMsg()
 void Window::startMenu()
 {
 	Button *joinGame = new Button(50.0f, 50.0f, 200.0f, 50.0f, sf::Color::Green, "Join Game", window, [this]()->bool {joinScreen();  return true; });
-	Button *createGame = new Button(50.0f, 115.0f, 200.0f, 50.0f, sf::Color::Green, "Create Game", window, [this]()->bool {eventhandler(); return true; });
+	Button *createGame = new Button(50.0f, 115.0f, 200.0f, 50.0f, sf::Color::Green, "Create Game", window, [this]()->bool {hostScreen(); return true; });
 	Button *createMap = new Button(50.0f, 175.0f, 200.0f, 50.0f, sf::Color::Green, "Create Map", window, [this]()->bool {mapeditor(); return true; });
 	Button *hostGame = new Button(50.0f, 235.0f, 200.0f, 50.0f, sf::Color::Green, "Host Game", window, [this]()->bool {hostScreen(); return true; });
 	Button *exitGame = new Button(50.0f, 300.0f, 200.0f, 50.0f, sf::Color::Green, "Exit Game", window, [this]()->bool {window->close(); return true; });
@@ -404,7 +410,7 @@ void Window::startMenu()
 		{
 			if (event.type == sf::Event::KeyPressed) {
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) return;
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) eventhandler();
+				//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) thegame();
 			}
 
 			if (event.type == sf::Event::MouseButtonPressed) {
@@ -525,6 +531,7 @@ void Window::joinScreen()
 			if (connectionStatus == sf::Socket::Status::Done)
 			{
 				message.setString("Connected!");
+				thegame();
 			}
 
 			
@@ -560,7 +567,7 @@ void Window::hostScreen()
 	message.setCharacterSize(50);
 	message.setPosition(20,100);
 	message.setString("Waiting for other player...");
-
+	bool ready=false;
 	while (window->isOpen())
 	{
 		sf::Event event;
@@ -570,6 +577,8 @@ void Window::hostScreen()
 
 			if (event.type == sf::Event::KeyPressed) {
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) return;
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && ready) thegame();
+
 			}
 
 			if (event.type == sf::Event::MouseButtonPressed) {
@@ -581,7 +590,8 @@ void Window::hostScreen()
 			connectionStatus = ApplicationManager::getInstance().getNetworkManager()->getNetworkStatus();
 			if (connectionStatus == sf::Socket::Status::Done)
 			{
-				message.setString("Connected!");
+				message.setString("Connected! ,press enter to start the game");
+				ready = true;
 			}
 
 			window->draw(sf::Sprite(background));

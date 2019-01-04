@@ -27,7 +27,7 @@ class Window : public IWindow
 
 public:
 
-	void eventhandler() override;
+	void thegame() override;
 	void mapeditor();
 	void onTimerEndMsg();
 	void startMenu() override;
