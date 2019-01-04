@@ -176,9 +176,7 @@ void IEngine::ReceiveData(std::vector<std::string> movesetData)
 	std::vector<KeyboardData> keys = players[currentPlayer]->getKeyboardDataAsVector();
 	for (int i = 0; i < keys.size(); i++)
 	{
-		LOG((keys[i].Left ? "L" : "_"));
-		LOG((keys[i].Up ? "U" : "_"));
-		LOG((keys[i].Right ? "R" : "_"));
+		Move(keys[i].Up, keys[i].Left, keys[i].Right);
 	}
 }
 
