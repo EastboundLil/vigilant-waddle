@@ -25,6 +25,7 @@ IEngine::IEngine() : thread(&IEngine::StartThread, this)
 
 	reloaded = false;
 	cycleCounter = 0;
+	defaultPlayer = 0;
 }
 
 
