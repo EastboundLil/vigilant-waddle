@@ -30,7 +30,6 @@ public:
 	void setEngineTypeClient() { engineType = EngineType::Client; }
 
 	virtual sf::Vector2f Find(Drawable* item);
-	void SetDefaultPlayer(int player, bool setCurrent);
 
 protected:
 	sf::Mutex mut1;

@@ -24,6 +24,7 @@ public:
 	std::stringstream write_data();
 	void write_data_to_file(std::string filename);
 	void load_from_file(std::string filename);
+	void write_data_to_file_system();
 	void make_empty();
 	
 
