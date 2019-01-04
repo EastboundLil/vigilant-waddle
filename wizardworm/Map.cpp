@@ -80,10 +80,13 @@ void Map::write_data_to_file(std::string filename)
 	
 	
 	of << write_data().str();
-	//std::cout << "kiirtam ide: " << "\n";
+	//std::cout << "kiirtam ide: "<<filename << "\n";
 	of.close();
 
 }
+
+
+
 
 
 
@@ -121,7 +124,7 @@ void Map::load_from_file(std::string filename)
 		}else {
 			//std::cout << "minormap: \n";
 			ss.clear();
-			ss.str( "");
+			ss.str("");
 			
 			while(getline(f, line)){
 
@@ -222,7 +225,38 @@ void Map::load_from_file(std::string filename)
 	}
 	*/
 
+}
+
+void Map::write_data_to_file_system()
+{
+	std::string systemfile("mapsystem.txt");
 	
+	std::ifstream ifile(systemfile);
+	std::stringstream ss;
+	std::string line;
+	int counter = 1;
+	while (getline(ifile, line)) {
+	
+		ss << line;
+		ss << "\n";
+		counter++;
+	}
+	ss << "map_no_" << counter<<".txt\n";
+
+	ifile.close();
+	std::ofstream of(systemfile ,std::ofstream::out | std::ofstream::trunc);
+	of << ss.str();
+	of.close();
+
+	ss.clear();
+	ss.str("");
+	
+	ss << "map_no_" << counter << ".txt";
+	std::cout << "stringstream tatalma: \n" << ss.str() << "\nvege\n";
+	write_data_to_file(ss.str());
+	
+
+
 
 }
 

@@ -5,6 +5,7 @@
 #include <iostream>
 #include "ApplicationManager.h"
 #include "Logger.h"
+#include <sstream>
 
 Window::Window()
 {
@@ -92,7 +93,7 @@ void Window::mapeditor() {
 
 	Button *addnewmapbutton = new Button(200 , 10 , 200 ,50 , sf::Color::Black , "save this map" , window , [this]() ->bool {
 		
-		map->write_data_to_file("map.txt");
+		map->write_data_to_file_system();
 		return true;
 	});
 
@@ -341,6 +342,7 @@ void Window::thegame() {
 						if (1 == spellBar->getSelected()) {
 							myplayer->shoot(pos, fireBolt);
 							map->explosion_happened(pos, 50);
+
 						}
 						else {
 							float deg = myplayer->get_arrow()->get_deg();
@@ -405,7 +407,7 @@ void Window::onTimerEndMsg()
 void Window::startMenu()
 {
 	Button *joinGame = new Button(50.0f, 50.0f, 200.0f, 50.0f, sf::Color::Green, "Join Game", window, [this]()->bool {joinScreen();  return true; });
-	Button *createGame = new Button(50.0f, 115.0f, 200.0f, 50.0f, sf::Color::Green, "Create Game", window, [this]()->bool {hostScreen(); return true; });
+	Button *createGame = new Button(50.0f, 115.0f, 200.0f, 50.0f, sf::Color::Green, "Create Game", window, [this]()->bool {mapSelector(); return true; });
 	Button *createMap = new Button(50.0f, 175.0f, 200.0f, 50.0f, sf::Color::Green, "Create Map", window, [this]()->bool {mapeditor(); return true; });
 	Button *hostGame = new Button(50.0f, 235.0f, 200.0f, 50.0f, sf::Color::Green, "Host Game", window, [this]()->bool {hostScreen(); return true; });
 	Button *exitGame = new Button(50.0f, 300.0f, 200.0f, 50.0f, sf::Color::Green, "Exit Game", window, [this]()->bool {window->close(); return true; });
@@ -444,9 +446,46 @@ void Window::startMenu()
 
 void Window::mapSelector()
 {
+	sf::Text message;
+	bool empty=false;
+	
+	sf::Font font;
+	if (!font.loadFromFile("font.ttf")) {
+		//TODO error
+	}
+
+	sf::Text addressText;
+	addressText.setFont(font);
+	//text.setColor(sf::Color::Red);
+	addressText.setCharacterSize(100);
 
 
+	message.setFont(font);
+	//text.setColor(sf::Color::Red);
+	message.setCharacterSize(50);
+	message.setPosition(20, 100);
+	message.setString("There are no saved maps");
 
+	std::ifstream systemfile("mapsystem.txt");
+	std::vector<std::string> files_v;
+	if (systemfile.fail() ) {
+		empty = true;		
+	}
+	else {
+		
+
+		message.setString("vannak fajlok");
+		//std::stringstream ss;
+		std::string line;
+		
+		while (getline(systemfile, line)) {
+
+			files_v.push_back(line);
+			
+		}
+		systemfile.close();
+	
+	}
 	//TODO: itt kell egy kivalaszto widget, meg egy lista ami tartalmazza a létező mapokat, vagy egy lehetőség hogy új mapot csinálj, plusz, minden map mellé hogy map kiprobalasa
 	while (window->isOpen())
 	{
@@ -468,7 +507,7 @@ void Window::mapSelector()
 			window->draw(sf::Sprite(background));
 
 			
-
+			if (/*empty*/true)window->draw(message);
 			window->display();
 		}
 	}
