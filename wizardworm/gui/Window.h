@@ -26,6 +26,8 @@ class Window : public IWindow
 	void hostScreen();
 
 public:
+	std::string line;
+
 
 	void thegame() override;
 	void mapeditor();
