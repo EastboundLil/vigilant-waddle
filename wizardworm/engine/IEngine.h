@@ -30,6 +30,7 @@ public:
 	void setEngineTypeClient() { engineType = EngineType::Client; }
 
 	virtual sf::Vector2f Find(Drawable* item);
+	void SetDefaultPlayer(int player, bool setCurrent);
 
 protected:
 	sf::Mutex mut1;
@@ -49,6 +50,7 @@ protected:
 
 	int currentEngineState;
 	int engineType;
+	int defaultPlayer;
 
 	void StartThread();
 	void ColCheck(sf::Vector2f direction, bool gravCheck = true);

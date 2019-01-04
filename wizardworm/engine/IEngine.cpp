@@ -105,7 +105,6 @@ void IEngine::Update()
 
 		if (players[currentPlayer]->GetCurrentEntity()->GetJumpSpeed() != 0)
 		{
-			//TODO: Fix lag
 			players[currentPlayer]->GetCurrentEntity()->AdjustJumpSpeed(-(GRAVITY / 2));
 			ColCheck(sf::Vector2f(0, -1));
 			if (players[currentPlayer]->GetCurrentEntity()->GetJumpSpeed() != 0)
@@ -292,4 +291,11 @@ sf::Vector2f IEngine::Find(Drawable * item)
 	}
 
 	return sf::Vector2f(-1, -1);
+}
+
+void IEngine::SetDefaultPlayer(int player, bool setCurrent)
+{
+	defaultPlayer = player;
+	if (setCurrent)
+		currentPlayer = player;
 }
