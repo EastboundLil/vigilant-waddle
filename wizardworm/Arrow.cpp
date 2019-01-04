@@ -69,7 +69,7 @@ bool Arrow::is_opened()
 
 void Arrow::set_opened(bool t)
 {
-	std::cout << type << t<<" \n";
+	//std::cout << type << t<<" \n";
 		opened = t;
 	
 	

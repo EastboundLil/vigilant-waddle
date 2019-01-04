@@ -40,9 +40,6 @@ void Map::explosion_happened(sf::Vector2i pos , float r)
 
 }
 
-/*void Map::laserExp_happened(sf::Vector2i pos, std::vector<std::shared_ptr<Player>> player_v, float deg) {
-
-}*/
 
 void Map::laserExp_happened(Wizard* wiz, std::vector<std::shared_ptr<Player>> player_v, float deg) {
 
@@ -83,7 +80,7 @@ void Map::write_data_to_file(std::string filename)
 	
 	
 	of << write_data().str();
-	std::cout << "kiirtam ide: " << "\n";
+	//std::cout << "kiirtam ide: " << "\n";
 	of.close();
 
 }
@@ -156,7 +153,7 @@ void Map::load_from_file(std::string filename)
 	}
 	
 	
-	std::cout << "a mapnak " << minormap_v.size() << " eleme van";
+	 //std::cout << "a mapnak " << minormap_v.size() << " eleme van";
 
 
 	//TODO: egy fájl van az egész mapra, ezért valszeg a fájlszerkezetet meg kell változtatni. itt dolgozom fel a fajlt, és a loadot a minormapoknak adom

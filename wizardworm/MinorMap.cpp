@@ -198,8 +198,9 @@ void MinorMap::laserExp_happened(Wizard* shooterwiz,Wizard* slavewiz, float deg)
 	}
 
 
-	if (slavewiz->wizard_in_shape(s))
-		std::cout<<"lel \n";
+	if (slavewiz->wizard_in_shape(s)) {
+		std::cout << "lel \n";
+	}
 
 }
 
@@ -324,7 +325,7 @@ void MinorMap::load(std::string to_load)
 
 	}
 
-	std::cout << "az egyik minornak " << block_v.size() <<" eleme van \n";
+	//std::cout << "az egyik minornak " << block_v.size() <<" eleme van \n";
 
 
 }

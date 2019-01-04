@@ -127,7 +127,7 @@ std::string Block::write_data() //returned data: "<posx> <posy> <ndbpont> <width
 	std::stringstream ss;
 	
 	ss <<x<<" "<<y<<" "<< convex_v->getPointCount() << " "<<width<<" "<<height<<" "<<(int)convex_v->getFillColor().r <<" "<<(int)convex_v->getFillColor().g << " "<<(int)convex_v->getFillColor().b<<" "<<destructible ;
-	for (size_t i = 0; i < convex_v->getPointCount(); i++) {
+	for (int i = 0; i < convex_v->getPointCount(); i++) {
 		ss <<" "<< convex_v->getPoint(i).x << " " << convex_v->getPoint(i).y;
 	}
 	ss << "\n";
