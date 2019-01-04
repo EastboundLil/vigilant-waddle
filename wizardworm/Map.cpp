@@ -88,7 +88,26 @@ void Map::write_data_to_file(std::string filename)
 
 
 
+void Map::load_from_ss(std::stringstream &ss) {
 
+
+
+	if (minormap_v.empty()) {
+		std::cout << "uresa map";
+	}
+
+
+	minormap_v.push_back(std::make_shared<MinorMap>(window));
+	//std::cout << ss.str()<<"minorvege \n";
+
+	minormap_v[minormap_v.size() - 1]->load(ss.str());
+	ss.clear();
+	ss << "";
+
+		
+
+	
+}
 
 void Map::load_from_file(std::string filename)
 {

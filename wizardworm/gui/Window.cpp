@@ -277,12 +277,12 @@ void Window::thegame() {
 	if (ApplicationManager::getInstance().getNetworkManager()->isRunningAsHost())
 	{
 		myplayer = player_v[0];
-		
 		//std::cout << " \n én most host vagyok \n";
 	}
 	else {
 		myplayer = player_v[1];
 		ApplicationManager::getInstance().getEngineManager()->switchplayerBence();
+
 		//std::cout << " \n én most joiner vagyok \n";
 	}
 
@@ -591,6 +591,13 @@ void Window::joinScreen()
 			if (connectionStatus == sf::Socket::Status::Done)
 			{
 				message.setString("Connected!");
+				message.setString("waiting for map!");
+
+			}
+
+			if (!map->isEmpty())
+			{
+				message.setString("map received!");
 				thegame();
 				return;
 			}
@@ -652,6 +659,8 @@ void Window::hostScreen()
 			connectionStatus = ApplicationManager::getInstance().getNetworkManager()->getNetworkStatus();
 			if (connectionStatus == sf::Socket::Status::Done)
 			{
+				ApplicationManager::getInstance().getNetworkManager()->sendNewMapMsg(map->write_data());
+
 				message.setString("Connected! ,press enter to start the game");
 				ready = true;
 			}
@@ -669,7 +678,7 @@ std::shared_ptr<Map> Window::get_map()
 	return map;
 }
 
-void Window::receiveMap(std::stringstream& map)
+void Window::receiveMap(std::stringstream& fmap)
 {
-
+	map->load_from_ss(fmap);
 }
