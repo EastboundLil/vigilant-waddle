@@ -332,16 +332,16 @@ void Window::thegame() {
 				{
 					pos = sf::Mouse::getPosition(*window);
 
-					if (player_v[0]->get_arrow() != nullptr) {
+					if (myplayer->get_arrow() != nullptr) {
 						if (1 == spellBar->getSelected()) {
-							player_v[0]->shoot(pos, fireBolt);
+							myplayer->shoot(pos, fireBolt);
 							map->explosion_happened(pos, 50);
 						}
 						else {
-							float deg = player_v[0]->get_arrow()->get_deg();
-							player_v[0]->shoot(deg, laserBeam);
+							float deg = myplayer->get_arrow()->get_deg();
+							myplayer->shoot(deg, laserBeam);
 							//std::cout << deg << "deg" << std::endl;
-							map->laserExp_happened(player_v[0]->getWizard(), player_v, deg);
+							map->laserExp_happened(myplayer->getWizard(), player_v, deg);
 						}
 					}
 				}
@@ -377,7 +377,7 @@ void Window::thegame() {
 		
 		for (int i = 0; i < player_v.size(); i++) {
 			for (int j = 0; j < player_v[i]->getWizard_v().size(); j++) {
-				player_v[i]->set_Pos(ApplicationManager::getInstance().getEngineManager()->Find(player_v[i]->getWizard()));
+				player_v[i]->set_Pos(ApplicationManager::getInstance().getEngineManager()->Find(player_v[i]->getWizard_v()[j]));
 			}
 			player_v[i]->draw();
 		}
