@@ -83,6 +83,7 @@ void IEngine::Update()
 		}
 		mut2.unlock();
 		timer.restart();
+		reloaded = false;
 	}
 	else if (roundTimer.getElapsedTime().asSeconds() >= 10)
 	{
@@ -154,13 +155,14 @@ void IEngine::SendData()
 
 	ApplicationManager::getInstance().getNetworkManager()->sendMoveSetMsg(movesetData);
 	cycleCounter = 0;
+
 }
 
 void IEngine::ReceiveData(std::vector<std::string> movesetData)
 {
 	switchplayerBence();
 
-	for (int i = 0; movesetData.size(); i++)
+	for (int i = 0; i < movesetData.size(); i++)
 	{
 		bool up, left, right = false;
 

@@ -539,6 +539,7 @@ void Window::joinScreen()
 			{
 				message.setString("Connected!");
 				thegame();
+				return;
 			}
 
 			
